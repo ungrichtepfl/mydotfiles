@@ -56,8 +56,10 @@ bindkey '^[[Z' undo                                             # Shift+tab undo
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
+alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
 alias ls='ls --color'						# Show content of folder colorized 
+alias mutt='neomutt'
 
 # Theming section  
 autoload -U compinit colors zcalc
