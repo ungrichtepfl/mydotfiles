@@ -61,8 +61,8 @@ alias gitu='git add . && git commit && git push'
 alias ls='ls --color'						# Show content of folder colorized 
 alias mutt='neomutt'
 alias saptu='sudo apt update'					# Update all packages
-alias saptuu='sudo apt upgrade && sudo apt upgrade -y' 		# Update and upgrade all packages
-alias saptufu='sudo apt upgrade && sudo apt full-upgrade -y' 		# Update and upgrade all packages
+alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
+alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
 alias sapti='sudo apt install'
 
 # Theming section  
