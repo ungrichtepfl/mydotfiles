@@ -20,8 +20,8 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 HISTFILE=~/.zhistory
 HISTSIZE=2000
 SAVEHIST=10000
-export EDITOR=/usr/bin/vim
-export VISUAL=/usr/bin/vim
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
 
@@ -59,11 +59,13 @@ alias free='free -m'                                            # Show sizes in 
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
 alias ls='ls --color'						# Show content of folder colorized 
-alias mutt='neomutt'
+alias nmutt='neomutt'
+alias vim='nvim'
 alias saptu='sudo apt update'					# Update all packages
 alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
 alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
 alias sapti='sudo apt install'
+
 
 # Theming section  
 autoload -U compinit colors zcalc
@@ -146,7 +148,7 @@ git_prompt_string() {
 # Right prompt with exit status of previous command if not successful
  #RPROMPT="%{$fg[red]%} %(?..[%?])" 
 # Right prompt with exit status of previous command marked with ✓ or ✗
- RPROMPT="%(?.%{$fg[green]%}✓ %{$reset_color%}.%{$fg[red]%}✗ %{$reset_color%})"
+RPROMPT="%(?.%{$fg[green]%}✓ %{$reset_color%}.%{$fg[red]%}✗ %{$reset_color%})"
 
 
 # Color man pages
@@ -161,10 +163,11 @@ export LESS=-r
 
 
 ## Plugins section: Enable fish style features
+export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 # Use syntax highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # Use history substring search
-source /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
 # bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -199,8 +202,26 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
   *)
         RPROMPT='$(git_prompt_string)'
 		# Use autosuggestion
-		source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+		source "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
 		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
   		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
     ;;
 esac
+
+
+# Add path to path
+export PATH=$PATH:/home/$USER/.local/bin
+export PATH=/usr/local/MATLAB/R2021b/bin:$PATH
+export PATH=/home/chrigi/cmake-install/bin:$PATH
+export PATH="$HOME/.poetry/bin:$PATH"
+
+export XDG_CONFIG_HOME="$HOME/.config"
+
+source /opt/ros/noetic/setup.zsh
+#export CMAKE_PREFIX_PATH=/home/chrigi/cmake-install:$CMAKE_PREFIX_PATH
+
+# poetry config
+fpath+=~/.zfunc
+
+
+
