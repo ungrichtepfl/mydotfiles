@@ -64,6 +64,8 @@ alias vim='nvim'
 alias saptu='sudo apt update'					# Update all packages
 alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
 alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
+alias saptufup='sudo apt update && sudo apt full-upgrade -y; update-zsh-plugins'	# Update and upgrade all packages, plus zsh plugins
+
 alias sapti='sudo apt install'
 
 
