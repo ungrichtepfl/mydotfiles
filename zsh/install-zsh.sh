@@ -12,7 +12,7 @@ main(){
   # zshrc
   if [[ -f "${HOME}/.zshrc" ]]; then
     echo '".zshrc" already exists. Creating backup.'
-    cp "${HOME}/.zshrc" "${HOME}/.zshrc.bak"
+    mv "${HOME}/.zshrc" "${HOME}/.zshrc.bak"
   fi
 
   echo 'Copy ".zshrc" to home folder:'
@@ -38,7 +38,7 @@ main(){
 
   BIN_PATH="${HOME}/.local/bin"
   [[ -d "${BIN_PATH}" ]] || (mkdir -p "${BIN_PATH}" && echo "Add \"${BIN_PATH}\" to your \"PATH\" variable, i.e. add to your .zshrc \"export PATH=PATH:${BIN_PATH}\"")
-  mv "update-zsh-plugins.sh" "${BIN_PATH}/update-zsh-plugins"
+  cp "update-zsh-plugins.sh" "${BIN_PATH}/update-zsh-plugins"
   echo 'Run "update-zsh-plugins" to update all plugins'
 }
 
