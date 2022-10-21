@@ -96,6 +96,10 @@ gitpsu() {
     git push --set-upstream origin $_git_branch
 }
 
+ssource(){
+  [ -f "${1}" ] && source "${1}"
+}
+
 # Theming section
 autoload -U compinit colors zcalc
 compinit -d
@@ -194,10 +198,10 @@ export LESS=-r
 ## Plugins section: Enable fish style features
 export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 # Use syntax highlighting
-# source "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/F-Sy-H.plugin.zsh"
+# ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/F-Sy-H.plugin.zsh"
 # Use history substring search
-source "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
 # More suggsetions
 fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
 
@@ -226,16 +230,16 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
         #		#Possible variants: dark and light
         #		#shade="dark"
         #		#BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
-        #		#[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+        #		#[[ -s $BASE16_SHELL ]] && ssource $BASE16_SHELL
         #		# Use autosuggestion
-        #		source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+        #		ssource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
         #		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
         #  		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
         #     ;;
     *)
         RPROMPT='$(git_prompt_string)'
         # Use autosuggestion
-        source "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+        ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
         ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
         ;;
@@ -258,8 +262,11 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=/home/$USER/.local/go
 export PATH=$PATH:/home/$USER/.local/go/bin
 
+# Ros
+ssource "/opt/ros/noetic/setup.zsh"
+
 # Haskell:
-[ -f "/home/christoph/.ghcup/env" ] && source "/home/christoph/.ghcup/env" # ghcup-env
+ssource "/home/christoph/.ghcup/env" # ghcup-env
 
 # Nvm:
 export NVM_DIR="$HOME/.config/nvm"
