@@ -97,7 +97,7 @@ gitpsu() {
 }
 
 ssource(){
-  [ -f "${1}" ] && source "${1}"
+    [ -f "${1}" ] && source "${1}"
 }
 
 # Theming section
@@ -199,7 +199,7 @@ export LESS=-r
 export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 # Use syntax highlighting
 # ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/F-Sy-H.plugin.zsh"
+ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 # Use history substring search
 ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
 # More suggsetions
