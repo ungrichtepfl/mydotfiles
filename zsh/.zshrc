@@ -65,9 +65,36 @@ alias saptu='sudo apt update'					# Update all packages
 alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
 alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
 alias saptufup='sudo apt update && sudo apt full-upgrade -y; update-zsh-plugins'	# Update and upgrade all packages, plus zsh plugins
-
 alias sapti='sudo apt install'
-
+# kitty terminal ssh
+alias sshk="kitty +kitten ssh"
+alias ranger=". ranger" # such that when quitting the terminal is already in the directory
+alias ra="ranger"
+# Python
+alias pd="pydoc3"
+# Git
+alias cdg='cd $(git rev-parse --show-toplevel)'/ca
+alias gita='git add'
+alias gitb='git --no-pager branch'
+alias gitc='git checkout'
+alias gitca='git commit --amend'
+alias gitcan='git commit --amend --no-edit'
+alias gitcp='git cherry-pick'
+alias gits='git status'
+alias gitd='git diff'
+alias gitl='git log'
+alias gitcb='git checkout -b'
+alias gitcm='git commit --signoff -m'
+alias gitds='gitd --staged'
+alias gitpo='git pull origin'
+alias gitpom='gitpo master'
+alias gitpomr='gitpom --rebase'
+alias gitpod='gitpo develop'
+alias gitpodr='gitpod --rebase'
+gitpsu() {
+  local _git_branch="$(git branch --show-current)"
+  git push --set-upstream origin $_git_branch
+}
 
 # Theming section  
 autoload -U compinit colors zcalc
@@ -167,9 +194,13 @@ export LESS=-r
 ## Plugins section: Enable fish style features
 export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 # Use syntax highlighting
-source "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# source "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/F-Sy-H.plugin.zsh"
 # Use history substring search
 source "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+# More suggsetions
+fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
+
 # bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -217,13 +248,31 @@ export PATH=/usr/local/MATLAB/R2021b/bin:$PATH
 export PATH=/home/chrigi/cmake-install/bin:$PATH
 export PATH="$HOME/.poetry/bin:$PATH"
 
+# Config
 export XDG_CONFIG_HOME="$HOME/.config"
+# For external auto completion:
+fpath+=$HOME/.zfunc
 
-source /opt/ros/noetic/setup.zsh
-#export CMAKE_PREFIX_PATH=/home/chrigi/cmake-install:$CMAKE_PREFIX_PATH
+# Golang:
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=/home/$USER/.local/go
+export PATH=$PATH:/home/$USER/.local/go/bin
 
-# poetry config
-fpath+=~/.zfunc
+# Haskell:
+[ -f "/home/christoph/.ghcup/env" ] && source "/home/christoph/.ghcup/env" # ghcup-env
 
+# Nvm:
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Cargo
+# load cargo
+if [ ! -e ~/.zfunc/_rustup -a $commands[rustup] ]; then
+  mkdir -p ~/.zfunc
+  rustup completions zsh > ~/.zfunc/_rustup
+fi
+
+#jira api:
+export JIRA_API_TOKEN=0BSh6i1L9zHXFc2UPJd91F9F
 
