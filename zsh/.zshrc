@@ -280,5 +280,5 @@ if [ ! -e ~/.zfunc/_rustup -a $commands[rustup] ]; then
     rustup completions zsh > ~/.zfunc/_rustup
 fi
 
-#jira api:
-export JIRA_API_TOKEN=0BSh6i1L9zHXFc2UPJd91F9F
+# Get no sync data:
+ssource $HOME/.zshrc.nosync
