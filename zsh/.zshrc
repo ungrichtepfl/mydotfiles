@@ -248,9 +248,9 @@ esac
 
 
 # Add path to path
-export PATH=$PATH:/home/$USER/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 export PATH=/usr/local/MATLAB/R2021b/bin:$PATH
-export PATH=/home/chrigi/cmake-install/bin:$PATH
+export PATH=$HOME/cmake-install/bin:$PATH
 export PATH="$HOME/.poetry/bin:$PATH"
 
 # Config
@@ -260,14 +260,14 @@ fpath+=$HOME/.zfunc
 
 # Golang:
 export PATH=$PATH:/usr/local/go/bin
-export GOPATH=/home/$USER/.local/go
-export PATH=$PATH:/home/$USER/.local/go/bin
+export GOPATH=$HOME/.local/go
+export PATH=$PATH:$HOME/.local/go/bin
 
 # Ros
 ssource "/opt/ros/noetic/setup.zsh"
 
 # Haskell:
-ssource "/home/christoph/.ghcup/env" # ghcup-env
+ssource "$HOME/.ghcup/env" # ghcup-env
 
 # Nvm:
 export NVM_DIR="$HOME/.config/nvm"
