@@ -16,7 +16,7 @@ main(){
     fi
 
     echo 'Copy ".zshrc" to home folder:'
-    cp .zshrc "${HOME}"
+    cp .zshrc "$HOME"
 
     # Change shell:
     zsh_str="zsh"
@@ -28,7 +28,7 @@ main(){
     # install plugins:
 
     ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
-    if [ -z "${ZSH_PLUGIN_PATH}" ]; then
+    if [ "$ZSH_PLUGIN_PATH" = "" ]; then
         # TODO: try to export from .zshrc
         echo '"ZSH_PLUGIN_PATH" var is empty, should be exported in ".zshrc". Plugins will not be installed...'
     else
@@ -37,27 +37,29 @@ main(){
     fi
 
     BIN_PATH="${HOME}/.local/bin"
-    [[ -d "${BIN_PATH}" ]] || (mkdir -p "${BIN_PATH}" && echo "Add \"${BIN_PATH}\" to your \"PATH\" variable, i.e. add to your .zshrc \"export PATH=PATH:${BIN_PATH}\"")
+    [[ -d "$BIN_PATH" ]] || (mkdir -p "$BIN_PATH" && echo "Add \"${BIN_PATH}\" to your \"PATH\" variable, i.e. add to your .zshrc \"export PATH=PATH:${BIN_PATH}\"")
     cp "update-zsh-plugins.sh" "${BIN_PATH}/update-zsh-plugins"
     echo 'Run "update-zsh-plugins" to update all plugins'
 }
 
 install_plugins() {
     plug_path="${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting"
-    [[ -d "${plug_path}" ]] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${plug_path}"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-history-substring-search"
-    [[ -d "${plug_path}" ]] || git clone https://github.com/zsh-users/zsh-history-substring-search.git "${plug_path}"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-history-substring-search.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-autosuggestions"
-    [[ -d "${plug_path}" ]] || git clone https://github.com/zsh-users/zsh-autosuggestions.git "${plug_path}"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/fast-syntax-highlighting"
-    [[ -d "${plug_path}" ]] || git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "${plug_path}"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-completions"
-    [[ -d "${plug_path}" ]] || git clone https://github.com/zsh-users/zsh-completions.git "${plug_path}"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-completions.git "$plug_path"
 
+    plug_path="${ZSH_PLUGIN_PATH}/zsh-z"
+    [[ -d "$plug_path" ]] || git clone https://github.com/agkozak/zsh-z.git "$plug_path"
 }
 
 

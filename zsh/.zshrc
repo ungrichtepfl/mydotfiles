@@ -203,6 +203,8 @@ export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 # Use history substring search
 ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+# jump quickly to directories that where visited frequently
+ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
 # More suggsetions
 fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
 
@@ -246,6 +248,9 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
         ;;
 esac
 
+# Init plugins:
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select
 
 # Add path to path
 export PATH=$PATH:$HOME/.local/bin
