@@ -248,8 +248,6 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
         ;;
 esac
 
-# Init plugins:
-autoload -U compinit && compinit
 zstyle ':completion:*' menu select
 
 # Add path to path
@@ -274,10 +272,13 @@ ssource "/opt/ros/noetic/setup.zsh"
 # Haskell:
 ssource "$HOME/.ghcup/env" # ghcup-env
 
-# Nvm:
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Run as function, only when needed
+nvm-init(){
+    # # Nvm:
+    export NVM_DIR="$HOME/.config/nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
 
 # Cargo
 # load cargo
