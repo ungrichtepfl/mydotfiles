@@ -292,3 +292,6 @@ ssource $HOME/.zshrc.nosync
 
 # Add neovim:
 export PATH=$HOME/.local/nvim/bin:$PATH
+
+# Add julia:
+export PATH=$HOME/.local/julia/bin:$PATH
