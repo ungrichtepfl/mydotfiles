@@ -250,6 +250,12 @@ esac
 
 zstyle ':completion:*' menu select
 
+# Add fzf completions and key-bindings to zsh
+# sudo apt install fzf
+
+ssource /usr/share/doc/fzf/examples/key-bindings.zsh
+ssource /usr/share/doc/fzf/examples/completion.zsh
+
 # Add path to path
 export PATH=$PATH:$HOME/.local/bin
 export PATH=/usr/local/MATLAB/R2021b/bin:$PATH
