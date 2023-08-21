@@ -15,8 +15,8 @@ main(){
         mv "${HOME}/.zshrc" "${HOME}/.zshrc.bak"
     fi
 
-    echo 'Copy ".zshrc" to home folder:'
-    cp .zshrc "$HOME"
+    echo 'Link ".zshrc" to home folder:'
+    ln -s "$(pwd)/.zshrc" "$HOME"
 
     # Change shell:
     zsh_str="zsh"
