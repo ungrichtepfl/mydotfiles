@@ -224,6 +224,8 @@ bindsym $mod+y exec thunar
 bindsym $mod+o exec dmenu-find-file.sh
 bindsym $mod+Shift+o exec dmenu-find-hidden-file.sh
 
+# See all shortcuts
+bindsym $mod+c exec dmenu-hotkeys.sh
 
 ## Screenshots
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshot from $(date)"
