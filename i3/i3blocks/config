@@ -1,3 +1,13 @@
+[IFACE-NAME]
+command=display_wifi_name=1 ~/.config/i3blocks/iface/iface.sh
+color=#FEC925
+interval=10
+
+[IFACE-IP]
+command=display_wifi_name=0 ~/.config/i3blocks/iface/iface.sh
+color=#FEC925
+interval=10
+
 [DISK]
 command=df -h / | awk '/\//{ printf(" 💾 %4s/%s \n", $4, $2) }'
 interval=2
@@ -31,3 +41,4 @@ signal=1
 [TIME_DATE]
 command=date +" %a, %d %b - %H:%M:%S"
 interval=1
+
