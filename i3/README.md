@@ -1,12 +1,11 @@
 # i3
 
-Symlink to config folders:
+Set symlinks to setup:
 
 ```shell
-mkdir -p $HOME/.config/i3
-mkdir -p $HOME/.config/i3status
-ln -s `pwd`/i3.conf $HOME/.config/i3/config
-ln -s `pwd`/i3status.conf $HOME/.config/i3status/config
+ln -s `pwd`/i3 $HOME/.config/
+ln -s `pwd`/i3blocks $HOME/.config/
+ln -s `pwd`/bin/* $HOME/.local/bin/
 ```
 
 ## To enable screenshots
@@ -24,4 +23,20 @@ needs to be installed.
 
 ```shell
 sudo apt install feh
+```
+
+## Finding files
+
+Install faster find:
+
+```shell
+sudo apt install fd-find
+```
+
+## i3blocks
+
+Install:
+
+```shell
+sudo apt install lm_sensors pulsemixer fonts-font-awesome
 ```
