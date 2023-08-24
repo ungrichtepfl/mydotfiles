@@ -1,5 +1,7 @@
 # i3
 
+Download newest version from the [official website](https://i3wm.org/docs/repositories.html).
+
 Set symlinks to setup:
 
 ```shell
