@@ -20,8 +20,6 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 HISTFILE=~/.zhistory
 HISTSIZE=2000
 SAVEHIST=10000
-export EDITOR=/usr/bin/nvim
-export VISUAL=/usr/bin/nvim
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
 
@@ -266,6 +264,12 @@ export PATH="$HOME/.poetry/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 # For external auto completion:
 fpath+=$HOME/.zfunc
+
+# Use nvim as default editor
+if [ -x "$(command -v nvim)" ]; then
+    export EDITOR=`which nvim`
+    export VISUAL=`which nvim`
+fi
 
 # Golang:
 export PATH=$PATH:/usr/local/go/bin
