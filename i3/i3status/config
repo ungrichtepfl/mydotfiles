@@ -49,8 +49,8 @@ load {
 }
 
 volume master {
-       format = "🔊 %volume"
-       format_muted = "🔇 (%volume)"
+       format = "🔊 %devicename (%volume)"
+       format_muted = "🔇 %devicename (%volume)"
        device = "pulse"
 }
 
