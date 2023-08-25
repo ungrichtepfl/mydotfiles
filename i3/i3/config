@@ -261,4 +261,4 @@ bar {
 }
 
 # Include machine specific config
-include ~/.config/i3/conf.nosync
+include ~/.config/i3/config.nosync
