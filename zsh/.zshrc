@@ -305,3 +305,7 @@ export PATH=$HOME/.local/nvim/bin:$PATH
 
 # Add julia:
 export PATH=$HOME/.local/julia/bin:$PATH
+
+# Add mojo:
+export MODULAR_HOME=$HOME/.modular
+export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
