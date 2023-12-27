@@ -309,3 +309,6 @@ export PATH=$HOME/.local/julia/bin:$PATH
 # Add mojo:
 export MODULAR_HOME=$HOME/.modular
 export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
+
+# Dotnet: 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
