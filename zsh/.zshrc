@@ -57,6 +57,9 @@ alias free='free -m'                                            # Show sizes in 
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
 alias ls='ls --color'						# Show content of folder colorized
+alias ll='ls -lh'   						# Show content of folder in list format
+alias la='ls -a'    						# Show all content of folder
+alias lla='ls -lha' 						# Show all content of folder in list format
 alias nmutt='neomutt'
 alias vim='nvim'
 alias saptu='sudo apt update'					# Update all packages
@@ -312,3 +315,5 @@ export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
 
 # Dotnet: 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+# Create as alias for nuget
+alias nuget="mono /usr/local/bin/nuget.exe"
