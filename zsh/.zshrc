@@ -103,6 +103,9 @@ ssource(){
     [ -f "${1}" ] && source "${1}"
 }
 
+# For external auto completion:
+fpath+=$HOME/.zfunc
+
 # Theming section
 autoload -U compinit colors zcalc
 compinit -d
@@ -266,8 +269,6 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 # Config
 export XDG_CONFIG_HOME="$HOME/.config"
-# For external auto completion:
-fpath+=$HOME/.zfunc
 
 # Use nvim as default editor
 if [ -x "$(command -v nvim)" ]; then
@@ -314,7 +315,7 @@ export PATH=$HOME/.local/julia/bin:$PATH
 export MODULAR_HOME=$HOME/.modular
 export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
 
-# Dotnet: 
+# Dotnet:
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
