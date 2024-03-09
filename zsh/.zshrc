@@ -1,3 +1,4 @@
+[ -z "$ZPROF" ] || zmodload zsh/zprof
 ## Options section
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
@@ -106,9 +107,14 @@ ssource(){
 # For external auto completion:
 fpath+=$HOME/.zfunc
 
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+    compinit
+done
+compinit -C
+
 # Theming section
-autoload -U compinit colors zcalc
-compinit -d
+autoload -U colors zcalc
 colors
 
 # enable substitution for prompt
@@ -319,3 +325,21 @@ export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
+
+# Auto attach to zellij
+zellij_auto_attach(){
+    if [[ -z "$ZELLIJ" ]]; then
+        if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+            zellij attach -c
+        else
+            zellij
+        fi
+
+        if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+            exit
+        fi
+    fi
+}
+zellij_auto_attach
+# run with: ZPROF=1 zsh -i -c exit
+[ -z "$ZPROF" ] || zprof
