@@ -195,4 +195,4 @@ pane_frames false
 // Default: "default"
 //
 
-// default_layout "compact"
+default_layout "compact"
