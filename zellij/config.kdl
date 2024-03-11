@@ -146,7 +146,8 @@ keybinds clear-defaults=true {
     shared_except "locked" {
         bind "Alt g" { SwitchToMode "Locked"; }
         bind "Alt q" { Quit; }
-        bind "Alt n" { NewPane; }
+        bind "Alt ." { NewPane; }
+        bind "Alt ," { NewTab; SwitchToMode "Normal"; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
         bind "Alt j" "Alt Down" { MoveFocus "Down"; }
@@ -194,4 +195,4 @@ pane_frames false
 // Default: "default"
 //
 
-default_layout "compact"
+// default_layout "compact"
