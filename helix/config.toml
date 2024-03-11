@@ -1,0 +1,4 @@
+theme = "kanabox_default"
+
+[editor]
+line-number = "relative"
