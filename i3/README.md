@@ -47,5 +47,5 @@ sudo apt install fd-find
 If i3blocks wants do be used install:
 
 ```shell
-sudo apt install lm_sensors pulsemixer
+sudo apt install lm-sensors pulsemixer
 ```
