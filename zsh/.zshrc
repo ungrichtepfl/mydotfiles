@@ -57,10 +57,17 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
-alias ls='ls --color'						# Show content of folder colorized
-alias ll='ls -lh'   						# Show content of folder in list format
-alias la='ls -a'    						# Show all content of folder
-alias lla='ls -lha' 						# Show all content of folder in list format
+if [ -x "$(command -v exa)" ]; then
+    alias ls='exa --color=auto'                                 # Show content of folder colorized
+    alias ll='exa -lh'                                          # Show content of folder in list format
+    alias la='exa -a'                                           # Show all content of folder
+    alias lla='exa -lha'                                        # Show all content of folder in list format
+else
+    alias ls='ls --color'                                       # Show content of folder colorized
+    alias ll='ls -lh'                                           # Show content of folder in list format
+    alias la='ls -a'                                            # Show all content of folder
+    alias lla='ls -lha'                                         # Show all content of folder in list format
+fi
 alias nmutt='neomutt'
 alias vim='nvim'
 alias saptu='sudo apt update'					# Update all packages
