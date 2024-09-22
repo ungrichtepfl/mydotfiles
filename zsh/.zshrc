@@ -62,6 +62,11 @@ if [ -x "$(command -v exa)" ]; then
     alias ll='exa -lh'                                          # Show content of folder in list format
     alias la='exa -a'                                           # Show all content of folder
     alias lla='exa -lha'                                        # Show all content of folder in list format
+elif [ -x "$(command -v eza)" ]; then
+    alias ls='eza --color=auto'                                 # Show content of folder colorized
+    alias ll='eza -lh'                                          # Show content of folder in list format
+    alias la='eza -a'                                           # Show all content of folder
+    alias lla='eza -lha'                                        # Show all content of folder in list format
 else
     alias ls='ls --color'                                       # Show content of folder colorized
     alias ll='ls -lh'                                           # Show content of folder in list format
