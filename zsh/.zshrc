@@ -317,6 +317,14 @@ if [ ! -e ~/.zfunc/_rustup -a $commands[rustup] ]; then
     rustup completions zsh > ~/.zfunc/_rustup
 fi
 
+# pnpm
+export PNPM_HOME="/home/chrigi/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
 # Get no sync data:
 ssource $HOME/.zshrc.nosync
 
