@@ -1,12 +1,21 @@
 #!/bin/bash
 
+set -e
+
 main(){
+
+    DISTRO="$(lsb_release -i | cut -f 2-)"
 
     if which zsh > /dev/null; then
         echo '"zsh" already installed.'
     else
         echo "Install zsh:"
-        sudo apt install zsh -y
+	if [[ $DISTRO == "VoidLinux" ]]; then
+	    sudo xbps-install -S zsh -y
+        else 
+            echo "Assuming Debian based system."
+	    sudo apt install zsh -y
+	fi
     fi
 
     # zshrc
