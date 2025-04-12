@@ -24,7 +24,7 @@ sudo xbps install font-awesome6 nerd-fonts
 ## Lockscreen
 
 ```shell
-sudo xbps-install -S i3lock
+sudo xbps-install -S i3lock-color
 ```
 
 ## Network
