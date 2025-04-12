@@ -1,0 +1,3 @@
+# Allows me to shutdown the system without a password
+
+chrigi ALL=(ALL) NOPASSWD: /usr/bin/halt, /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown

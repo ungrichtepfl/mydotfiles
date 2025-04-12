@@ -51,12 +51,12 @@ cpu_usage {
 
 volume master {
        format = "🔊 %devicename (%volume)"
-       format_muted = "🔇 %devicename (%volume)"
+       format_muted = "  %devicename (%volume)"
        device = "pulse"
 }
 
 memory {
-        format = "🐏 %used / %total"
+        format = "  %used / %total"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 }
