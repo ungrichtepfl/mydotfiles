@@ -1,0 +1,6 @@
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+# On this surface with HDPI we need to increase the GTK Scaling
+GDK_SCALE=2
