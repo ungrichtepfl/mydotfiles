@@ -14,37 +14,41 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
-
 ### HIGH DPI CONFIG
 
-# First find out if it is high dpi
-# Extract resolution (e.g., 1920x1080)
-RESOLUTION=$(xrandr | grep '*' | awk '{print $1}')
-WIDTH=$(echo "$RESOLUTION" | cut -d'x' -f1)
-HEIGHT=$(echo "$RESOLUTION" | cut -d'x' -f2)
+DISPLAYS_CONNECTED=$(xrandr | grep " connected " | awk '{ print$1 }' | wc -l)
+if [ "$DISPLAYS_CONNECTED" -lt 2 ]; then
+  # ONLY AUTOMATICALLY CONFIGURE IF NO OTHER MONITORS ARE CONNECTED
 
-# Extract physical dimensions in mm
-MM=$(xrandr | grep -w connected | grep -o '[0-9]\+mm x [0-9]\+mm' | head -n1)
-PHYS_WIDTH=$(echo "$MM" | cut -d'm' -f1)
-PHYS_HEIGHT=$(echo "$MM" | cut -d'x' -f2 | tr -d 'm ')
+  # First find out if it is high dpi
+  # Extract resolution (e.g., 1920x1080)
+  RESOLUTION=$(xrandr | grep '*' | awk '{print $1}')
+  WIDTH=$(echo "$RESOLUTION" | cut -d'x' -f1)
+  HEIGHT=$(echo "$RESOLUTION" | cut -d'x' -f2)
 
-# Convert mm to inches (1 inch = 25.4 mm)
-WIDTH_INCH=$(echo "scale=4; $PHYS_WIDTH / 25.4" | bc)
-HEIGHT_INCH=$(echo "scale=4; $PHYS_HEIGHT / 25.4" | bc)
+  # Extract physical dimensions in mm
+  MM=$(xrandr | grep -w connected | grep -o '[0-9]\+mm x [0-9]\+mm' | head -n1)
+  PHYS_WIDTH=$(echo "$MM" | cut -d'm' -f1)
+  PHYS_HEIGHT=$(echo "$MM" | cut -d'x' -f2 | tr -d 'm ')
 
-# Calculate diagonal in inches and pixels
-DIAGONAL_INCH=$(echo "scale=4; sqrt($WIDTH_INCH * $WIDTH_INCH + $HEIGHT_INCH * $HEIGHT_INCH)" | bc)
-DIAGONAL_PX=$(echo "scale=4; sqrt($WIDTH * $WIDTH + $HEIGHT * $HEIGHT)" | bc)
+  # Convert mm to inches (1 inch = 25.4 mm)
+  WIDTH_INCH=$(echo "scale=4; $PHYS_WIDTH / 25.4" | bc)
+  HEIGHT_INCH=$(echo "scale=4; $PHYS_HEIGHT / 25.4" | bc)
 
-# Compute DPI
-DPI=$(echo "scale=0; $DIAGONAL_PX / $DIAGONAL_INCH" | bc)
+  # Calculate diagonal in inches and pixels
+  DIAGONAL_INCH=$(echo "scale=4; sqrt($WIDTH_INCH * $WIDTH_INCH + $HEIGHT_INCH * $HEIGHT_INCH)" | bc)
+  DIAGONAL_PX=$(echo "scale=4; sqrt($WIDTH * $WIDTH + $HEIGHT * $HEIGHT)" | bc)
 
-# Check if DPI is considered HiDPI (threshold: 200)
-if [ "$DPI" -gt 200 ]; then
-  # Checkout https://wiki.archlinux.org/title/HiDPI for more info
-  export QT_AUTO_SCREEN_SCALE_FACTOR=1
-  export QT_ENABLE_HIGHDPI_SCALING=1
-  export GDK_SCALE=2
+  # Compute DPI
+  DPI=$(echo "scale=0; $DIAGONAL_PX / $DIAGONAL_INCH" | bc)
+
+  # Check if DPI is considered HiDPI (threshold: 200)
+  if [ "$DPI" -gt 200 ]; then
+    # Checkout https://wiki.archlinux.org/title/HiDPI for more info
+    export QT_AUTO_SCREEN_SCALE_FACTOR=1
+    export QT_ENABLE_HIGHDPI_SCALING=1
+    export GDK_SCALE=2
+  fi
 fi
 
 ### END HIGH DPI CONFIG

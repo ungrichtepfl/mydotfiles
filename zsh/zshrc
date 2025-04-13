@@ -1,4 +1,19 @@
 [ -z "$ZPROF" ] || zmodload zsh/zprof
+
+DISTRO="$(lsb_release -i | cut -f 2-)"
+
+typeset -U path PATH # Make sure only unique values are added
+path_add_front(){
+    path=("${1}" "${path[@]}")
+}
+path_add_back(){
+    path+=("${1}")
+}
+
+ssource(){
+    [ -f "${1}" ] && source "${1}"
+}
+
 ## Options section
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
@@ -75,17 +90,13 @@ else
 fi
 alias nmutt='neomutt'
 alias vim='nvim'
-alias saptu='sudo apt update'					# Update all packages
-alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
-alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
-alias saptufup='sudo apt update && sudo apt full-upgrade -y; update-zsh-plugins'	# Update and upgrade all packages, plus zsh plugins
-alias sapti='sudo apt install'
+
 # kitty terminal ssh
-alias sshk="kitty +kitten ssh"
-alias ranger=". ranger" # such that when quitting the terminal is already in the directory
-alias ra="ranger"
+alias sshk='kitty +kitten ssh'
+alias ranger='. ranger' # such that when quitting the terminal is already in the directory
+alias ra='ranger'
 # Python
-alias pd="pydoc3"
+alias pd='pydoc3'
 # Git
 alias cdg='cd $(git rev-parse --show-toplevel)'/ca
 alias gita='git add'
@@ -112,12 +123,22 @@ gitpsu() {
 }
 alias gitfprl="git fetch -p ; git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -D"
 
-ssource(){
-    [ -f "${1}" ] && source "${1}"
-}
+# Distro specific config
+if [[ "$DISTRO" == "VoidLinux" ]]; then
+    alias poweroff='sudo poweroff'
+    alias reboot='sudo reboot'
+    alias shutdown='sudo shutdown'
+else
+    # Assume Debian like system
+    alias saptu='sudo apt update'					# Update all packages
+    alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
+    alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
+    alias saptufup='sudo apt update && sudo apt full-upgrade -y; update-zsh-plugins'	# Update and upgrade all packages, plus zsh plugins
+    alias sapti='sudo apt install'
+fi
 
 # For external auto completion:
-fpath+=$HOME/.zfunc
+fpath+="$HOME/.zfunc"
 
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
@@ -276,14 +297,11 @@ zstyle ':completion:*' menu select
 # Add fzf completions and key-bindings to zsh
 # sudo apt install fzf
 
-ssource /usr/share/doc/fzf/examples/key-bindings.zsh
-ssource /usr/share/doc/fzf/examples/completion.zsh
+ssource "/usr/share/doc/fzf/examples/key-bindings.zsh"
+ssource "/usr/share/doc/fzf/examples/completion.zsh"
 
 # Add path to path
-export PATH=$PATH:$HOME/.local/bin
-export PATH=/usr/local/MATLAB/R2021b/bin:$PATH
-export PATH=$HOME/cmake-install/bin:$PATH
-export PATH="$HOME/.poetry/bin:$PATH"
+path_add_front "$HOME/.local/bin"
 
 # Config
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -295,12 +313,9 @@ if [ -x "$(command -v nvim)" ]; then
 fi
 
 # Golang:
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/.local/go
-export PATH=$PATH:$HOME/.local/go/bin
-
-# Ros
-ssource "/opt/ros/noetic/setup.zsh"
+path_add_back "$HOME/.local/go/bin"
+path_add_back "/usr/local/go/bin"
+export GOPATH="$HOME/.local/go"
 
 # Haskell:
 ssource "$HOME/.ghcup/env" # ghcup-env
@@ -323,22 +338,22 @@ fi
 export PNPM_HOME="/home/chrigi/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *) path_add_front "$PNPM_HOME" ;;
 esac
 # pnpm end
 
 # Get no sync data:
-ssource $HOME/.zshrc.nosync
+ssource "$HOME/.zshrc.nosync"
 
 # Add neovim:
-export PATH=$HOME/.local/nvim/bin:$PATH
+path_add_front "$HOME/.local/nvim/bin"
 
 # Add julia:
-export PATH=$HOME/.local/julia/bin:$PATH
+path_add_front "$HOME/.local/julia/bin"
 
 # Add mojo:
-export MODULAR_HOME=$HOME/.modular
-export PATH=$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH
+export MODULAR_HOME="$HOME/.modular"
+path_add_front "$HOME/.modular/pkg/packages.modular.com_mojo/bin"
 
 # Dotnet:
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
