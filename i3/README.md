@@ -22,6 +22,15 @@ sudo apt install fonts-font-awesome
 sudo xbps install font-awesome6 nerd-fonts
 ```
 
+## Styling
+
+You can use [](https://github.com/altdesktop/i3-style) to set a font. It will automatically
+update your config.
+
+```shell
+cargo install i3-style
+```
+
 ## Lockscreen
 
 ```shell

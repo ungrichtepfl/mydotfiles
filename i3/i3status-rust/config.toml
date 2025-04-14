@@ -1,7 +1,7 @@
 icons_format = "{icon}"
 
 [theme]
-theme = "modern"
+theme = "slick"
 
 [icons]
 icons = "awesome6"
