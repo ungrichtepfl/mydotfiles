@@ -1,3 +1,4 @@
 lines="-l 15"
-font="-fn Inconsolata-13"
-colors="-nb #2C323E -nf #9899a0 -sb #81A1C1 -sf #E5E9F0"
+font="-fn FontAwesomeNerdFont-12"
+colors="-nb #002b36 -nf #9899a0 -sb #586e75 -sf #E5E9F0"
+

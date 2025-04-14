@@ -16,7 +16,7 @@ scripts_path="$HOME/.local/bin"
 # dmenu theming
 . "$scripts_path/dmenu-theming"
 
-if [[ ! -z $search_path ]]; then
+if [[ -n $search_path ]]; then
 
     prompt="File:"
 

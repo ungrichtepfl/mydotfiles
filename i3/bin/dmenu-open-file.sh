@@ -15,7 +15,7 @@ file_path="$(find $root_path -maxdepth 5 -type d \( ! -regex '.*/\..*' \) | \
              sed 's|^'$root_path/'||' | sort | \
              dmenu -i $prompt $lines $colors $font)"
 
-if [[ ! -z $file_path ]]; then
+if [[ -n $file_path ]]; then
 
     if [[ "$file_path" == "$root_path" ]]; then
         search_path=$root_path
@@ -35,7 +35,7 @@ if [[ ! -z $file_path ]]; then
                  awk -F'/' '{print $NF}' | \
                  dmenu -i -p "$prompt" $lines $colors $font)"
 
-    if [[ ! -z $file_name ]]; then
+    if [[ -n $file_name ]]; then
         xdg-open "$search_path/$file_name"
     fi
 
