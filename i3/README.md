@@ -8,6 +8,7 @@ Set symlinks to setup:
 ln -s `pwd`/i3 $HOME/.config/
 ln -s `pwd`/i3blocks $HOME/.config/
 ln -s `pwd`/i3status $HOME/.config/
+ln -s `pwd`/i3status-rust $HOME/.config/
 ln -s `pwd`/bin/* $HOME/.local/bin/
 ```
 
@@ -109,7 +110,19 @@ sudo xbps-install -S fd
 sudo xbps-install -S picom
 ```
 
-## i3blocks (recommended)
+## i3status-rust (recommended)
+
+```shell
+sudo xbps-install -S i3status-rust
+```
+
+Enable in the bar block:
+
+```text
+status_command i3status-rust
+```
+
+## i3status
 
 ```shell
 sudo xbps-install -S i3status
