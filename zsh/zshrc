@@ -128,6 +128,14 @@ if [[ "$DISTRO" == "VoidLinux" ]]; then
     alias poweroff='sudo poweroff'
     alias reboot='sudo reboot'
     alias shutdown='sudo shutdown'
+    update-all() {
+        echo "[update-all] Updating system..."
+        sudo xbps-install -Suy
+        echo "[update-all] Update zsh-plugins..."
+        update-zsh-plugins
+        echo "[update-all] Resigning efi files..."
+        sudo sbctl sign-all
+    }
 else
     # Assume Debian like system
     alias saptu='sudo apt update'					# Update all packages
