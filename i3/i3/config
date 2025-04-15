@@ -45,10 +45,6 @@ exec --no-startup-id picom --daemon
 # Start PulseAudio
 exec --no-startup-id pulseaudio --start
 
-# Start notification daemon
-exec --no-startup-id dunst
-# Alternatively use wired (https://github.com/Toqozz/wired-notify) but needs config
-
 # Start low battery notification
 exec --no-startup-id i3-battery-popup.sh -L 15 -n -s ~/.config/i3/i3-battery-popup.wav -v 50
 
