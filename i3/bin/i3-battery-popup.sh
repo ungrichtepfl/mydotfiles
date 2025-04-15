@@ -202,7 +202,7 @@ main (){
     UPPER_LIMIT="${UPPER_LIMIT:-10}"
     UPPER_HALF=$(( UPPER_LIMIT / 2 ))
     LOWER_LIMIT=${LOWER_LIMIT:-$UPPER_HALF}
-    MESSAGE="${MESSAGE:-Warning: Battery is getting low}"
+    MESSAGE="${MESSAGE:-Battery is getting low}"
     SLEEP_TIME="${SLEEP_TIME:-5m}"
     # Note: BATTERIES is an array
     if ls /sys/class/power_supply/BAT*/uevent > /dev/null 2>&1; then
