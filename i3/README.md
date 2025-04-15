@@ -66,7 +66,7 @@ thunar settings.
 
 ## Flatpak
 
-Use flatpak for whatsapp (whatsie) and Brave.
+Use flatpak for whatsapp (zapzap) and Brave.
 
 ## Sound
 
