@@ -68,13 +68,21 @@ thunar settings.
 
 Use flatpak for whatsapp (whatsie) and Brave.
 
-## Change sound
+## Sound
 
 Use pactl with pulseaudio:
 
 ```shell
 sudo xbps-install -S pulseaudio
 ```
+
+## Brightness
+
+```shell
+sudo xbps-install -S brightnessctl
+```
+
+You need to add the `udev` rule available in this repository.
 
 ## To enable screenshots
 
