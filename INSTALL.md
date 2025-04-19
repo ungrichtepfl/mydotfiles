@@ -2,7 +2,7 @@
 
 ## Secure Boot
 
-> ![Warning]
+> [!Warning]
 > Replacing the platform keys with your own can end up bricking hardware on some
 > machines, including laptops, making it impossible to get into the firmware
 > settings to rectify the situation. This is due to the fact that some device

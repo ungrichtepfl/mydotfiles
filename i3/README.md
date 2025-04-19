@@ -53,6 +53,11 @@ Then install the gui tool `nm-applet`:
 sudo xbps-install -S network-manager-applet-
 ```
 
+> [!Note]
+> You need to be in the network group for it to work:
+> `sudo usermod -aG network <username>`
+> and `polkit` must be installed and its service running.
+
 ## File Manager
 
 Use thunar:
