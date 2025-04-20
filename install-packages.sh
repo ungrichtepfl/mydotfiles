@@ -4,15 +4,19 @@ DISTRO="$(lsb_release -i | cut -f 2-)"
 
 if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
-  sudo xbps-install -Sy base-devel curl wget vim neovim neofetch \
-      polkit chrony dbus \
+  sudo xbps-install -Sy polkit chrony dbus \
       pulseaudio NetworkManager network-manager-applet \
+      base-devel curl wget vim neovim neofetch cmake go zig \
       Thunar thunar-volman gvfs lm_sensors pulsemixer \
       brightnessctl maim xclip feh fd picom ripgrep \
       i3 i3status-rust dmenu \
       i3lock-color \
       lightdm lightdm-gtk3-greeter \
+      flatpak evolution okular libreoffice vlc inkscape \
       nerd-fonts font-awesome6
+
+  flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop
 
   echo "[install-packages] Adding user to important groups."
   sudo usermod -aG wheel "$(whoami)"
