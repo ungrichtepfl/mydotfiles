@@ -6,12 +6,14 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
   sudo xbps-install -Sy polkit chrony dbus \
       pulseaudio NetworkManager network-manager-applet \
-      base-devel curl wget git git-lfs zsh vim neovim neofetch cmake go zig \
+      base-devel curl wget git git-lfs zsh \
+      vim neovim neofetch cmake go zig \
       Thunar thunar-volman gvfs lm_sensors pulsemixer \
       brightnessctl maim xclip feh fd picom ripgrep \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \
-      flatpak evolution gthumb mupdf neomutt vlc inkscape \
+      flatpak evolution gthumb mupdf \
+      neomutt khard w3m vlc inkscape \
       nerd-fonts font-awesome6
 
   flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

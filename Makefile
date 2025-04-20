@@ -1,6 +1,6 @@
 home := home
 flags := -v --restow --dotfiles
-ignore := '\.md$$'
+ignore := '\.md$$|\.gitignore$$'
 
 # USER
 
