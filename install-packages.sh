@@ -4,7 +4,7 @@ DISTRO="$(lsb_release -i | cut -f 2-)"
 
 if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
-  sudo xbps-install -Sy base-devel curl vim neovim neofetch \
+  sudo xbps-install -Sy base-devel curl wget vim neovim neofetch \
       polkit chrony dbus \
       pulseaudio NetworkManager network-manager-applet \
       Thunar thunar-volman gvfs lm_sensors pulsemixer \

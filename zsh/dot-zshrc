@@ -131,8 +131,10 @@ if [[ "$DISTRO" == "VoidLinux" ]]; then
     vupdate-all() {
         echo "[update-all] Updating system..."
         sudo xbps-install -Suy
-        echo "[update-all] Resigning efi files if needed..."
-        sudo sbctl sign-all
+        if command -v sbctl 2>&1 >/dev/null; then
+            echo "[update-all] Resigning efi files if needed..."
+            sudo sbctl sign-all
+        fi
         echo "[update-all] Update zsh-plugins..."
         update-zsh-plugins
         echo "[update-all] Update flatpak..."
@@ -338,7 +340,7 @@ export NVM_DIR="$HOME/.config/nvm"
 # Cargo/Rust
 ssource "$HOME/.cargo/env"
 if [ ! -e ~/.zfunc/_rustup -a $commands[rustup] ]; then
-    if which rustup > /dev/null; then
+    if command -v rustup 2>&1 >/dev/null; then
         mkdir -p ~/.zfunc
         rustup completions zsh > ~/.zfunc/_rustup
     fi
