@@ -39,15 +39,11 @@ theme :=  Everforest-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 icons := Papirus-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 
 .PHONY: system
-system: packages gtk lightdm polkit sudoers udev
+system: gtk lightdm polkit sudoers udev
 	@echo "--------------FINISHED--------------------"
 	@echo "If you have a HDPI system checkout the README on how to fix the tiny screen."
 	@echo "Also check out the INSTALL.md for more manual info (Secure Boot)."
 	@echo "To install a grub theme please go to grub/README.md and install it manually."
-
-.PHONY: packages
-packages:
-	-./install-packages.sh
 
 .PHONY: gtk
 gtk:

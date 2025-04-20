@@ -2,9 +2,23 @@
 
 All my Dotfiles at one place.
 
-## Xprofile
+Install packages for specific distro with:
 
-Will be loaded automatically by lightdm.
+```shell
+./install-packages.sh
+```
+
+Install user configs with
+```shell
+make
+```
+
+Install system configs with
+
+```shell
+make system
+```
+
 
 ### dbus
 
