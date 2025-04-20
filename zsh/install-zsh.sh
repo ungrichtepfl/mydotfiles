@@ -10,22 +10,13 @@ main(){
         echo '"zsh" already installed.'
     else
         echo "Install zsh:"
-	if [[ $DISTRO == "VoidLinux" ]]; then
-	    sudo xbps-install -S zsh -y
-        else 
-            echo "Assuming Debian based system."
-	    sudo apt install zsh -y
-	fi
+        if [[ $DISTRO == "VoidLinux" ]]; then
+                sudo xbps-install -S zsh -y
+            else
+                echo "Assuming Debian based system."
+            sudo apt install zsh -y
+        fi
     fi
-
-    # zshrc
-    if [[ -f "${HOME}/.zshrc" ]]; then
-        echo '".zshrc" already exists. Creating backup.'
-        mv "${HOME}/.zshrc" "${HOME}/.zshrc.bak"
-    fi
-
-    echo 'Link ".zshrc" to home folder:'
-    ln -s "$(pwd)/.zshrc" "$HOME"
 
     # Change shell:
     zsh_str="zsh"
@@ -44,11 +35,6 @@ main(){
         echo "Installing plugins"
         install_plugins
     fi
-
-    BIN_PATH="${HOME}/.local/bin"
-    [[ -d "$BIN_PATH" ]] || (mkdir -p "$BIN_PATH" && echo "Add \"${BIN_PATH}\" to your \"PATH\" variable, i.e. add to your .zshrc \"export PATH=PATH:${BIN_PATH}\"")
-    cp "update-zsh-plugins.sh" "${BIN_PATH}/update-zsh-plugins"
-    echo 'Run "update-zsh-plugins" to update all plugins'
 }
 
 install_plugins() {
@@ -71,6 +57,4 @@ install_plugins() {
     [[ -d "$plug_path" ]] || git clone https://github.com/agkozak/zsh-z.git "$plug_path"
 }
 
-
-
-main "$@"; zsh; exit
+main "$@";
