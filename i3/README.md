@@ -9,8 +9,9 @@ ln -s `pwd`/i3 $HOME/.config/
 ln -s `pwd`/i3blocks $HOME/.config/
 ln -s `pwd`/i3status $HOME/.config/
 ln -s `pwd`/i3status-rust $HOME/.config/
-ln -s `pwd`/bin/* $HOME/.local/bin/
 ```
+
+Also, the binaries in `../bin` are needed.
 
 Fonts needed:
 
@@ -50,7 +51,7 @@ Make sure the service is running.
 Then install the gui tool `nm-applet`:
 
 ```shell
-sudo xbps-install -S network-manager-applet-
+sudo xbps-install -S network-manager-applet
 ```
 
 > [!Note]

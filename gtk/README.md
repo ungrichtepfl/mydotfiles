@@ -1,6 +1,6 @@
 # GTK3 Themes
 
-Additionally to symlinking the settings to `/etc/gtk-3.0` use the following
+Additionally to copying the settings to `/etc/gtk-3.0` use the following
 command to set the theme:
 
 ```shell
