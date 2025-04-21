@@ -249,7 +249,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "dracula"
+theme "solarized-dark"
  
 // Choose the base input mode of zellij.
 // Default: normal
@@ -311,7 +311,7 @@ pane_frames false
 //   - detach (Default)
 //   - quit
 // 
-// on_force_close "quit"
+on_force_close "quit"
  
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
