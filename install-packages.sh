@@ -6,7 +6,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
   sudo xbps-install -Sy polkit chrony dbus \
       pulseaudio NetworkManager network-manager-applet \
-      base-devel curl wget git git-lfs zsh \
+      base-devel curl wget git git-lfs jq unzip zstd zsh \
       vim neovim neofetch cmake go zig \
       Thunar thunar-volman gvfs lm_sensors pulsemixer \
       brightnessctl maim xclip feh fd picom ripgrep \
