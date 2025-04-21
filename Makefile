@@ -2,13 +2,21 @@ home := home
 flags := -v --restow --dotfiles
 ignore := '\.md$$|\.gitignore$$'
 
+
 # USER
 
 .PHONY: user
 user: home bin zsh i3
 	@echo '-------------------- FINISHED ------------------------'
+	@echo 'If you want to install packages run "make packages"'
 	@echo 'If you also want to install the fonts run "make fonts"'
 	@echo 'If you also want to install system configs run "make system"'
+
+# INSTALLATION
+
+.PHONY: packages
+packages:
+	./install-packages.sh
 
 .PHONY: home
 home:
@@ -70,3 +78,17 @@ sudoers:
 udev:
 	sudo mkdir -p /etc/udev/rules.d
 	-sudo cp -i ./udev/backlight.rules /etc/udev/rules.d/
+
+
+# HELP
+
+.PHONY: help
+help:
+	@echo 'Usage: make [target]'
+	@echo 'Targets:'
+	@echo '  make [user]: install all the dotfiles'
+	@echo '  make packages: install all the packages'
+	@echo '  make fonts: install all the fonts'
+	@echo '  make system: install all the system configs'
+	@echo '  make help: show this help message'
+
