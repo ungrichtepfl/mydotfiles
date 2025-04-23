@@ -8,8 +8,9 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       pulseaudio NetworkManager network-manager-applet \
       base-devel curl wget git git-lfs jq unzip zstd zsh \
       vim neovim neofetch cmake go zig \
-      Thunar thunar-volman gvfs lm_sensors pulsemixer \
-      brightnessctl maim xclip feh fd picom ripgrep \
+      Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
+      lm_sensors pulsemixer brightnessctl \
+      maim xclip feh fd picom ripgrep \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \
       flatpak evolution gthumb mupdf \
