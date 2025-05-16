@@ -9,7 +9,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       base-devel curl wget git git-lfs jq unzip zstd zsh \
       vim neovim neofetch cmake go zig cronie tzupdate \
       Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
-      lm_sensors pulsemixer brightnessctl \
+      lm_sensors pulsemixer brightnessctl zramen \
       maim xclip feh fd picom ripgrep \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \

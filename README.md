@@ -33,3 +33,10 @@ Checkout [the arch wiki](https://wiki.archlinux.org/title/HiDPI)
 for more info.
 
 Checkout [INSTALL.md](INSTALL.md) for more info on how to install and setup the distro.
+
+# Zram
+
+Instead of a swapfile you can use [Zram](https://wiki.archlinux.org/title/Zram).
+For easy installation use [zramen](https://github.com/atweiden/zramen/blob/master/zramen)
+on VoidLinux. If you use zramen simply change the configuration in `/etc/sv/zramen/conf`
+and activate the service `sudo ln -s /etc/sv/zramen /var/service`.
