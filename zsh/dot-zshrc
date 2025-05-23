@@ -74,12 +74,7 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
-if [ -x "$(command -v exa)" ]; then
-    alias ls='exa --color=auto'                                 # Show content of folder colorized
-    alias ll='exa -lh'                                          # Show content of folder in list format
-    alias la='exa -a'                                           # Show all content of folder
-    alias lla='exa -lha'                                        # Show all content of folder in list format
-elif [ -x "$(command -v eza)" ]; then
+if [ -x "$(command -v eza)" ]; then
     alias ls='eza --color=auto'                                 # Show content of folder colorized
     alias ll='eza -lh'                                          # Show content of folder in list format
     alias la='eza -a'                                           # Show all content of folder
@@ -89,6 +84,15 @@ else
     alias ll='ls -lh'                                           # Show content of folder in list format
     alias la='ls -a'                                            # Show all content of folder
     alias lla='ls -lha'                                         # Show all content of folder in list format
+fi
+if [ -x "$(command -v bat)" ]; then
+    alias cat="bat"
+fi
+if [ -x "$(command -v dust)" ]; then
+    alias du="dust"
+fi
+if [ -x "$(command -v dua)" ]; then
+    alias ncdu="dua i"
 fi
 alias nmutt='neomutt'
 alias vim='nvim'

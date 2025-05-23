@@ -10,7 +10,8 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       vim neovim neofetch cmake go zig cronie tzupdate \
       Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
       lm_sensors pulsemixer brightnessctl zramen \
-      maim xclip feh fd picom ripgrep \
+      maim xclip feh fd picom ripgrep eza bat dust \
+      dua-cli yazi wiki-tui delta \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \
       flatpak evolution gthumb mupdf \
