@@ -5,6 +5,7 @@ DISTRO="$(lsb_release -i | cut -f 2-)"
 if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
   sudo xbps-install -Sy polkit chrony dbus \
+      man-pages man-pages-devel man-pages-posix \
       pulseaudio NetworkManager network-manager-applet \
       base-devel gdb curl wget git git-lfs jq unzip zstd zsh \
       vim neovim neofetch cmake go zig cronie tzupdate \
