@@ -136,6 +136,7 @@ if [[ "$DISTRO" == "VoidLinux" ]]; then
     alias shutdown='sudo shutdown'
     vupdate-all() {
         echo "[update-all] Updating system..."
+        sudo xbps-install -Suy xbps
         sudo xbps-install -Suy
         if command -v sbctl 2>&1 >/dev/null; then
             echo "[update-all] Resigning efi files if needed..."
