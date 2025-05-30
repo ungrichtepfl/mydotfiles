@@ -7,7 +7,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   sudo xbps-install -Sy polkit chrony dbus \
       man-pages man-pages-devel man-pages-posix \
       pulseaudio NetworkManager network-manager-applet \
-      base-devel gdb curl wget git git-lfs jq unzip zstd zsh \
+      base-devel gdb curl wget git git-lfs jq unzip zstd zsh lz4 \
       vim neovim neofetch cmake go zig cronie tzupdate \
       Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
       lm_sensors pulsemixer brightnessctl zramen \

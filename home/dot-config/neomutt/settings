@@ -62,6 +62,8 @@ set tilde
 unset markers
 
 set mailcap_path = ~/.config/neomutt/mailcap
+set header_cache_compress_method = "zstd"
+set header_cache_compress_level = 1
 set header_cache = "~/.cache/mutt"
 set message_cache_dir = "~/.cache/mutt"
 set certificate_file = "~/.mutt/certificates"
