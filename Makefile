@@ -2,21 +2,24 @@ home := home
 flags := -v --restow --dotfiles
 ignore := '\.md$$|\.gitignore$$'
 
-
 # USER
 
 .PHONY: user
 user: home bin zsh i3
 	@echo '-------------------- FINISHED ------------------------'
-	@echo 'If you want to install packages run "make packages"'
-	@echo 'If you also want to install the fonts run "make fonts"'
 	@echo 'If you also want to install system configs run "make system"'
+	@echo 'If you want to install packages run "make packages"'
+	@echo 'If you want to install packages for work run "make packages-work"'
 
 # INSTALLATION
 
 .PHONY: packages
 packages:
 	./install-packages.sh
+
+.PHONY: packages-work
+packages-work:
+	./install-packages.sh --work
 
 .PHONY: home
 home:
@@ -88,7 +91,5 @@ help:
 	@echo 'Targets:'
 	@echo '  make [user]: install all the dotfiles'
 	@echo '  make packages: install all the packages'
-	@echo '  make fonts: install all the fonts'
 	@echo '  make system: install all the system configs'
 	@echo '  make help: show this help message'
-

@@ -15,9 +15,12 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       dua-cli yazi wiki-tui delta \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \
-      flatpak evolution gthumb mupdf \
+      flatpak gthumb mupdf \
       neomutt khard w3m vlc inkscape \
       nerd-fonts font-awesome6
+  if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
+      sudo xbps-install -Sy evolution
+  fi
 
   flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop
