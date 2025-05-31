@@ -338,7 +338,6 @@ export GOPATH="$HOME/.local/go"
 
 # Haskell:
 ssource "$HOME/.ghcup/env" # ghcup-env
-ssource "$HOME/.ghc-wasm/env" # ghc-wasm-env
 
 # Nvm:
 export NVM_DIR="$HOME/.config/nvm"
