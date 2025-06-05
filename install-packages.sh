@@ -4,7 +4,7 @@ DISTRO="$(lsb_release -i | cut -f 2-)"
 
 if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages] Installing packages on Void Linux"
-  sudo xbps-install -Sy polkit chrony dbus \
+  sudo xbps-install -Sy polkit chrony dbus bluez \
       man-pages man-pages-devel man-pages-posix \
       pulseaudio NetworkManager network-manager-applet \
       base-devel gdb curl wget git git-lfs jq unzip zstd zsh lz4 \
@@ -36,6 +36,13 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages]    dbus"
   echo "[install-packages]    NetworkManager"
   echo "[install-packages]    crond"
+  echo "[install-packages]    bluetoothd"
+  echo "[install-packages]    lightdm"
+  echo "[install-packages]    zramen"
+  echo "[install-packages]    udevd"
+  echo "[install-packages]    crond"
+  echo "[install-packages]    acpid"
+  echo "[install-packages]    sshd"
 else
   echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi
