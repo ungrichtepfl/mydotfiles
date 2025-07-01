@@ -23,10 +23,7 @@ default_floating_border pixel 1
 hide_edge_borders both
 
 # Set keyboard
-exec --no-startup-id setxkbmap ch -variant de_nodeadkeys
-
-# Remap escape to caps lock
-exec --no-startup-id setxkbmap -option caps:escape
+exec --no-startup-id setxkbmap ch -variant de_nodeadkeys -option caps:escape
 
 # set a wallpaper
 exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/current.jpeg
