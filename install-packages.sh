@@ -15,7 +15,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       dua-cli yazi wiki-tui delta \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter \
-      flatpak gthumb mupdf \
+      flatpak gthumb mupdf kitty \
       neomutt khard w3m vlc inkscape \
       nerd-fonts font-awesome6
   if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
