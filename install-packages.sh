@@ -12,7 +12,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
       Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
       lm_sensors pulsemixer brightnessctl zramen \
       maim xclip feh fd picom ripgrep eza bat dust \
-      dua-cli yazi wiki-tui delta \
+      dua-cli yazi poppler ueberzug wiki-tui delta \
       i3 i3status-rust dmenu i3lock-color \
       lightdm lightdm-gtk3-greeter elogind \
       flatpak gthumb mupdf kitty \
