@@ -7,14 +7,14 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   sudo xbps-install -Sy polkit chrony dbus bluez \
       man-pages man-pages-devel man-pages-posix \
       pulseaudio NetworkManager network-manager-applet \
-      base-devel gdb curl wget git git-lfs jq unzip zstd zsh lz4 fzf \
+      base-devel gdb curl wget git git-lfs jq unzip p7zip zstd zsh lz4 fzf \
       vim neovim neofetch cmake go zig cronie tzupdate \
       Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
       lm_sensors pulsemixer brightnessctl zramen \
       maim xclip feh fd picom ripgrep eza bat dust \
       dua-cli yazi wiki-tui delta \
       i3 i3status-rust dmenu i3lock-color \
-      lightdm lightdm-gtk3-greeter \
+      lightdm lightdm-gtk3-greeter elogind \
       flatpak gthumb mupdf kitty \
       neomutt khard w3m vlc inkscape \
       nerd-fonts font-awesome6
@@ -43,6 +43,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
   echo "[install-packages]    crond"
   echo "[install-packages]    acpid"
   echo "[install-packages]    sshd"
+  echo "[install-packages]    elogind"
 else
   echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi
