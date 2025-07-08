@@ -43,30 +43,7 @@ WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider
 
 ## Keybindings section
 bindkey -e
-bindkey '^[[7~' beginning-of-line                               # Home key
-bindkey '^[[H' beginning-of-line                                # Home key
-if [[ "${terminfo[khome]}" != "" ]]; then
-    bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
-fi
-bindkey '^[[8~' end-of-line                                     # End key
-bindkey '^[[F' end-of-line                                     # End key
-if [[ "${terminfo[kend]}" != "" ]]; then
-    bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
-fi
-bindkey '^[[2~' overwrite-mode                                  # Insert key
-bindkey '^[[3~' delete-char                                     # Delete key
-bindkey '^[[C'  forward-char                                    # Right key
-bindkey '^[[D'  backward-char                                   # Left key
-bindkey '^[[5~' history-beginning-search-backward               # Page up key
-bindkey '^[[6~' history-beginning-search-forward                # Page down key
-
-# Navigate words with ctrl+arrow keys
-bindkey '^[Oc' forward-word                                     #
-bindkey '^[Od' backward-word                                    #
-bindkey '^[[1;5D' backward-word                                 #
-bindkey '^[[1;5C' forward-word                                  #
-bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
-bindkey '^[[Z' undo                                             # Shift+tab undo last action
+# Add keybindings here:
 
 ## Alias section
 alias cp="cp -i"                                                # Confirm before overwriting something
@@ -261,6 +238,7 @@ export LESS=-r
 
 ## Plugins section: Enable fish style features
 export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
+
 # Use syntax highlighting
 # ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
@@ -277,6 +255,8 @@ bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+bindkey '^p' history-substring-search-up
+bindkey '^n' history-substring-search-down
 
 # Apply different settings for different terminals
 case $(basename "$(cat "/proc/$PPID/comm")") in
@@ -308,6 +288,8 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
         ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
         ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+        # Bind ctrl + space to accept the current suggestion.
+        bindkey '^ ' autosuggest-accept
         ;;
 esac
 
@@ -315,9 +297,9 @@ zstyle ':completion:*' menu select
 
 # Add fzf completions and key-bindings to zsh
 # sudo apt install fzf
-
-ssource "/usr/share/doc/fzf/examples/key-bindings.zsh"
-ssource "/usr/share/doc/fzf/examples/completion.zsh"
+if [ -x "$(command -v fzf)" ]; then
+    source <(fzf --zsh)
+fi
 
 # Add path to path
 path_add_front "$HOME/.local/bin"
@@ -356,8 +338,8 @@ fi
 # pnpm
 export PNPM_HOME="/home/chrigi/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) path_add_front "$PNPM_HOME" ;;
+    *":$PNPM_HOME:"*) ;;
+    *) path_add_front "$PNPM_HOME" ;;
 esac
 # pnpm end
 
