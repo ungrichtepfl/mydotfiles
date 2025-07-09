@@ -51,7 +51,7 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
-if [ -x "$(command -v eza)" ]; then
+if [ $commands[eza] ]; then
     alias ls='eza --color=auto'                                 # Show content of folder colorized
     alias ll='eza -lh'                                          # Show content of folder in list format
     alias la='eza -a'                                           # Show all content of folder
@@ -62,13 +62,13 @@ else
     alias la='ls -a'                                            # Show all content of folder
     alias lla='ls -lha'                                         # Show all content of folder in list format
 fi
-if [ -x "$(command -v bat)" ]; then
+if [ $commands[bat] ]; then
     alias cat="bat"
 fi
-if [ -x "$(command -v dust)" ]; then
+if [ $commands[dust] ]; then
     alias du="dust"
 fi
-if [ -x "$(command -v dua)" ]; then
+if [ $commands[dua] ]; then
     alias ncdu="dua i"
 fi
 
@@ -229,7 +229,7 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
 # jump quickly to directories that where visited frequently
-if  [[ ! -x "$(command -v zoxide)" ]]; then
+if  [[ $commands[zoxide] ]]; then
     ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
 fi
 # More suggsetions
@@ -256,7 +256,7 @@ zstyle ':completion:*' menu select
 
 # Add fzf completions and key-bindings to zsh
 # sudo apt install fzf
-if [ -x "$(command -v fzf)" ]; then
+if [ $commands[fzf] ]; then
     source <(fzf --zsh)
 fi
 
@@ -267,7 +267,7 @@ path_add_front "$HOME/.local/bin"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # Use nvim as default editor
-if [ -x "$(command -v nvim)" ]; then
+if [ $commands[nvim] ]; then
     export EDITOR=`which nvim`
     export VISUAL=`which nvim`
 fi
@@ -282,13 +282,21 @@ export GOPATH="$HOME/.local/go"
 ssource "$HOME/.ghcup/env" # ghcup-env
 
 # Nvm:
+# NOTE: Very slow so we use https://peterlyons.com/problog/2018/01/zsh-lazy-loading/
+# and https://notes.frederic-hemberger.de/speeding-up-initial-zsh-startup-with-lazy-loading/
+# to speed it up:
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm() { # Lazy loading
+    unfunction "$0"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    # invoke the real nvm function now
+    nvm "$@"
+}
 
 # Cargo/Rust
 ssource "$HOME/.cargo/env"
-if command -v rustup 2>&1 >/dev/null; then
+if [ $commands[rustup] ]; then
     if [ ! -e ~/.zfunc/_rustup ]; then
         mkdir -p ~/.zfunc
         rustup completions zsh > ~/.zfunc/_rustup
@@ -330,7 +338,7 @@ compinit -C # Enable caching
 
 
 # Must be after comptinit:
-if [[ -x $(command -v zoxide) ]]; then
+if [ $commands[zoxide] ]; then
     eval "$(zoxide init zsh)"
 fi
 
