@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -exuo pipefail
 
 main(){
 
@@ -11,9 +11,9 @@ main(){
     else
         echo "Install zsh:"
         if [[ $DISTRO == "VoidLinux" ]]; then
-                sudo xbps-install -S zsh -y
-            else
-                echo "Assuming Debian based system."
+            sudo xbps-install -S zsh -y
+        else
+            echo "Assuming Debian based system."
             sudo apt install zsh -y
         fi
     fi
@@ -38,8 +38,6 @@ main(){
 }
 
 install_plugins() {
-    plug_path="${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting"
-    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-history-substring-search"
     [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-history-substring-search.git "$plug_path"
@@ -55,6 +53,10 @@ install_plugins() {
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-z"
     [[ -d "$plug_path" ]] || git clone https://github.com/agkozak/zsh-z.git "$plug_path"
+
+    plug_path="${ZSH_PLUGIN_PATH}/zsh-defer"
+    [[ -d "$plug_path" ]] || git clone https://github.com/romkatv/zsh-defer.git "$plug_path"
+
 }
 
 main "$@";

@@ -1,5 +1,9 @@
 # vim: filetype=zsh
 
+# NOTE: Checkout https://peterlyons.com/problog/2018/01/zsh-lazy-loading/
+# and https://notes.frederic-hemberger.de/speeding-up-initial-zsh-startup-with-lazy-loading/
+# for lazy-loading
+
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 
 DISTRO="$(lsb_release -i | cut -f 2-)"
@@ -213,34 +217,45 @@ export LESS=-r
 ## Plugins section:
 export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 
+# Defer sourcing
+ssource "${ZSH_PLUGIN_PATH}/zsh-defer/zsh-defer.plugin.zsh"
+
 # Use syntax highlighting
-ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+zsh-defer ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
 # Use history substring search
-ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
-# bind UP and DOWN arrow keys to history substring search
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
+setup_history_search(){
+    unfunction "$0"
+    ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    # bind UP and DOWN arrow keys to history substring search
+    zmodload zsh/terminfo
+    bindkey "$terminfo[kcuu1]" history-substring-search-up
+    bindkey "$terminfo[kcud1]" history-substring-search-down
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-down
+    bindkey '^P' history-substring-search-up
+    bindkey '^N' history-substring-search-down
+}
+zsh-defer setup_history_search
 
 # jump quickly to directories that where visited frequently
-if  [[ $commands[zoxide] ]]; then
-    ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
+if  [[ ! $commands[zoxide] ]]; then
+    zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
 fi
 # More suggsetions
 fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
 
 # Use autosuggestion
-ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-# Bind ctrl-space to accept the current suggestion.
-bindkey '^ ' autosuggest-accept
+setup_autosuggestion(){
+    unfunction "$0"
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+    ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+    # Bind ctrl-space to accept the current suggestion.
+    bindkey '^ ' autosuggest-accept
+}
+zsh-defer setup_autosuggestion
 
 # Apply different settings for different terminals
 case $(basename "$(cat "/proc/$PPID/comm")") in
@@ -257,7 +272,7 @@ zstyle ':completion:*' menu select
 # Add fzf completions and key-bindings to zsh
 # sudo apt install fzf
 if [ $commands[fzf] ]; then
-    source <(fzf --zsh)
+    zsh-defer source <(fzf --zsh)
 fi
 
 # Add path to path
@@ -282,17 +297,13 @@ export GOPATH="$HOME/.local/go"
 ssource "$HOME/.ghcup/env" # ghcup-env
 
 # Nvm:
-# NOTE: Very slow so we use https://peterlyons.com/problog/2018/01/zsh-lazy-loading/
-# and https://notes.frederic-hemberger.de/speeding-up-initial-zsh-startup-with-lazy-loading/
-# to speed it up:
 export NVM_DIR="$HOME/.config/nvm"
-nvm() { # Lazy loading
+setup_nvm() {
     unfunction "$0"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-    # invoke the real nvm function now
-    nvm "$@"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion (also zsh)
 }
+zsh-defer setup_nvm
 
 # Cargo/Rust
 ssource "$HOME/.cargo/env"
