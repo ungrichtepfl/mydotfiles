@@ -221,7 +221,7 @@ export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
 ssource "${ZSH_PLUGIN_PATH}/zsh-defer/zsh-defer.plugin.zsh"
 
 # Use syntax highlighting
-zsh-defer ssource "${ZSH_PLUGIN_PATH}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # Use history substring search
 setup_history_search(){
@@ -252,8 +252,8 @@ setup_autosuggestion(){
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
     ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-    # Bind ctrl-space to accept the current suggestion.
-    bindkey '^ ' autosuggest-accept
+    # Bind ctrl-Y to accept the current suggestion.
+    bindkey '^Y' autosuggest-accept
 }
 zsh-defer setup_autosuggestion
 

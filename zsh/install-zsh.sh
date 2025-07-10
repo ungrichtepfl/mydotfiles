@@ -45,8 +45,8 @@ install_plugins() {
     plug_path="${ZSH_PLUGIN_PATH}/zsh-autosuggestions"
     [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$plug_path"
 
-    plug_path="${ZSH_PLUGIN_PATH}/fast-syntax-highlighting"
-    [[ -d "$plug_path" ]] || git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$plug_path"
+    plug_path="${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting"
+    [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$plug_path"
 
     plug_path="${ZSH_PLUGIN_PATH}/zsh-completions"
     [[ -d "$plug_path" ]] || git clone https://github.com/zsh-users/zsh-completions.git "$plug_path"
