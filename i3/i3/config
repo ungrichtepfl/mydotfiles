@@ -23,7 +23,9 @@ default_floating_border pixel 1
 hide_edge_borders both
 
 # Set keyboard
-exec --no-startup-id setxkbmap -layout ch,us -variant de_nodeadkeys, -option grp:alt_shift_toggle,caps:escape
+exec --no-startup-id setxkbmap -layout ch -variant de_nodeadkeys -option caps:escape
+# Switch y and z
+exec --no-startup-id xmodmap -e "keycode 29 = y Y" -e "keycode 52 = z Z"
 
 # set a wallpaper
 exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/current.jpeg
