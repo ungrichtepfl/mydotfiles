@@ -19,7 +19,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         lightdm lightdm-gtk3-greeter elogind \
         flatpak gthumb mupdf kitty \
         neomutt khard w3m vlc inkscape \
-        nerd-fonts font-awesome6
+        nerd-fonts font-awesome6 flameshot
     if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
         sudo xbps-install -Sy evolution
     fi
