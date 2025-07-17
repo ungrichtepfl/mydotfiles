@@ -26,8 +26,7 @@ hide_edge_borders both
 exec_always --no-startup-id -option "" 
 exec_always --no-startup-id setxkbmap -layout ch -variant de_nodeadkeys -option caps:escape
 # Map menu key to control
-exec_always --no-startup-id xmodmap -e "keycode 135 = Control_R" -e "add Control = Control_R"
-
+exec_always --no-startup-id sh -c 'sleep 1 && xmodmap -e "keycode 135 = Control_R" -e "add Control = Control_R"'
 # set a wallpaper
 exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/current.jpeg
 
