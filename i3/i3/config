@@ -23,7 +23,8 @@ default_floating_border pixel 1
 hide_edge_borders both
 
 # Set keyboard
-exec --no-startup-id setxkbmap -layout ch -variant de_nodeadkeys -option caps:escape
+exec_always --no-startup-id -option "" 
+exec_always --no-startup-id setxkbmap -layout ch -variant de_nodeadkeys -option caps:escape
 # Map menu key to control
 exec_always --no-startup-id xmodmap -e "keycode 135 = Control_R" -e "add Control = Control_R"
 
