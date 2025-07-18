@@ -34,12 +34,16 @@ set history=200
 set nobackup
 set nowritebackup
 set undofile
+let s:undo_dir = expand("$HOME/.local/state/vim/undo//")
+if !isdirectory(s:undo_dir)
+  call mkdir(s:undo_dir, "p")
+endif
+execute 'set undodir=' . s:undo_dir
 set noswapfile
 
 set signcolumn=yes
 set pumheight=10
 set synmaxcol=300
-
 set updatetime=300
 set timeoutlen=500
 set ttimeoutlen=0
@@ -59,7 +63,6 @@ cnoremap jk <C-C>
 
 " Keymaps
 
-nnoremap <leader>w :w<cr>
 function! s:OpenTermWithCurrentFile()
   botright split
   execute 'terminal' fnameescape(expand('%:p'))
@@ -79,7 +82,53 @@ nnoremap <leader>e :Explore<cr>
 nnoremap <leader>f :find 
 nnoremap <leader>g :vimgrep  **/*<left><left><left><left><left>
 
-nnoremap <C-l> :<C-u>nohlsearch<cr><C-l>
+nnoremap <a-t><a-t> :tabclose<cr>
+
+nnoremap <C-l> <cmd>nohlsearch<cr><C-l>
+inoremap <C-l> <cmd>nohlsearch<cr>
+
+" Insert and Command
+inoremap <C-e> <End>
+inoremap <C-a> <Home>
+cnoremap <C-a> <Home>
+inoremap <C-b> <Left>
+cnoremap <C-b> <Left>
+inoremap <C-f> <Right>
+cnoremap <C-f> <Right>
+inoremap <C-d> <Del>
+cnoremap <C-d> <Del>
+inoremap <A-d> <C-o>b
+inoremap <A-f> <C-o>w
+inoremap <C-m> <C-o>d$
+inoremap <A-d> <C-o>dw
+
+
+" Resize with arrowkeys
+nnoremap <A-Up> :resize +1<cr>
+nnoremap <A-Down> :resize -1<cr>
+nnoremap <A-Left> :vertical resize -1<cr>
+nnoremap <A-Right> :vertical resize +1<cr>
+
+nnoremap <S-l> <cmd>bnext<cr>
+nnoremap <S-h> <cmd>bprev<cr>
+nnoremap <A-j> <cmd>cnext<cr>
+nnoremap <A-k> <cmd>cprev<cr>
+nnoremap <A-q> <cmd>cclose<cr>
+nnoremap <A-o> <cmd>copen<cr>
+
+nnoremap <leader>w :w<cr>
+nnoremap <leader>W :w!<cr>
+nnoremap <leader>c <C-w>c
+nnoremap <leader>q :conf q<cr>
+
+xnoremap > >gv 
+xnoremap < <gv
+xnoremap p _dP
+
+xnoremap <S-j> :move '>+1<cr>gv-gv
+xnoremap <S-k> :move '<-2<cr>gv-gv
+
+nnoremap <leader>cp :let @+ = expand('%:p') \| echo 'Copied path to clipboard: ' . @+<CR>
 
 " Toggle terminal
 let g:terminal_bufnr = -1
@@ -107,6 +156,7 @@ function! ToggleTerminal()
   else
     " Create new terminal
     terminal
+    setlocal nobuflisted
     let g:terminal_bufnr = bufnr('%')
     let g:terminal_winid = win_getid()
     startinsert
@@ -114,6 +164,72 @@ function! ToggleTerminal()
 
 endfunction
 
-" Key mappings
 nnoremap <C-t> :call ToggleTerminal()<CR>
 tnoremap <C-t> <C-\><C-n>:call ToggleTerminal()<CR>
+
+
+" Autocommands
+
+augroup GeneralSettings
+  autocmd!
+  autocmd TextYankPost * silent! call s:FlashYankedText()
+  
+  autocmd FileType qf,help,man nnoremap <buffer> <silent> q :close<cr>
+
+  autocmd BufWinEnter * setlocal formatoptions-=c
+
+  autocmd Filetype qf setlocal nobuflisted
+
+  " Return to last edited position when reopening a file
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   execute "normal! g`\"" |
+    \ endif
+
+augroup END
+
+augroup FiletypeIndent
+  autocmd!
+  autocmd FileType python setlocal tabstop=4 shiftwidth=4
+  autocmd FileType c,cpp,rust,javascript,typescript,json,html,css setlocal tabstop=2 shiftwidth=2
+augroup END
+
+augroup MailSettings
+  autocmd!
+  autocmd FileType mail setlocal textwidth=0 wrapmargin=0 formatoptions-=t formatoptions-=a spell
+augroup END
+
+augroup GitSettings
+  autocmd!
+  autocmd FileType gitcommit setlocal wrap spell
+augroup END
+
+augroup MarkdownSetting
+  autocmd!
+  autocmd FileType markdown setlocal wrap spell
+augroup END
+
+" Stolen from: https://www.statox.fr/posts/2020/07/vim_flash_yanked_textf
+function! s:FlashYankedText()
+    if (!exists('g:yankedTextMatches'))
+        let g:yankedTextMatches = []
+    endif
+
+    let matchId = matchadd('IncSearch', ".\\%>'\\[\\_.*\\%<']..")
+    let windowId = winnr()
+
+    call add(g:yankedTextMatches, [windowId, matchId])
+    call timer_start(200, 's:DeleteTemporaryMatch')
+endfunction
+
+function! s:DeleteTemporaryMatch(timerId)
+    while !empty(g:yankedTextMatches)
+        let match = remove(g:yankedTextMatches, 0)
+        let windowID = match[0]
+        let matchID = match[1]
+
+        try
+            call matchdelete(matchID, windowID)
+        endtry
+    endwhile
+endfunction
