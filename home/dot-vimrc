@@ -34,7 +34,7 @@ set history=200
 set nobackup
 set nowritebackup
 set undofile
-let s:undo_dir = expand("$HOME/.local/state/vim/undo//")
+let s:undo_dir = expand("~/.local/state/vim/undo//")
 if !isdirectory(s:undo_dir)
   call mkdir(s:undo_dir, "p")
 endif
@@ -89,8 +89,9 @@ inoremap <C-l> <cmd>nohlsearch<cr>
 
 " Insert and Command
 inoremap <C-e> <End>
+cnoremap <A-e> <End>
 inoremap <C-a> <Home>
-cnoremap <C-a> <Home>
+cnoremap <A-a> <Home>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
 inoremap <C-f> <Right>
@@ -111,8 +112,8 @@ nnoremap <A-Right> :vertical resize +1<cr>
 
 nnoremap <S-l> <cmd>bnext<cr>
 nnoremap <S-h> <cmd>bprev<cr>
-nnoremap <A-j> <cmd>cnext<cr>
-nnoremap <A-k> <cmd>cprev<cr>
+nnoremap <A-n> <cmd>cnext<cr>
+nnoremap <A-p> <cmd>cprev<cr>
 nnoremap <A-q> <cmd>cclose<cr>
 nnoremap <A-o> <cmd>copen<cr>
 
