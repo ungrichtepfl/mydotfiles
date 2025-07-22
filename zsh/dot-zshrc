@@ -254,6 +254,7 @@ setup_autosuggestion(){
 
     # Bind ctrl-Y to accept the current suggestion.
     bindkey '^Y' autosuggest-accept
+    bindkey '^ ' autosuggest-accept
 }
 zsh-defer setup_autosuggestion
 
