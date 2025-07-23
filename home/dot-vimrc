@@ -110,10 +110,10 @@ nnoremap <A-Down> :resize -1<cr>
 nnoremap <A-Left> :vertical resize -1<cr>
 nnoremap <A-Right> :vertical resize +1<cr>
 
-nnoremap <S-l> <cmd>bnext<cr>
-nnoremap <S-h> <cmd>bprev<cr>
-nnoremap <A-n> <cmd>cnext<cr>
-nnoremap <A-p> <cmd>cprev<cr>
+nnoremap ]b <cmd>bnext<cr>
+nnoremap [b <cmd>bprev<cr>
+nnoremap ]q <cmd>cnext<cr>
+nnoremap [q <cmd>cprev<cr>
 nnoremap <A-q> <cmd>cclose<cr>
 nnoremap <A-o> <cmd>copen<cr>
 
