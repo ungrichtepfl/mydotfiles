@@ -59,7 +59,7 @@ interval = 10
 [[block]]
 block = "keyboard_layout"
 format = "    $layout $variant "
-interval = 2
+driver = "setxkbmap"
 
 [[block]]
 block = "time"
