@@ -58,7 +58,7 @@ interval = 10
 
 [[block]]
 block = "keyboard_layout"
-format = "    $layout $variant "
+format = "    $layout "
 driver = "setxkbmap"
 
 [[block]]
