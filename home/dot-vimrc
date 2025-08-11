@@ -75,6 +75,7 @@ nnoremap <leader><leader>v :so<cr>
 nnoremap my "+y
 xnoremap my "+y
 nnoremap mY "+Y
+nnoremap mP "+P
 nnoremap mp "+p
 xnoremap mp "+P
 
@@ -84,14 +85,19 @@ nnoremap <leader>g :vimgrep  **/*<left><left><left><left><left>
 
 nnoremap <a-t><a-t> :tabclose<cr>
 
-nnoremap <C-l> <cmd>nohlsearch<cr><C-l>
-inoremap <C-l> <cmd>nohlsearch<cr>
+nnoremap <C-h> <cmd>set hlsearch<CR>
+nnoremap <C-l> <cmd>set nohlsearch<CR><C-l>
+inoremap <C-l> <cmd>set nohlsearch<CR>
+
+augroup vimrc-incsearch-highlight
+  autocmd!
+  autocmd CmdlineEnter /,\? :set hlsearch
+  autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END
 
 " Insert and Command
 inoremap <C-e> <End>
-cnoremap <A-e> <End>
 inoremap <C-a> <Home>
-cnoremap <A-a> <Home>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
 inoremap <C-f> <Right>
@@ -100,9 +106,6 @@ inoremap <C-d> <Del>
 cnoremap <C-d> <Del>
 inoremap <A-d> <C-o>b
 inoremap <A-f> <C-o>w
-inoremap <C-m> <C-o>d$
-inoremap <A-d> <C-o>dw
-
 
 " Resize with arrowkeys
 nnoremap <A-Up> :resize +1<cr>
@@ -113,7 +116,7 @@ nnoremap <A-Right> :vertical resize +1<cr>
 nnoremap ]b <cmd>bnext<cr>
 nnoremap [b <cmd>bprev<cr>
 nnoremap ]q <cmd>cnext<cr>
-nnoremap [q <cmd>cprev<cr>
+nnoremap <A-p> <cmd>cprev<cr>
 nnoremap <A-q> <cmd>cclose<cr>
 nnoremap <A-o> <cmd>copen<cr>
 
@@ -175,7 +178,7 @@ augroup GeneralSettings
   autocmd!
   autocmd TextYankPost * silent! call s:FlashYankedText()
   
-  autocmd FileType qf,help,man nnoremap <buffer> <silent> q :close<cr>
+  autocmd FileType qf,help,man,vim nnoremap <buffer> <silent> q :close<cr>
 
   autocmd BufWinEnter * setlocal formatoptions-=c
 
