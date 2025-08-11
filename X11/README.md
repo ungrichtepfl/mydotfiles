@@ -10,5 +10,6 @@ for more info.
 Then symlink it:
 
 ```shell
-sudo ln -s `pwd`/xorg.conf-hdpi /etc/X11/xorg.conf
+sudo mkdir -p /etc/X11/xorg.conf.d/
+sudo ln -s `pwd`/99-hdpi.conf /etc/X11/xorg.conf.d/
 ```
