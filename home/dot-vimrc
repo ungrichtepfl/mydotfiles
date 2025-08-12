@@ -104,8 +104,11 @@ inoremap <C-f> <Right>
 cnoremap <C-f> <Right>
 inoremap <C-d> <Del>
 cnoremap <C-d> <Del>
-inoremap <A-d> <C-o>b
-inoremap <A-f> <C-o>w
+inoremap <C-k> <C-o>d$
+"FIXME: Alt key somehow nor working:
+"inoremap <A-b> <C-o>b
+"inoremap <A-f> <C-o>w
+"inoremap <A-d> <C-o>dw
 
 " Resize with arrowkeys
 nnoremap <A-Up> :resize +1<cr>
@@ -178,7 +181,7 @@ augroup GeneralSettings
   autocmd!
   autocmd TextYankPost * silent! call s:FlashYankedText()
   
-  autocmd FileType qf,help,man,vim nnoremap <buffer> <silent> q :close<cr>
+  autocmd FileType qf,help,man nnoremap <buffer><silent> q :close<cr>
 
   autocmd BufWinEnter * setlocal formatoptions-=c
 
