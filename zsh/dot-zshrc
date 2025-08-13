@@ -58,6 +58,8 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
+alias neomutt="$XDG_CONFIG_HOME/neomutt/neomutt_wrapper.sh"
+
 if [ $commands[eza] ]; then
     alias ls='eza --color=auto'                                 # Show content of folder colorized
     alias ll='eza -lh'                                          # Show content of folder in list format
@@ -351,7 +353,6 @@ alias nuget="mono /usr/local/bin/nuget.exe"
 # Enable autocomplete
 autoload -Uz compinit
 compinit -C # Enable caching
-
 
 # Must be after comptinit:
 if [ $commands[zoxide] ]; then

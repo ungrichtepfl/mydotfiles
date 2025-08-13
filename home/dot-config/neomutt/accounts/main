@@ -1,26 +1,30 @@
 # vim: filetype=muttrc
-unmailboxes *
+set folder = ~/Maildir/Personal    # set to the primary account's folder
+set mbox_type = maildir
 
-# Allow Mutt to open a new IMAP connection automatically.
-unset imap_passive
+set spoolfile = +INBOX         # 'spool' is now pointing at the main inbox
+set move       = no            # don't move mail from spool as it's pointing at the main inbox
 
-set smtp_authenticators = "xoauth2"
-set imap_authenticators = "xoauth2"
-set ssl_starttls=yes
-set ssl_force_tls=yes
+# initial mailboxes
+set record     = +Sent
+set trash      = +Deleted
+set postponed  = +Drafts
 
-set imap_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
-set smtp_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
+set mail_check = 120
+set timeout    = 30
+set mail_check_stats = yes
+set mail_check_stats_interval = 120
 
-set imap_user = 'christoph.ungricht@outlook.com'
-set from= $imap_user
-set use_from=yes
-set realname='Christoph Ungricht'
-set folder = "imaps://$imap_user@outlook.office365.com"
-set spoolfile = "+INBOX"
-set postponed="+Drafts"
-set mail_check = 100
-set smtp_url = "smtp://$imap_user@smtp.office365.com:587"
-set move = no
-set record="+Sent"
+# Account 1: mailboxes and folder hook
+mailboxes -label P:INBOX -notify -poll ~/Maildir/Personal/INBOX \
+          -label P:Junk -notify -poll ~/Maildir/Personal/Junk \
+          -label P:Sent -nonotify -poll ~/Maildir/Personal/Sent \
+          -label P:Drafts -nonotify -poll ~/Maildir/Personal/Drafts \
+          -label P:Deleted -nonotify -nopoll ~/Maildir/Personal/Deleted
+
+folder-hook ~/Maildir/Personal/ 'source ~/.config/neomutt/accounts/personal'
+
+# NOTE: Add here more mailboxes and folderhooks if you have more accounts:
+#  Also, to not forget to add the account to ./home/dot-config/isyncrc and ./home/dot-config/goimapnotify/
+#  Otherwise syncing will not work
 

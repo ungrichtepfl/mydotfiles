@@ -1,0 +1,23 @@
+IMAPAccount personal
+ Host outlook.office365.com
+ Port 993
+ User christoph.ungricht@outlook.com
+ PassCmd "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
+ AuthMechs XOAUTH2
+ TLSType IMAPS
+
+ IMAPStore personal-remote
+ Account personal
+
+ MaildirStore personal-local
+ Subfolders Verbatim
+ Path ~/Maildir/Personal/
+ Inbox ~/Maildir/Personal/INBOX
+
+ Channel Personal
+ Far :personal-remote:
+ Near :personal-local:
+ Patterns INBOX Junk Sent Drafts Deleted
+ Create Both
+ Expunge Both
+ SyncState *

@@ -1,0 +1,26 @@
+# vim: filetype=muttrc
+unmailboxes *
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+set smtp_authenticators = "xoauth2"
+set imap_authenticators = "xoauth2"
+set ssl_starttls=yes
+set ssl_force_tls=yes
+
+set imap_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
+set smtp_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
+
+set imap_user = 'christoph.ungricht@outlook.com'
+set from= $imap_user
+set use_from=yes
+set realname='Christoph Ungricht'
+set folder = "imaps://$imap_user@outlook.office365.com"
+set spoolfile = "+INBOX"
+set postponed="+Drafts"
+set mail_check = 100
+set smtp_url = "smtp://$imap_user@smtp.office365.com:587"
+set move = no
+set record="+Sent"
+

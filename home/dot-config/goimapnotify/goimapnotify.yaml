@@ -1,0 +1,25 @@
+configurations:
+  - host: outlook.office365.com
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: false
+    username: christoph.ungricht@outlook.com
+    xoAuth2: true
+    passwordCmd: "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
+    boxes:
+      - mailbox: INBOX
+        onNewMail: 'bash -c "mbsync Personal:INBOX"'
+        onDeletedMail: 'bash -c "mbsync Personal:INBOX"'
+      - mailbox: Junk
+        onNewMail: 'bash -c "mbsync Personal:Junk"'
+        onDeletedMail: 'bash -c "mbsync Personal:Junk"'
+      - mailbox: Sent
+        onNewMail: 'bash -c "mbsync Personal:Sent"'
+        onDeletedMail: 'bash -c "mbsync Personal:Sent"'
+      - mailbox: Drafts
+        onNewMail: 'bash -c "mbsync Personal:Drafts"'
+        onDeletedMail: 'bash -c "mbsync Personal:Drafts"'
+      - mailbox: Deleted
+        onNewMail: 'bash -c "mbsync Personal:Deleted"'
+        onDeletedMail: 'bash -c "mbsync Personal:Deleted"'

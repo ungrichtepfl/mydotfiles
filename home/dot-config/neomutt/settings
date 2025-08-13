@@ -10,7 +10,6 @@ set imap_check_subscribed
 auto_view text/html text/calendar application/ics # view html automatically
 alternative_order text/html text/plain text/enriched text/*
 
-
 # main options
 set use_envelope_from
 set edit_headers                     # show headers when composing
@@ -63,7 +62,7 @@ unset markers
 
 set mailcap_path = ~/.config/neomutt/mailcap
 set header_cache_compress_method = "zstd"
-set header_cache_compress_level = 1
+set header_cache_compress_level = 3
 set header_cache = "~/.cache/mutt"
 set message_cache_dir = "~/.cache/mutt"
 set certificate_file = "~/.mutt/certificates"
