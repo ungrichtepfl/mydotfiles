@@ -5,7 +5,8 @@ DISTRO="$(lsb_release -i | cut -f 2-)"
 if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Installing packages on Void Linux"
     sudo xbps-install -Sy polkit chrony dbus bluez \
-        man-pages man-pages-devel man-pages-posix \
+        socklog-void
+    man-pages man-pages-devel man-pages-posix \
         pulseaudio NetworkManager network-manager-applet \
         base-devel gdb curl wget git git-lfs jq unzip p7zip zstd zsh lz4 fzf \
         vim-huge neovim neofetch cmake go zig cronie tzupdate \
@@ -46,6 +47,8 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    acpid"
     echo "[install-packages]    sshd"
     echo "[install-packages]    elogind"
+    echo "[install-packages]    nanoklogd"
+    echo "[install-packages]    socklog-unix"
 else
     echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi
