@@ -5,7 +5,7 @@ ignore := '\.md$$|\.gitignore$$'
 # USER
 
 .PHONY: user
-user: home bin zsh i3 neomutt
+user: home bin zsh i3
 	@echo '-------------------- FINISHED ------------------------'
 	@echo 'If you also want to install system configs run "make system"'
 	@echo 'If you want to install packages run "make packages"'
@@ -43,10 +43,6 @@ zsh:
 fonts:
 	stow $(flags) --ignore $(ignore) -t $$HOME/.local/share/fonts fonts
 	fc-cache -fv
-
-.PHONY: neomutt
-neomutt:
-	./home/dot-config/neomutt/bootstrap_mail_sync.sh
 
 # SYSTEM
 
