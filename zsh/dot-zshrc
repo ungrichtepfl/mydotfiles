@@ -265,8 +265,7 @@ setup_autosuggestion(){
 
     # Bind ctrl-Y to accept the current suggestion.
     bindkey '^Y' autosuggest-accept
-    bindkey '^Z' autosuggest-accept
-    bindkey '^ ' autosuggest-accept
+    bindkey '^Z' autosuggest-accept # Swiss keyboard
 }
 zsh-defer setup_autosuggestion
 
