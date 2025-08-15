@@ -72,12 +72,12 @@ endfunction
 nnoremap <leader>x :call <SID>OpenTermWithCurrentFile()<CR>
 nnoremap <leader><leader>v :so<cr>
 
-nnoremap my "+y
-xnoremap my "+y
-nnoremap mY "+Y
-nnoremap mP "+P
-nnoremap mp "+p
-xnoremap mp "+P
+nnoremap by "+y
+xnoremap by "+y
+nnoremap bY "+Y
+nnoremap bP "+P
+nnoremap bp "+p
+xnoremap bp "+P
 
 nnoremap <leader>e :Explore<cr>
 nnoremap <leader>f :find 
