@@ -144,6 +144,62 @@ fpath+="$HOME/.zfunc"
 autoload -U colors zcalc
 colors
 
+
+# Color man pages
+export LESS_TERMCAP_mb=$'\E[01;32m'
+export LESS_TERMCAP_md=$'\E[01;32m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;47;34m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;36m'
+export LESS=-r
+
+## Plugins section:
+export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
+
+# Defer sourcing
+ssource "${ZSH_PLUGIN_PATH}/zsh-defer/zsh-defer.plugin.zsh"
+
+# Use syntax highlighting
+zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Use history substring search
+setup_history_search(){
+    unfunction "$0"
+    ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    # bind UP and DOWN arrow keys to history substring search
+    zmodload zsh/terminfo
+    bindkey "$terminfo[kcuu1]" history-substring-search-up
+    bindkey "$terminfo[kcud1]" history-substring-search-down
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-down
+    bindkey '^P' history-substring-search-up
+    bindkey '^N' history-substring-search-down
+}
+zsh-defer setup_history_search
+
+# jump quickly to directories that where visited frequently
+if  [[ ! $commands[zoxide] ]]; then
+    zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
+fi
+# More suggsetions
+fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
+
+# Use autosuggestion
+setup_autosuggestion(){
+    unfunction "$0"
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+    ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+    # Bind ctrl-Y to accept the current suggestion.
+    bindkey '^Y' autosuggest-accept
+    bindkey '^Z' autosuggest-accept # Swiss keyboard
+}
+zsh-defer setup_autosuggestion
+
+## DEFINE PROMPT                  # NOTE: Has to be below plugins otherwise it does not work somehow?
 # enable substitution for prompt
 setopt prompt_subst
 PROMPT=$'%{$fg_bold[red]%}%n%{$fg_bold[yellow]%}@%{$fg_bold[green]%}%m %{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%}%{$fg[blue]%}%{$fg_bold[blue]%} %#%{$reset_color%} '
@@ -203,7 +259,6 @@ git_prompt_string() {
     # If not inside the Git repo, only yprint exit codes of last command (only if it failed)
     [ ! -n "$git_where" ] && echo "%{$fg[red]%} %(?..[%?])"
 }
-
 # Apply different settings for different terminals
 case $(basename "$(cat "/proc/$PPID/comm")") in
     login)
@@ -213,62 +268,7 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
         RPROMPT='$(git_prompt_string)'
         ;;
 esac
-
-# Color man pages
-export LESS_TERMCAP_mb=$'\E[01;32m'
-export LESS_TERMCAP_md=$'\E[01;32m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;47;34m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;36m'
-export LESS=-r
-
-
-## Plugins section:
-export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
-
-# Defer sourcing
-ssource "${ZSH_PLUGIN_PATH}/zsh-defer/zsh-defer.plugin.zsh"
-
-# Use syntax highlighting
-zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-# Use history substring search
-setup_history_search(){
-    unfunction "$0"
-    ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
-    # bind UP and DOWN arrow keys to history substring search
-    zmodload zsh/terminfo
-    bindkey "$terminfo[kcuu1]" history-substring-search-up
-    bindkey "$terminfo[kcud1]" history-substring-search-down
-    bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-    bindkey '^P' history-substring-search-up
-    bindkey '^N' history-substring-search-down
-}
-zsh-defer setup_history_search
-
-# jump quickly to directories that where visited frequently
-if  [[ ! $commands[zoxide] ]]; then
-    zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
-fi
-# More suggsetions
-fpath+="${ZSH_PLUGIN_PATH}/zsh-completions/src"
-
-# Use autosuggestion
-setup_autosuggestion(){
-    unfunction "$0"
-    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-    ssource "${ZSH_PLUGIN_PATH}/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
-    # Bind ctrl-Y to accept the current suggestion.
-    bindkey '^Y' autosuggest-accept
-    bindkey '^Z' autosuggest-accept # Swiss keyboard
-}
-zsh-defer setup_autosuggestion
-
+## END DEFINE PROMPT
 
 zstyle ':completion:*' menu select
 
@@ -289,7 +289,6 @@ if [ $commands[nvim] ]; then
     export EDITOR=`which nvim`
     export VISUAL=`which nvim`
 fi
-
 
 # Golang:
 path_add_back "$HOME/.local/go/bin"
