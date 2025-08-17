@@ -15,8 +15,8 @@ set ssl_force_tls       = yes
 set smtp_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
 set smtp_url = "smtp://$imap_user@smtp.office365.com:587"
 
-# NOTE: Remap for each account
-macro index I "<enter-command>echo 'Syncing account \"Personal\" with IMAP server...'<enter><shell-escape>mbsync -V Personal<enter><enter-command>echo 'Finish syncing'<enter>" \
+# NOTE: Remap for each account:
+macro index I "<enter-command>unset wait_key<enter><enter-command>echo 'Syncing account \"Personal\" with IMAP server in the background...'<enter><shell-escape>bash -c '(mbsync Personal &>/dev/null && notify-send \"Successfully syncd mails!\" &>/dev/null) || notify-send -u critical \"Failed sync mails\" &>/dev/null' &<enter><enter-command>set wait_key=yes<enter>" \
         "Sync IMAP account."
 
 # set status: black (color0) text, yellow (color11) foreground
