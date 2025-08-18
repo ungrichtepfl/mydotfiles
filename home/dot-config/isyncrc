@@ -11,8 +11,8 @@ IMAPAccount personal
 
  MaildirStore personal-local
  Subfolders Verbatim
- Path ~/Maildir/Personal/
- Inbox ~/Maildir/Personal/INBOX
+ Path ~/Mail/Personal/
+ Inbox ~/Mail/Personal/INBOX
 
  Channel Personal
  Far :personal-remote:

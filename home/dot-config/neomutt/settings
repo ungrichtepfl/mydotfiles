@@ -14,9 +14,10 @@ alternative_order text/html text/plain text/enriched text/*
 set use_envelope_from
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
-set ask_cc                            # ask for CC:
+set ask_cc                            # if you want ask for CC:
 set fcc_attach                       # save attachments with the body
 set forward_format = "Fwd: %s"       # format of subject when forwarding
+set empty_subject = "Re: "
 set forward_decode                   # decode when forwarding
 set attribution_intro = "On %d, %n wrote:" # format of quoting header
 set reply_to                         # reply to Reply to: field
@@ -25,10 +26,11 @@ set include                          # include message in replies
 set forward_quote                    # include message in forwards
 set text_flowed
 unset sig_dashes                     # no dashes before sig
-unset mime_forward                   # forward attachments as part of body
-unset help                           # No help bar at the top of index
-# set status_on_top                    # Status bar on top of index
+set mime_forward                   # forward attachments as part of body
+set help                           # No help bar at the top of index
 set tmp_dir = ~/Programs/neomutt/temp # where to keep temp files
+set attach_save_dir = ~/Downloads
+# TODO: set attach_format =
 
 unset confirm_append      # don't ask, just do!
 set quit                 # don't ask, just do!!

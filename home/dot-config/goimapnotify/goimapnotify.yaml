@@ -1,7 +1,7 @@
 configurations:
   - host: outlook.office365.com
     port: 993
-    tls: truee
+    tls: true
     tlsOptions:
       rejectUnauthorized: false
     username: christoph.ungricht@outlook.com

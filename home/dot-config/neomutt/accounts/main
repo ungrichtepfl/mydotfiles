@@ -1,5 +1,5 @@
 # vim: filetype=muttrc
-set folder = ~/Maildir/Personal    # set to the primary account's folder
+set folder = ~/Mail/Personal    # set to the primary account's folder
 set mbox_type = maildir
 
 set spoolfile = +INBOX         # 'spool' is now pointing at the main inbox
@@ -16,13 +16,13 @@ set mail_check_stats = yes
 set mail_check_stats_interval = 120
 
 # Account 1: mailboxes and folder hook
-mailboxes -label P:INBOX -notify -poll ~/Maildir/Personal/INBOX \
-          -label P:Junk -notify -poll ~/Maildir/Personal/Junk \
-          -label P:Sent -nonotify -poll ~/Maildir/Personal/Sent \
-          -label P:Drafts -nonotify -poll ~/Maildir/Personal/Drafts \
-          -label P:Deleted -nonotify -nopoll ~/Maildir/Personal/Deleted
+mailboxes -label " INBOX" -notify -poll ~/Mail/Personal/INBOX \
+          -label " Junk" -notify -poll ~/Mail/Personal/Junk \
+          -label " Sent" -nonotify -poll ~/Mail/Personal/Sent \
+          -label " Drafts" -nonotify -poll ~/Mail/Personal/Drafts \
+          -label " Deleted" -nonotify -nopoll ~/Mail/Personal/Deleted
 
-folder-hook ~/Maildir/Personal/ 'source ~/.config/neomutt/accounts/personal'
+folder-hook ~/Mail/Personal/ 'source ~/.config/neomutt/accounts/personal'
 
 # NOTE: Add here more mailboxes and folderhooks if you have more accounts:
 #  Also, to not forget to add the account to ./home/dot-config/isyncrc and ./home/dot-config/goimapnotify/

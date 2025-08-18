@@ -1,6 +1,6 @@
 # vim: ft=muttrc
 
-set folder     = ~/Maildir/Personal
+set folder     = ~/Mail/Personal
 set spoolfile  = +INBOX
 set record     = +Sent
 set trash      = +Deleted
