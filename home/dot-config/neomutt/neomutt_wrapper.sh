@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+SUCCESS="Successfully sync'd emails!"
+FAIL="Failed to sync emails!"
+
 neomutt "$@"
-echo "Syncing IMAP accounts..."
-mbsync -a -V
+tmux new -d bash -c "(mbsync -a && notify-send \"$SUCCESS\") || notify-send -u critical \"$FAIL\"; exit" 
