@@ -10,11 +10,6 @@ set record     = +Sent
 set trash      = +Deleted
 set postponed  = +Drafts
 
-set mail_check = 120
-set timeout    = 30
-set mail_check_stats = yes
-set mail_check_stats_interval = 120
-
 # Account 1: mailboxes and folder hook
 mailboxes -label " INBOX" -notify -poll ~/Mail/Personal/INBOX \
           -label " Junk" -notify -poll ~/Mail/Personal/Junk \

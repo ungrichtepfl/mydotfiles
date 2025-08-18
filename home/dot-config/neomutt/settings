@@ -30,7 +30,7 @@ set mime_forward                   # forward attachments as part of body
 set help                           # No help bar at the top of index
 set tmp_dir = ~/Programs/neomutt/temp # where to keep temp files
 set attach_save_dir = ~/Downloads
-# TODO: set attach_format =
+set history=5000
 
 unset confirm_append      # don't ask, just do!
 set quit                 # don't ask, just do!!
@@ -39,6 +39,9 @@ set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
 set timeout = 0
+set mail_check = 5
+set mail_check_stats = yes
+set mail_check_stats_interval = 5
 
 # status bar, date format, finding stuff etc.
 set status_chars = " *%A"
@@ -48,8 +51,8 @@ set sort = threads
 set sort_aux = reverse-last-date-received
 set uncollapse_jump
 set sort_re
-set reply_regex = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-set quote_regex = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set reply_regex = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*" # TODO: Check if it works with german
+set quote_regex = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+" # TODO: Try to understand
 set send_charset = "utf-8:iso-8859-1:us-ascii"
 set charset = "utf-8"
 set arrow_cursor = "no" # Change `color indicator` depending
