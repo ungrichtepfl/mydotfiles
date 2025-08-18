@@ -11,11 +11,12 @@ mono underline underline
 mono indicator reverse
 mono error bold
 color normal default default
-color indicator brightyellow default # currently selected message. default makes bar clear, disabled arrow to save space.
-color sidebar_highlight blue default
-color sidebar_divider brightblack black
-color sidebar_flagged red black
-color sidebar_new green black
+color indicator yellow default # currently selected message. default makes bar clear, disabled arrow to save space.
+color sidebar_indicator brightyellow default
+color sidebar_ordinary blue default
+color sidebar_highlight yellow default
+color sidebar_divider blue default
+color sidebar_new brightblue black
 color normal brightyellow default
 color error red default
 color tilde black default
@@ -57,14 +58,18 @@ mono body bold "^gpg: BAD signature from.*"
 color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Default index colors:
-color index yellow default '.*'
-color index_author red default '.*'
-color index_number blue default
-color index_subject cyan default '.*'
+color index blue default '.*'
+color index_author brightblue default '.*'
+color index_subject blue default '.*'
 
 # For new mail:
-color index brightyellow black "~N"
-color index_author brightred black "~N"
-color index_subject brightcyan black "~N"
+color index italic bold lightblue black "~N"
+color index_author italic bold lightblue black "~N"
+color index_subject italic bold lightblue black "~N"
 
-color progress black cyan
+# For flagged mail:
+color index brightred black "~F"
+color index_author brightred black "~F"
+color index_subject brightred black "~F"
+
+color progress black blue

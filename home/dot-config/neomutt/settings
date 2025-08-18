@@ -27,7 +27,7 @@ set forward_quote                    # include message in forwards
 set text_flowed
 unset sig_dashes                     # no dashes before sig
 set mime_forward                   # forward attachments as part of body
-set help                           # No help bar at the top of index
+unset help                           # No help bar at the top of index
 set tmp_dir = ~/Programs/neomutt/temp # where to keep temp files
 set attach_save_dir = ~/Downloads
 set history=5000
