@@ -99,5 +99,8 @@ macro index,pager ga "<change-folder>+Archive<enter>" "go to archive"
 macro index,pager Ma ";<save-message>+Archive<enter>" "move mail to archive"
 macro index,pager Ca ";<copy-message>+Archive<enter>" "copy mail to archive"
 
+# Virtual mailboxes
+macro index,pager gf "<change-vfolder>Flagged<enter>" "go to flagged virtual mailbox"
+
 macro index \Ca "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
