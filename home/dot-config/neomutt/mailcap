@@ -1,12 +1,15 @@
 # vim: filetype=.mailcap
 
-# HTML
+text/html; ~/.config/neomutt/openfile.sh %s; nametemplate=%s.html
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
-text/plain; nvim %s;
+text/plain; $EDITOR %s;
 
-# PDFs
-application/pdf; mupdf %s;
+application/pdf; ~/.config/neomutt/openfile.sh %s;
 
-# Images
-image/png; feh %s;
-image/jpeg; feh %s;
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+application/pgp-keys; gpg --import '%s'; copiousoutput;
+application/x-subrip; $EDITOR %s;
+
+image/*; ~/.config/neomutt/openfile.sh %s;
+video/*; ~/.config/neomutt/openfile.sh %s;
+audio/*; ~/.config/neomutt/openfile.sh %s;

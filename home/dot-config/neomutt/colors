@@ -25,7 +25,7 @@ color tilde black default
 color message cyan default
 color markers red color248
 color attachment color248 default
-color search brightmagenta default
+color search black color248
 color status bold color248 black
 color hdrdefault brightgreen default
 color quoted green default
@@ -40,7 +40,7 @@ color underline black default
 color normal default default
 
 color body brightred default "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+" # Email addresses
-color body brightblue default "(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+" # URL
+color body brightblue default "(https?|ftp|file)://[\-\.,/%~_:?&=\#a-zA-Z0-9;+]+" # URL
 color body green default "\`[^\`]*\`" # Green text between ` and `
 color body brightblue default "^# \.*" # Headings as bold blue
 color body brightcyan default "^## \.*" # Subheadings as bold cyan

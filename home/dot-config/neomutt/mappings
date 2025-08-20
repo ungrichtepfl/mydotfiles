@@ -6,6 +6,10 @@
 
 # Moving around
 bind attach,browser,index       g   noop
+bind index,pager                M noop
+bind index,pager                C noop
+bind index                      gM show-log-messages
+bind index,pager                CC copy-message
 bind attach,browser,index       gg  first-entry
 bind attach,browser,index       G   last-entry
 bind pager                      g   noop
@@ -68,6 +72,10 @@ bind index,pager                B   sidebar-toggle-visible
 
 # MACROS
 
+macro index,pager gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan<Enter><enter-command>set wait_key=yes<enter>"\
+               "call urlscan to extract URLs out of a message"
+macro attach,compose gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan<Enter><enter-command>set wait_key=yes<enter>"\
+               "call urlscan to extract URLs out of a message"
 # Search using notmuch
 bind index S vfolder-from-query
 # NOTE: Mostly copied from muttwizard: https://github.com/LukeSmithxyz/mutt-wizard/blob/master/share/mutt-wizard.muttrc
@@ -75,10 +83,6 @@ macro index                     L "<enter-command>unset wait_key<enter><shell-es
 # shows all messages again
 macro index                     A "<limit>all\n" "show all messages (undo limit)"
 
-bind index,pager                M noop
-bind index,pager                C noop
-bind index                      gM show-log-messages
-bind index,pager                CC copy-message
 
 macro index,pager gi "<change-folder>+INBOX<enter>" "go to inbox"
 macro index,pager Mi ";<save-message>+INBOX<enter>" "move mail to inbox"

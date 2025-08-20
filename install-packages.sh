@@ -19,7 +19,8 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         i3 i3status-rust dmenu i3lock-color \
         lightdm lightdm-gtk3-greeter elogind \
         flatpak gthumb mupdf \
-        neomutt khard w3m isync cyrus-sasl-xoauth2 goimapnotify vlc inkscape \
+        neomutt mpv w3m-img notmuch \
+        isync cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
         nerd-fonts font-awesome6 flameshot
     if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
         sudo xbps-install -Sy evolution
