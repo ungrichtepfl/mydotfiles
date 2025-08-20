@@ -12,6 +12,7 @@ alternative_order text/html text/plain text/enriched text/*
 
 # main options
 # set new_mail_command = 'bash -c "(( %n > 0 )) && notify-send \"New Email in %f\" || true"'
+set new_mail_command = 'bash -c "notify-send \"New Email in %f\""'
 set use_envelope_from
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
@@ -35,7 +36,6 @@ set history=5000
 
 unset confirm_append      # don't ask, just do!
 set quit                 # don't ask, just do!!
-unset mark_old           # read/new is good enough for me
 set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
