@@ -1,0 +1,7 @@
+# vim: ft=neomuttrc
+
+unset hostname
+unmailboxes *
+unvirtual-mailboxes *
+unalternates *
+unset signature

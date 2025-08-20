@@ -2,8 +2,10 @@
 
 set folder     = ~/Mail/Personal
 set spoolfile  = +INBOX
+set move       = no            # don't move mail from spool as it's pointing at the main inbox
 set record     = +Sent
 set trash      = +Deleted
+set postponed  = +Drafts
 set from       = "christoph.ungricht@outlook.com"
 set realname   = "Christoph Ungricht"
 
@@ -15,9 +17,30 @@ set ssl_force_tls       = yes
 set smtp_oauth_refresh_command = "/usr/share/neomutt/oauth2/mutt_oauth2.py ~/.config/neomutt/outlooktoken"
 set smtp_url = "smtp://$imap_user@smtp.office365.com:587"
 
-# NOTE: Remap for each account:
-macro index I "<enter-command>unset wait_key<enter><enter-command>echo 'Syncing account \"Personal\" with IMAP server in the background...'<enter><shell-escape>bash -c '(mbsync Personal &>/dev/null && notify-send \"Successfully syncd emails!\" &>/dev/null) || notify-send -u critical \"Failed to sync emails\" &>/dev/null' &<enter><enter-command>set wait_key=yes<enter>" \
-        "Sync IMAP account."
 
-# set status: black (color0) text, yellow (color11) foreground
-# color status color0 color39  # change status color for this account
+mailboxes  -label  " INBOX"   -notify   -poll   +INBOX
+virtual-mailboxes  " Flagged"                   "notmuch://?query=tag:flagged and path:Personal/**"
+mailboxes  -label  " Junk"    -notify   -poll   +Junk \
+           -label  " Sent"    -nonotify -poll   +Sent \
+           -label  " Drafts"  -nonotify -poll   +Drafts \
+           -label  " Deleted" -nonotify -nopoll +Deleted
+
+
+# NOTE: Remap for each account:
+macro index I "<enter-command>unset wait_key<enter>\
+<enter-command>echo 'Syncing account \"Personal\" with IMAP server in the background...'<enter>\
+<shell-escape>bash -c '\
+(mbsync Personal &>/dev/null &&\
+notmuch new &>/dev/null &&\
+notify-send \"Successfully syncd emails!\" &>/dev/null)\
+|| notify-send -u critical \"Failed to sync emails\" &>/dev/null\
+' &<enter>\
+<enter-command>set wait_key=yes<enter>" \
+        "sync IMAP account"
+
+
+# NOTE: Remap Trash as it is called Deleted
+macro index,pager gt "<change-folder>+Deleted<enter>" "go to trash"
+macro index,pager Mt ";<save-message>+Deleted<enter>" "move mail to trash"
+macro index,pager Ct ";<copy-message>+Deleted<enter>" "copy mail to trash"
+

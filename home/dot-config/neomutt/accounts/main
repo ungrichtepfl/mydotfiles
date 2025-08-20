@@ -1,25 +1,17 @@
 # vim: filetype=muttrc
 set folder = ~/Mail/Personal    # set to the primary account's folder
+set spoolfile  = +INBOX  # NOTE: Needed otherwise not working
 set mbox_type = maildir
+set nm_default_url = "notmuch://$HOME/Mail"
+set nm_query_type = "threads"
 
-set spoolfile = +INBOX         # 'spool' is now pointing at the main inbox
-set move       = no            # don't move mail from spool as it's pointing at the main inbox
+set query_command = "notmuch address %s"
+set query_format = "%5c %t %a %n %?e?(%e)?"
 
-# initial mailboxes
-set record     = +Sent
-set trash      = +Deleted
-set postponed  = +Drafts
+folder-hook ~/Mail/Personal/ 'source ~/.config/neomutt/accounts/switch; \
+                              source ~/.config/neomutt/accounts/personal'
 
-# Account 1: mailboxes and folder hook
-mailboxes -label " INBOX" -notify -poll ~/Mail/Personal/INBOX \
-          -label " Junk" -notify -poll ~/Mail/Personal/Junk \
-          -label " Sent" -nonotify -poll ~/Mail/Personal/Sent \
-          -label " Drafts" -nonotify -poll ~/Mail/Personal/Drafts \
-          -label " Deleted" -nonotify -nopoll ~/Mail/Personal/Deleted
-
-folder-hook ~/Mail/Personal/ 'source ~/.config/neomutt/accounts/personal'
-
-# NOTE: Add here more mailboxes and folderhooks if you have more accounts:
+# NOTE: Add new mailboxes and folder hook here:
 #  Also, to not forget to add the account to ./home/dot-config/isyncrc and ./home/dot-config/goimapnotify/
 #  Otherwise syncing will not work
 

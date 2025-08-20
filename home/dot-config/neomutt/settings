@@ -11,6 +11,7 @@ auto_view text/html text/calendar application/ics # view html automatically
 alternative_order text/html text/plain text/enriched text/*
 
 # main options
+# set new_mail_command = 'bash -c "(( %n > 0 )) && notify-send \"New Email in %f\" || true"'
 set use_envelope_from
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
@@ -72,4 +73,6 @@ set header_cache = "~/.cache/mutt"
 set message_cache_dir = "~/.cache/mutt"
 set certificate_file = "~/.mutt/certificates"
 
-set query_command = "khard email --parsable --search-in-source-files '%s'"
+# Sidebar
+set sidebar_width = 25
+set sidebar_format = '%D %* %?N? 󰇮 %2N? %?S? 󰇯 %5S?'

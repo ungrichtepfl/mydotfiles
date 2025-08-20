@@ -12,15 +12,25 @@ configurations:
         onNewMail: bash -c "mbsync Personal:INBOX"
         onDeletedMail: bash -c "mbsync Personal:INBOX"
         onChangedMail: bash -c "mbsync Personal:INBOX"
+        onChangedMailPost: bash -c "notmuch new"
+        onNewMailPost: bash -c "notmuch new"
       - mailbox: Junk
         onNewMail: bash -c "mbsync Personal:Junk"
         onDeletedMail: bash -c "mbsync Personal:Junk"
+        onChangedMailPost: bash -c "notmuch new"
+        onNewMailPost: bash -c "notmuch new"
       - mailbox: Sent
         onNewMail: bash -c "mbsync Personal:Sent"
         onDeletedMail: bash -c "mbsync Personal:Sent"
+        onChangedMailPost: bash -c "notmuch new"
+        onNewMailPost: bash -c "notmuch new"
       - mailbox: Drafts
         onNewMail: bash -c "mbsync Personal:Drafts"
         onDeletedMail: bash -c "mbsync Personal:Drafts"
+        onChangedMailPost: bash -c "notmuch new"
+        onNewMailPost: bash -c "notmuch new"
       - mailbox: Deleted
         onNewMail: bash -c "mbsync Personal:Deleted"
         onDeletedMail: bash -c "mbsync Personal:Deleted"
+        onChangedMailPost: bash -c "notmuch new"
+        onNewMailPost: bash -c "notmuch new"

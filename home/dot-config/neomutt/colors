@@ -1,35 +1,37 @@
 # vim: filetype=neomuttrc
 
+# NOTE: Check https://web.archive.org/web/20190712111427/https://jonasjacek.github.io/colors/
+#  for xterm-colors
+
 # Header colors:
-color header blue default ".*"
-color header brightmagenta default "^(From)"
-color header brightcyan default "^(Subject)"
-color header brightwhite default "^(CC|BCC)"
+color header cyan default ".*"
+color header standout cyan default "^(From)"
+color header standout color248 default "^(Subject)"
 
 mono bold bold
 mono underline underline
 mono indicator reverse
 mono error bold
 color normal default default
-color indicator yellow default # currently selected message. default makes bar clear, disabled arrow to save space.
-color sidebar_indicator brightyellow default
-color sidebar_ordinary blue default
-color sidebar_highlight yellow default
-color sidebar_divider blue default
+color indicator black color248 # currently selected message.
+color sidebar_indicator bold color248 black
+color sidebar_ordinary blue black
+color sidebar_highlight color248 black
+color sidebar_divider blue black
 color sidebar_new brightblue black
-color normal brightyellow default
+color normal bold color248 default
 color error red default
 color tilde black default
 color message cyan default
-color markers red white
-color attachment white default
+color markers red color248
+color attachment color248 default
 color search brightmagenta default
-color status brightyellow black
+color status bold color248 black
 color hdrdefault brightgreen default
 color quoted green default
 color quoted1 blue default
 color quoted2 cyan default
-color quoted3 yellow default
+color quoted3 color248 default
 color quoted4 red default
 color quoted5 brightred default
 color signature brightgreen default
@@ -43,7 +45,7 @@ color body green default "\`[^\`]*\`" # Green text between ` and `
 color body brightblue default "^# \.*" # Headings as bold blue
 color body brightcyan default "^## \.*" # Subheadings as bold cyan
 color body brightgreen default "^### \.*" # Subsubheadings as bold green
-color body yellow default "^(\t| )*(-|\\*) \.*" # List items as yellow
+color body color248 default "^(\t| )*(-|\\*) \.*" # List items as color248
 color body brightcyan default "[;:][-o][)/(|]" # emoticons
 color body brightcyan default "[;:][)(|]" # emoticons
 color body brightcyan default "[ ][*][^*]*[*][ ]?" # more emoticon?
@@ -51,15 +53,15 @@ color body brightcyan default "[ ]?[*][^*]*[*][ ]" # more emoticon?
 color body red default "(BAD signature)"
 color body cyan default "(Good signature)"
 color body brightblack default "^gpg: Good signature .*"
-color body brightyellow default "^gpg: "
-color body brightyellow red "^gpg: BAD signature from.*"
+color body bold color248 default "^gpg: "
+color body bold color248 red "^gpg: BAD signature from.*"
 mono body bold "^gpg: Good signature"
 mono body bold "^gpg: BAD signature from.*"
 color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Default index colors:
 color index blue default '.*'
-color index_author brightblue default '.*'
+color index_author bold blue default '.*'
 color index_subject blue default '.*'
 
 # For new mail:
@@ -68,8 +70,8 @@ color index_author italic bold lightblue black "~N"
 color index_subject italic bold lightblue black "~N"
 
 # For flagged mail:
-color index brightred black "~F"
-color index_author brightred black "~F"
-color index_subject brightred black "~F"
+color index color159 black "~F"
+color index_author bold color159 black "~F"
+color index_subject color159 black "~F"
 
 color progress black blue
