@@ -18,7 +18,7 @@ set new_mail_command = 'bash -c "notify-send \"New Email in %f\""'
 set use_envelope_from
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
-set ask_cc                            # if you want ask for CC:
+unset ask_cc                         # if you want ask for CC:
 set fcc_attach                       # save attachments with the body
 set forward_format = "Fwd: %s"       # format of subject when forwarding
 set empty_subject = "Re: "

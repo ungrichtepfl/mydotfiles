@@ -62,6 +62,10 @@ bind index,pager                R   group-reply
 bind index                      za  collapse-thread
 bind index                      zA  collapse-all # Missing :folddisable/foldenable
 
+# Switch those
+bind editor <Tab> complete-query
+bind editor ^T complete
+
 # sidebar mappings
 bind index,pager                \Ck sidebar-prev
 bind index,pager                \Cj sidebar-next
