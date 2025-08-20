@@ -108,3 +108,11 @@ macro index,pager gf "<change-vfolder>Flagged<enter>" "go to flagged virtual mai
 
 macro index \Ca "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
+# Multipart composing
+# https://jonathanh.co.uk/blog/multipart-emails-in-neomutt/
+macro compose Y "<first-entry>\
+<pipe-entry>~/.config/neomutt/convert_multipart.sh<enter>\
+<enter-command>source /tmp/neomutt-commands<enter>"\
+     "compose multipart emails"
+
+

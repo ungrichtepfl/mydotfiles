@@ -8,9 +8,12 @@ set imap_check_subscribed
 
 # Set preferred view modes
 auto_view text/html text/calendar application/ics # view html automatically
+auto_view application/pgp-encrypted
 alternative_order text/html text/plain text/enriched text/*
 
+
 # main options
+unset crypt_use_gpgme # TODO: Check why opening signed mail hangs
 set new_mail_command = 'bash -c "notify-send \"New Email in %f\""'
 set use_envelope_from
 set edit_headers                     # show headers when composing
