@@ -1,8 +1,5 @@
 # vim: filetype=neomuttrc
 
-# set editor to neovim
-# set editor = "nvim"
-
 set my_name = "Christoph Ungricht"
 set imap_check_subscribed
 
