@@ -76,17 +76,44 @@ bind index,pager                B   sidebar-toggle-visible
 
 # MACROS
 
-macro index,pager gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan<Enter><enter-command>set wait_key=yes<enter>"\
-               "call urlscan to extract URLs out of a message"
-macro attach,compose gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan<Enter><enter-command>set wait_key=yes<enter>"\
+# Macro to toggle alternates (plain <-> html), based on:
+# https://groups.google.com/d/msg/comp.mail.mutt/9I702oMwQQE/JqdLnp3j9WAJ
+macro pager ,@aoh= "<enter-command>unalternative_order *; alternative_order text/calendar text/html text/plain text/enriched; macro pager gh ,@aot= 'toggle alternative order'<enter><exit><display-message>"
+macro pager ,@aot= "<enter-command>unalternative_order *; alternative_order text/plain text/calendar text/enriched text/html; macro pager gh ,@aoh= 'toggle alternative order'<enter><exit><display-message>"
+macro pager gh ,@aoh= "toggle alternative order"
+
+# Use urlscan to handle links in messages
+macro index,pager,attach gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan -dc <Enter><enter-command>set wait_key=yes<enter>"\
                "call urlscan to extract URLs out of a message"
 # Search using notmuch
 bind index S vfolder-from-query
+
+# Multipart composing
+# https://jonathanh.co.uk/blog/multipart-emails-in-neomutt/
+bind compose Y send-message
+macro compose y "<enter-command>unset compose_confirm_detach_first<enter>\
+<enter-command>unset wait_key<enter>\
+<first-entry>\
+<pipe-entry>~/.config/neomutt/convert_multipart.sh<enter>\
+<enter-command>source ~/.cache/neomutt-custom/convert_multipart/neomutt-commands<enter>\
+<enter-command>set compose_confirm_detach_first=yes<enter>\
+<enter-command>set wait_key=yes<enter>\
+<send-message>"\
+     "compose multipart emails"
+
 # NOTE: Mostly copied from muttwizard: https://github.com/LukeSmithxyz/mutt-wizard/blob/master/share/mutt-wizard.muttrc
-macro index                     L "<enter-command>unset wait_key<enter><shell-escape>printf 'Enter a search term to find with notmuch: '; read x; echo \$x >\"\${XDG_CACHE_HOME:-\$HOME/.cache}/mutt_terms\"<enter><limit>~i \"\`notmuch search --output=messages \$(cat \"\${XDG_CACHE_HOME:-\$HOME/.cache}/mutt_terms\") | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/g for@a; s/\\$/\\\\\\$/g for@a;print@a' \`\"<enter><enter-command>set wait_key=yes<enter>" "show only messages matching a notmuch pattern"
+macro index                     L "<enter-command>unset wait_key<enter>\
+<shell-escape>printf 'Enter a search term to find with notmuch: '; read x; \
+echo \$x >\"\${XDG_CACHE_HOME:-\$HOME/.cache}/mutt_terms\"<enter>\
+<limit>~i \"\`notmuch search --output=messages \
+\$(cat \"\${XDG_CACHE_HOME:-\$HOME/.cache}/mutt_terms\") | head -n 600 \
+| perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";\
+print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/g for@a; s/\\$/\\\\\\$/g \
+for@a;print@a' \`\"<enter><enter-command>set wait_key=yes<enter>" \
+     "show only messages matching a notmuch pattern"
+
 # shows all messages again
 macro index                     A "<limit>all\n" "show all messages (undo limit)"
-
 
 macro index,pager gi "<change-folder>+INBOX<enter>" "go to inbox"
 macro index,pager Mi ";<save-message>+INBOX<enter>" "move mail to inbox"
@@ -111,12 +138,4 @@ macro index,pager Ca ";<copy-message>+Archive<enter>" "copy mail to archive"
 macro index,pager gf "<change-vfolder>Flagged<enter>" "go to flagged virtual mailbox"
 
 macro index \Ca "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
-
-# Multipart composing
-# https://jonathanh.co.uk/blog/multipart-emails-in-neomutt/
-macro compose Y "<first-entry>\
-<pipe-entry>~/.config/neomutt/convert_multipart.sh<enter>\
-<enter-command>source /tmp/neomutt-commands<enter>"\
-     "compose multipart emails"
-
 

@@ -41,6 +41,9 @@ HISTSIZE=2000
 SAVEHIST=10000
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
+# Config
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Load run-help correctly
 unalias run-help 2>/dev/null
 autoload -U run-help
@@ -58,7 +61,6 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
-alias neomutt="$XDG_CONFIG_HOME/neomutt/neomutt_wrapper.sh"
 
 if [ $commands[eza] ]; then
     alias ls='eza --color=auto'                                 # Show content of folder colorized
@@ -280,9 +282,6 @@ fi
 
 # Add path to path
 path_add_front "$HOME/.local/bin"
-
-# Config
-export XDG_CONFIG_HOME="$HOME/.config"
 
 # Use nvim as default editor
 if [ $commands[nvim] ]; then

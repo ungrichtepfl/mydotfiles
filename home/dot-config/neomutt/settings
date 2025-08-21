@@ -1,7 +1,7 @@
 # vim: filetype=neomuttrc
 
 # set editor to neovim
-set editor = "nvim"
+# set editor = "nvim"
 
 set my_name = "Christoph Ungricht"
 set imap_check_subscribed
@@ -9,8 +9,7 @@ set imap_check_subscribed
 # Set preferred view modes
 auto_view text/html text/calendar application/ics # view html automatically
 auto_view application/pgp-encrypted
-alternative_order text/html text/plain text/enriched text/*
-
+alternative_order text/plain text/calendar text/enriched text/html
 
 # main options
 unset crypt_use_gpgme # TODO: Check why opening signed mail hangs

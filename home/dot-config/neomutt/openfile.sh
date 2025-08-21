@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Helps open a file with xdg-open from mutt in a external program without weird side effects.
-tempdir="${XDG_CACHE_HOME:-$HOME/.cache}/mutt-wizard/files"
+tempdir="$HOME/.cache/neomutt-custom/openfile"
 file="$tempdir/${1##*/}"
 opener="setsid -f xdg-open"
 mkdir -p "$tempdir"

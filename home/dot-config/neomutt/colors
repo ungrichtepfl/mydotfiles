@@ -65,12 +65,12 @@ color index_author bold blue default '.*'
 color index_subject blue default '.*'
 
 # For new and unread mail:
-color index italic bold lightblue black "~N"
-color index_author italic bold lightblue black "~N"
-color index_subject italic bold lightblue black "~N"
-color index italic bold lightblue black "~O"
-color index_author italic bold lightblue black "~O"
-color index_subject italic bold lightblue black "~O"
+color index italic bold black lightblue "~N"
+color index_author italic bold black lightblue "~N"
+color index_subject italic bold black lightblue "~N"
+color index italic bold black lightblue "~O"
+color index_author italic bold black lightblue "~O"
+color index_subject italic bold black lightblue "~O"
 
 # For flagged mail:
 color index color159 black "~F"

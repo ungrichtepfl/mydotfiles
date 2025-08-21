@@ -1,7 +1,7 @@
 # vim: filetype=.mailcap
 
 text/html; ~/.config/neomutt/openfile.sh %s; nametemplate=%s.html
-text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html; w3m -I %{charset} -T text/html -dump; copiousoutput;
 text/plain; $EDITOR %s;
 
 application/pdf; ~/.config/neomutt/openfile.sh %s;

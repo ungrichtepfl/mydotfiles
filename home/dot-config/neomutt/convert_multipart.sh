@@ -5,54 +5,63 @@
 # https://github.com/neomutt/neomutt/issues/3229
 # https://unix.stackexchange.com/questions/612134/neomutt-run-command-to-attach-file-on-macro-key-press/612194#612194
 
-commandsFile="/tmp/neomutt-commands"
-markdownFile="/tmp/neomutt-markdown"
-htmlFile="/tmp/neomutt.html"
+# NOTE: Has to be the same as in neomutt config:
+TMPDIR="$HOME/.cache/neomutt-custom/convert_multipart" 
+mkdir -p "$TMPDIR"
 
-cat - > "${markdownFile}.orig"
-echo -n "push " > "$commandsFile"
+COMMANDS_FILE="$TMPDIR/neomutt-commands"
+MARKDOWN_FILE="$TMPDIR/neomutt-markdown"
+HTML_FILE="$TMPDIR/neomutt.html"
 
-cp "${markdownFile}.orig" "$markdownFile" 
+cat - > "${MARKDOWN_FILE}.orig"
+echo -n "push " > "$COMMANDS_FILE"
 
-grep -Eo '!\[[^]]*\]\([^)]+' "$markdownFile" | cut -d '(' -f 2 |
-	grep -Ev '^(cid:|https?://)' | while read file; do
-		id="cid:$(md5sum "$file" | cut -d ' ' -f 1 )"
-		sed -i "s#$file#$id#g" "$markdownFile"
-	done
+cp "${MARKDOWN_FILE}.orig" "$MARKDOWN_FILE"
 
-if [ "$(grep -Eo '!\[[^]]*\]\([^)]+' "$markdownFile" | cut -d '(' -f 2  | grep '^cid:' | wc -l)" -gt 0 ]; then
-	echo -n "<attach-file>\"$markdownFile\"<enter><toggle-disposition><toggle-unlink><first-entry><detach-file>" >> "$commandsFile"
+# Replace each inline image with an unique cid:
+grep -Eo '!\[[^]]*\]\([^)]+' "$MARKDOWN_FILE" | cut -d '(' -f 2 |
+grep -Ev '^(cid:|https?://)' | while read -r file; do
+    extended_file="${file/#\~/$HOME}"  # To allow ~ in file name
+    id="cid:$(md5sum "$extended_file" | cut -d ' ' -f 1 )"
+    sed -i "s#$file#$id#g" "$MARKDOWN_FILE"
+done
+# Detach the old markdown file as the names have changed and attach the new one:
+if [ "$(grep -Eo '!\[[^]]*\]\([^)]+' "$MARKDOWN_FILE" | cut -d '(' -f 2  | grep -c '^cid:')" -gt 0 ]; then
+    echo -n "<attach-file>\"$MARKDOWN_FILE\"<enter><toggle-disposition><toggle-unlink><first-entry><detach-file>" >> "$COMMANDS_FILE"
 fi
 
+# Generate the HTML:
+pandoc -f markdown -t html5 --standalone --template ~/.config/neomutt/multipart.html "$MARKDOWN_FILE" > "$HTML_FILE"
 
-pandoc -f markdown -t html5 --standalone --template ~/.config/neomutt/multipart.html "$markdownFile" > "$htmlFile"
+{
+    # Attach the html file
+    echo -n "<attach-file>\"$HTML_FILE\"<enter>"
+    # Set it as inline
+    echo -n "<toggle-disposition>"
+    # Tell neomutt to delete it after sending
+    echo -n "<toggle-unlink>"
+    # Select both the html and markdown files
+    echo -n "<tag-entry><previous-entry><tag-entry>"
+    # Group the selected messages as alternatives
+    echo -n "<group-alternatives>"
+} >> "$COMMANDS_FILE"
 
-# Attach the html file
-echo -n "<attach-file>\"$htmlFile\"<enter>" >> "$commandsFile"
-
-# Set it as inline
-echo -n "<toggle-disposition>" >> "$commandsFile"
-
-# Tell neomutt to delete it after sending
-echo -n "<toggle-unlink>" >> "$commandsFile"
-
-# Select both the html and markdown files
-echo -n "<tag-entry><previous-entry><tag-entry>" >> "$commandsFile"
-
-# Group the selected messages as alternatives
-echo -n "<group-alternatives>" >> "$commandsFile"
-
-grep -Eo '!\[[^]]*\]\([^)]+' "${markdownFile}.orig" | cut -d '(' -f 2 |
-	grep -Ev '^(cid:|https?://)' | while read file; do
-	id="$(md5sum "$file" | cut -d ' ' -f 1 )"
-	echo -n "<attach-file>\"$file\"<enter>" >> "$commandsFile"
-	echo -n "<toggle-disposition>" >> "$commandsFile"
-	echo -n "<edit-content-id>^u\"$id\"<enter>" >> "$commandsFile"
-	echo -n "<tag-entry>" >> "$commandsFile"
+# Attach the inline attachments
+grep -Eo '!\[[^]]*\]\([^)]+' "${MARKDOWN_FILE}.orig" | cut -d '(' -f 2 |
+grep -Ev '^(cid:|https?://)' | while read -r file; do
+    extended_file="${file/#\~/$HOME}"  # To allow ~ in file name
+    id="$(md5sum "$extended_file" | cut -d ' ' -f 1 )"
+    {
+        echo -n "<attach-file>\"$file\"<enter>"
+        echo -n "<toggle-disposition>"
+        echo -n "<edit-content-id>^u\"$id\"<enter>"
+        echo -n "<tag-entry>"
+    } >> "$COMMANDS_FILE"
 done
 
-
-if [ "$(grep -Eo '!\[[^]]*\]\([^)]+' "$markdownFile" | cut -d '(' -f 2 | grep '^cid:' |
-	wc -l)" -gt 0 ]; then
-	echo -n "<first-entry><tag-entry><group-related>" >> "$commandsFile"
+# Select the first entry (the multipart alternative we’ve already created), tag it and mark everything tagged as multipart related
+if [ "$(grep -Eo '!\[[^]]*\]\([^)]+' "$MARKDOWN_FILE" | cut -d '(' -f 2 | grep -c '^cid:')" -gt 0 ]; then
+    echo -n "<first-entry><tag-entry><group-related>" >> "$COMMANDS_FILE"
 fi
+
+find "${TMPDIR:?}" -mtime +1 -type f -delete
