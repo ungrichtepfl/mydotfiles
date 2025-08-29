@@ -14,9 +14,10 @@ image/*; ~/.config/neomutt/openfile.sh %s;
 video/*; ~/.config/neomutt/openfile.sh %s;
 audio/*; ~/.config/neomutt/openfile.sh %s;
 
-# MS Word documents
+# Word & Excel documents
 application/msword; ~/.config/neomutt/openfile.sh %s;
 application/vnd.ms-excel; ~/.config/neomutt/openfile.sh %s;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; ~/.config/neomutt/openfile.sh %s;
 application/vnd.openxmlformats-officedocument.presentationml.presentation; ~/.config/neomutt/openfile.sh %s;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document;  ~/.config/neomutt/openfile.sh %s;
 application/vnd.oasis.opendocument.text; ~/.config/neomutt/openfile.sh %s;
