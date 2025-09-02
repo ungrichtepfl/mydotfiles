@@ -2,6 +2,7 @@
 
 set my_name = "Christoph Ungricht"
 set imap_check_subscribed
+set editor = "nvim"
 
 # Set preferred view modes
 auto_view text/html text/calendar application/ics # view html automatically

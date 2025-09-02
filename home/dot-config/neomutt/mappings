@@ -90,15 +90,13 @@ bind index S vfolder-from-query
 
 # Multipart composing
 # https://jonathanh.co.uk/blog/multipart-emails-in-neomutt/
-bind compose Y send-message
-macro compose y "<enter-command>unset compose_confirm_detach_first<enter>\
+macro compose Y "<enter-command>unset compose_confirm_detach_first<enter>\
 <enter-command>unset wait_key<enter>\
 <first-entry>\
 <pipe-entry>~/.config/neomutt/convert_multipart.sh<enter>\
 <enter-command>source ~/.cache/neomutt-custom/convert_multipart/neomutt-commands<enter>\
 <enter-command>set compose_confirm_detach_first=yes<enter>\
-<enter-command>set wait_key=yes<enter>\
-<send-message>"\
+<enter-command>set wait_key=yes<enter>"\
      "compose multipart emails"
 
 # NOTE: Mostly copied from muttwizard: https://github.com/LukeSmithxyz/mutt-wizard/blob/master/share/mutt-wizard.muttrc
