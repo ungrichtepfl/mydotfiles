@@ -82,6 +82,9 @@ macro pager ,@aoh= "<enter-command>unalternative_order *; alternative_order text
 macro pager ,@aot= "<enter-command>unalternative_order *; alternative_order text/plain text/calendar text/enriched text/html; macro pager gh ,@aoh= 'toggle alternative order'<enter><exit><display-message>"
 macro pager gh ,@aoh= "toggle alternative order"
 
+# Mark all message as read
+macro index,pager \CA "<tag-prefix><clear-flag>N<untag-pattern>.<enter>" "Mark all messages as read"
+
 # Use urlscan to handle links in messages
 macro index,pager,attach gu "<enter-command>unset wait_key<enter><pipe-entry> urlscan -dc <Enter><enter-command>set wait_key=yes<enter>"\
                "call urlscan to extract URLs out of a message"
