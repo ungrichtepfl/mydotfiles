@@ -5,7 +5,7 @@ All my Dotfiles at one place.
 Install packages for specific distro with:
 
 ```shell
-./install-packages.sh
+make packages
 ```
 
 Install user configs with
@@ -20,6 +20,28 @@ Install system configs with
 make system
 ```
 
+## Installation
+
+Checkout [INSTALL.md](INSTALL.md) for more info on how to install and setup the distro.
+
+### Bootstrap VoidLinux
+
+After installation with `void-installer` run:
+
+```shell
+sudo xbps-install -u xbps
+sudo xbps-install -Su
+sudo xbps-install -S i3 i3-status dmenu xorg dbus lightdm lightdm-gtk3-greeter nvim git setxkbmap alacritty
+ln -s /etc/sv/dbus /var/service
+ln -s /etc/sv/lightdm /var/service
+```
+
+This should launch `lightdm` directly and after log in i3 should start.
+
+## Flatpak
+
+After installation allow permission for "All user files" in `Flatseal` for all apps.
+
 ## dbus
 
 On `VoidLinux` the dbus is not launched automatically and my cause some problems
@@ -31,8 +53,6 @@ On high dpi systems you need some additional config. Otherwise everything is tin
 
 Checkout [the arch wiki](https://wiki.archlinux.org/title/HiDPI)
 for more info.
-
-Checkout [INSTALL.md](INSTALL.md) for more info on how to install and setup the distro.
 
 ## Zram
 

@@ -2,31 +2,32 @@
 
 DISTRO="$(lsb_release -i | cut -f 2-)"
 
+
 if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Installing packages on Void Linux"
-    sudo xbps-install -Sy xorg polkit chrony dbus bluez \
+    sudo xbps-install -Sy xorg polkit chrony dbus bluez setxkbmap \
         socklog-void man-pages man-pages-devel man-pages-posix \
         pulseaudio NetworkManager network-manager-applet \
         base-devel gdb curl wget git git-lfs jq zip unzip p7zip zstd zsh lz4 fzf \
         vim-huge neovim fastfetch cmake go zig cronie tzupdate \
         libsixel-devel chafa chafa-devel zoxide xcb-util-image-devel \
         libvips-devel tbb-devel libopencv-devel \
-        Thunar thunar-volman gvfs tumbler ffmpegthumbnailer \
+        Thunar thunar-volman gvfs tumbler ffmpeg ffmpegthumbnailer \
         lm_sensors pulsemixer brightnessctl zramen \
         maim xclip feh fd picom ripgrep eza bat dust \
-        dua-cli yazi poppler wiki-tui delta \
+        dua-cli autorandr yazi poppler wiki-tui delta \
         i3 i3status-rust dmenu i3lock-color \
         lightdm lightdm-gtk3-greeter elogind \
-        flatpak gthumb mupdf \
+        flatpak gthumb mupdf ImageMagick \
         neomutt mpv w3m-img notmuch pandoc urlscan \
-        isync cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
+        isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
         nerd-fonts font-awesome6 flameshot
     if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
         sudo xbps-install -Sy evolution
     fi
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop
+    flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop com.github.tchx84.Flatseal
 
     echo "[install-packages] Adding user to important groups."
     sudo usermod -aG wheel "$(whoami)"
@@ -38,7 +39,6 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    ntpd"
     echo "[install-packages]    dbus"
     echo "[install-packages]    NetworkManager"
-    echo "[install-packages]    crond"
     echo "[install-packages]    bluetoothd"
     echo "[install-packages]    lightdm"
     echo "[install-packages]    zramen"
