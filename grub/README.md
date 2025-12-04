@@ -27,4 +27,5 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 > [!Note]
 > If some icons are not displayed add the `--class` attribute after the menu
 > entry name. The class name must be the same name as the icon that you want
-> (in your theme's `icon` folder). E.g. `--class efi` if `efi.png` exists.
+> (in your theme's `icon` folder). E.g. `--class efi` if `efi.png` exists or
+> `--class submenu` if `submenu.png` exists.
