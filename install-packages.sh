@@ -8,6 +8,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     sudo xbps-install -Sy xorg polkit chrony dbus bluez setxkbmap \
         socklog-void man-pages man-pages-devel man-pages-posix \
         pulseaudio NetworkManager network-manager-applet blueman \
+        binutils-devel lua-language-server \
         base-devel gdb curl wget git git-lfs jq zip unzip p7zip zstd zsh lz4 fzf \
         vim-huge neovim fastfetch cmake go zig cronie tzupdate \
         libsixel-devel chafa chafa-devel zoxide xcb-util-image-devel \
