@@ -7,7 +7,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Installing packages on Void Linux"
     sudo xbps-install -Sy xorg polkit chrony dbus bluez setxkbmap \
         socklog-void man-pages man-pages-devel man-pages-posix \
-        pulseaudio NetworkManager network-manager-applet blueman \
+        pulseaudio NetworkManager network-manager-applet blueman tlp \
         binutils-devel lua-language-server \
         base-devel gdb curl wget git git-lfs jq zip unzip p7zip zstd zsh lz4 fzf \
         vim-huge neovim fastfetch cmake go zig cronie tzupdate \
@@ -38,6 +38,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Please check that the following services are enables in /var/service"
     echo "[install-packages]    polkitd"
     echo "[install-packages]    ntpd"
+    echo "[install-packages]    tlp"
     echo "[install-packages]    dbus"
     echo "[install-packages]    NetworkManager"
     echo "[install-packages]    bluetoothd"
@@ -50,9 +51,11 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    elogind"
     echo "[install-packages]    nanoklogd"
     echo "[install-packages]    socklog-unix"
-    echo "[install-packages] And disable the following when you enable NetworkManager:"
+    echo "[install-packages] Disable the following when you enable NetworkManager:"
     echo "[install-packages]    dhcpcd"
     echo "[install-packages]    wpa_supplicant"
+    echo "[install-packages] Disable the following when you enable elogind:"
+    echo "[install-packages]    acpid"
 else
     echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi
