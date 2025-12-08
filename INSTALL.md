@@ -1,5 +1,26 @@
 # Installation Guide
 
+## Additional repos
+
+```shell
+sudo xbps-install -Su void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree
+sudo xbps-install -S
+```
+
+## Nvidia
+
+Checkout [install nvidia drivers](https://docs.voidlinux.org/config/graphical-session/graphics-drivers/nvidia.html)
+in the void docs.
+
+## Steam
+
+It you will need `void-repo-nonfree`, `void-repo-multilib` and if you have a non-free driver installed `void-repo-multilib-nonfree`.
+
+Then read `/usr/share/doc/steam/README.voidlinux`.
+
+> [!NOTE]
+> The 32bit versions of pulsaudio are `libpulseaudio-32bit` `alsa-plugins-pulseaudio-32bit`
+
 ## Secure Boot
 
 > [!Warning]
