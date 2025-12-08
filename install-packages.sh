@@ -12,7 +12,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         base-devel gdb curl wget git git-lfs jq zip unzip p7zip zstd zsh lz4 fzf \
         vim-huge neovim fastfetch cmake go zig cronie tzupdate \
         libsixel-devel chafa chafa-devel zoxide xcb-util-image-devel \
-        libvips-devel tbb-devel libopencv-devel \
+        libvips-devel tbb-devel libopencv-devel zenity \
         Thunar thunar-volman gvfs tumbler ffmpeg ffmpegthumbnailer \
         lm_sensors pulsemixer brightnessctl zramen dunst \
         maim xclip feh fd picom ripgrep eza bat dust \
