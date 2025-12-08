@@ -17,7 +17,7 @@
     #
     # If this option is set to mouse or keyboard, the monitor option
     # will be ignored.
-    follow = none
+    follow = keyboard
 
     ### Geometry ###
 
@@ -36,12 +36,12 @@
     #       and the given value is treated as the maximum height
 
     # Position the notification in the top right corner
-    origin = top-right
+    origin = top-left
 
     # Offset from the origin
     # NOTE: Dunst from version 1.11 and older use this alternative notation
     # offset = 10x50
-    offset = (5, 15)
+    offset = (10, 30)
 
     # Scale factor. It is auto-detected if value is 0.
 	# NOTE: The screenshot was made with scale = 2

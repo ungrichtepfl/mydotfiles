@@ -14,7 +14,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         libsixel-devel chafa chafa-devel zoxide xcb-util-image-devel \
         libvips-devel tbb-devel libopencv-devel \
         Thunar thunar-volman gvfs tumbler ffmpeg ffmpegthumbnailer \
-        lm_sensors pulsemixer brightnessctl zramen \
+        lm_sensors pulsemixer brightnessctl zramen dunst \
         maim xclip feh fd picom ripgrep eza bat dust \
         dua-cli autorandr yazi poppler wiki-tui delta \
         i3 i3status-rust dmenu i3lock-color \
