@@ -63,6 +63,15 @@ and activate the service `sudo ln -s /etc/sv/zramen /var/service`.
 
 ## Troubleshooting
 
+### GPG
+
+If decryption does not work, it can be that the public key lockfile is still
+there and breaks decryption. Just remove it manually:
+
+```shell
+rm ~/.gnupg/public-keys.d/pubring.db.lock
+```
+
 ### Void Linux
 
 #### Update Repos
