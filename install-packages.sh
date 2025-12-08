@@ -50,6 +50,9 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    elogind"
     echo "[install-packages]    nanoklogd"
     echo "[install-packages]    socklog-unix"
+    echo "[install-packages] And disable the following when you enable NetworkManager:"
+    echo "[install-packages]    dhcpcd"
+    echo "[install-packages]    wpa_supplicant"
 else
     echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi
