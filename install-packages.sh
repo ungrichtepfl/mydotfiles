@@ -17,7 +17,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         lm_sensors pulsemixer brightnessctl zramen dunst \
         maim xclip feh fd picom ripgrep eza bat dust \
         dua-cli autorandr yazi poppler wiki-tui delta \
-        i3 i3status-rust dmenu i3lock-color \
+        i3 i3status-rust dmenu i3lock-color cups cups-filters \
         lightdm lightdm-gtk3-greeter elogind \
         flatpak gthumb mupdf ImageMagick \
         neomutt mpv w3m-img notmuch pandoc urlscan \
@@ -51,6 +51,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    elogind"
     echo "[install-packages]    nanoklogd"
     echo "[install-packages]    socklog-unix"
+    echo "[install-packages]    cupsd"
     echo "[install-packages] Disable the following when you enable NetworkManager:"
     echo "[install-packages]    dhcpcd"
     echo "[install-packages]    wpa_supplicant"
