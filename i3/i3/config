@@ -282,8 +282,7 @@ bar {
   # status_command i3blocks
   # status_command i3status
   position top
-  # NOTE: Put the font size in nosync if other font is needed
-  font pango:FontAwesome Nerd Font 12
+  font pango:FontAwesome Nerd Font 9
   # font pango:FiraCode Nerd Font 6
   # font pango:JetBrainsMono Nerd Font 7
   colors {

@@ -31,7 +31,7 @@ After installation with `void-installer` run:
 ```shell
 sudo xbps-install -u xbps
 sudo xbps-install -Su
-sudo xbps-install -S i3 i3-status dmenu xorg dbus lightdm lightdm-gtk3-greeter nvim git setxkbmap alacritty
+sudo xbps-install -S i3 i3status dmenu xorg dbus lightdm lightdm-gtk3-greeter neovim git setxkbmap alacritty
 ln -s /etc/sv/dbus /var/service
 ln -s /etc/sv/lightdm /var/service
 ```

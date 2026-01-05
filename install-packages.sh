@@ -18,11 +18,11 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         maim xclip feh fd picom ripgrep eza bat dust \
         dua-cli autorandr yazi poppler wiki-tui delta \
         i3 i3status-rust dmenu i3lock-color cups cups-filters \
-        lightdm lightdm-gtk3-greeter elogind \
-        flatpak gthumb mupdf ImageMagick \
+        lightdm lightdm-gtk3-greeter elogind clang \
+        flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
         neomutt mpv w3m-img notmuch pandoc urlscan \
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
-        nerd-fonts font-awesome6 flameshot
+        nerd-fonts font-awesome6 flameshot Solaar tealdeer
     if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
         sudo xbps-install -Sy evolution
     fi
@@ -34,6 +34,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     sudo usermod -aG wheel "$(whoami)"
     sudo usermod -aG storage "$(whoami)"
     sudo usermod -aG network "$(whoami)"
+    sudo usermod -aG plugdev "$(whoami)"
 
     echo "[install-packages] Please check that the following services are enables in /var/service"
     echo "[install-packages]    polkitd"
@@ -46,7 +47,6 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    zramen"
     echo "[install-packages]    udevd"
     echo "[install-packages]    crond"
-    echo "[install-packages]    acpid"
     echo "[install-packages]    sshd"
     echo "[install-packages]    elogind"
     echo "[install-packages]    nanoklogd"
@@ -55,8 +55,13 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Disable the following when you enable NetworkManager:"
     echo "[install-packages]    dhcpcd"
     echo "[install-packages]    wpa_supplicant"
+    echo "[install-packages]    Also remove /etc/resolv.conf"
     echo "[install-packages] Disable the following when you enable elogind:"
     echo "[install-packages]    acpid"
+    echo "[install-packages] Also install manually:"
+    echo "[install-packages]    nvm (and then node)"
+    echo "[install-packages]    rust"
+    echo "[install-packages]    treesitter-cli"
 else
     echo "[install-packages] Not yet implemented for $DISTRO. Nothing to install. Check manually if something does not work"
 fi

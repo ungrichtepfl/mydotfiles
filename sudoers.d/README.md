@@ -3,7 +3,7 @@
 You need to copy not symlink the file, because it needs specify permissions. Run:
 
 ```shell
-sudo cp z_chrigi /etc/sudoers.d
+sudo cp ./sudoers.d/z_chrigi /etc/sudoers.d
 sudo chmod 0440 /etc/sudoers.d/z_chrigi
 sudo chown root:root /etc/sudoers.d/z_chrigi
 ```

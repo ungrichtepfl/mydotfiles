@@ -13,7 +13,7 @@ Then you need to **copy** the file to `/etc/polkit-1/rules.d`.
 Symlinking seems not to work:
 
 ```shell
-sudo cp 50-udiskie.rules /etc/polkit-1/rules.d
+sudo cp ./polkit/50-udiskie.rules /etc/polkit-1/rules.d
 ```
 
 Also, you need to be added to the storage group:
