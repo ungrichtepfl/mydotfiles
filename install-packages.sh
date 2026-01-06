@@ -20,7 +20,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         i3 i3status-rust dmenu i3lock-color cups cups-filters \
         lightdm lightdm-gtk3-greeter elogind clang \
         flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
-        neomutt mpv w3m-img notmuch pandoc urlscan \
+        neomutt tmux mpv w3m-img notmuch pandoc urlscan \
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
         nerd-fonts font-awesome6 flameshot Solaar tealdeer
     if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
