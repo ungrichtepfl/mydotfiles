@@ -19,6 +19,8 @@ setxkbmap -layout ch -variant de_nodeadkeys
 xmodmap $HOME/.Xmodmap
 
 ### HIGH DPI CONFIG
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_ENABLE_HIGHDPI_SCALING=1
 
 DISPLAYS_CONNECTED=$(xrandr | grep " connected " | awk '{ print$1 }' | wc -l)
 if [ "$DISPLAYS_CONNECTED" -lt 2 ]; then
@@ -49,10 +51,10 @@ if [ "$DISPLAYS_CONNECTED" -lt 2 ]; then
     # Check if DPI is considered HiDPI (threshold: 200)
     if [ "$DPI" -gt 200 ]; then
         # Checkout https://wiki.archlinux.org/title/HiDPI for more info
-        export QT_AUTO_SCREEN_SCALE_FACTOR=1
-        export QT_ENABLE_HIGHDPI_SCALING=1
         export GDK_SCALE=2
     fi
+else
+    export GDK_SCALE=1 # Undo scaling for lightdm if set
 fi
 
 ### END HIGH DPI CONFIG
