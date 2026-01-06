@@ -11,7 +11,10 @@ set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
 folder-hook ~/Mail/Personal/ 'source ~/.config/neomutt/accounts/switch; \
                               source ~/.config/neomutt/accounts/personal'
 
-# NOTE: Add new mailboxes and folder hook here:
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/personal<enter><change-folder>!<enter>'
+
+# NOTE: Add new mailboxes ,folder hooks here and change mailbox macros here:
 #  Also, to not forget to add the account to ./home/dot-config/isyncrc and ./home/dot-config/goimapnotify/
 #  Otherwise syncing will not work
+
 
