@@ -365,7 +365,7 @@
     foreground = "#ffffff"
     frame_color = "#d54e53"
 	highlight = "#d54e53, #f0f0f0"
-    timeout = 10
+    timeout = 0
     override_pause_level = 60
     # Icon for notifications with critical urgency
     default_icon = dialog-warning

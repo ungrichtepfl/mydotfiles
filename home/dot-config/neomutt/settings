@@ -11,7 +11,6 @@ alternative_order text/plain text/calendar text/enriched text/html
 
 # main options
 unset crypt_use_gpgme # TODO: Check why opening signed mail hangs
-set new_mail_command = 'bash -c "notify-send \"New Email in %f\""'
 set use_envelope_from
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying

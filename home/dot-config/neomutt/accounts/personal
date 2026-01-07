@@ -33,8 +33,8 @@ macro index I "<enter-command>unset wait_key<enter>\
 <shell-escape>bash -c '\
 (mbsync Personal &>/dev/null &&\
 notmuch new &>/dev/null &&\
-notify-send \"Successfully syncd emails!\" &>/dev/null)\
-|| notify-send -u critical \"Failed to sync emails\" &>/dev/null\
+notify-send \"Mail Sync\" \"Successfully syncd emails!\" &>/dev/null)\
+|| notify-send -u critical \"Mail Sync Fail\" \"Failed to sync emails\" &>/dev/null\
 ' &<enter>\
 <enter-command>set wait_key=yes<enter>" \
         "sync IMAP account"
