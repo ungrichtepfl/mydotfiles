@@ -18,7 +18,7 @@ configurations:
         onNewMail: bash -c "mbsync Personal:Junk"
         onDeletedMail: bash -c "mbsync Personal:Junk"
         onChangedMailPost: bash -c "notmuch new"
-        onNewMailPost: bash -c 'notmuch new; ~/.config/neomutt/new_email_notify.sh "New Junk" "New work junk emails"'
+        onNewMailPost: bash -c "notmuch new"
       - mailbox: Sent
         onNewMail: bash -c "mbsync Personal:Sent"
         onDeletedMail: bash -c "mbsync Personal:Sent"
