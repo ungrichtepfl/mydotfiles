@@ -5,6 +5,11 @@ GRUB_DEFAULT=saved
 GRUB_SAVEDEFAULT=true
 
 GRUB_TIMEOUT=10
+# NOTE: If the set the timeout above to 0 uncomment the option 
+# below such that you can boot into grub using the shift key or
+# shift-F1 etc.
+# GRUB_TIMEOUT_STYLE=hidden
+
 #GRUB_HIDDEN_TIMEOUT=0
 #GRUB_HIDDEN_TIMEOUT_QUIET=false
 
