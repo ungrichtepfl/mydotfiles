@@ -384,7 +384,9 @@ if [[ -n $ZELLIJ && ! -n $NVIM ]]; then
 
     function set_tab_to_command_line() {
         local cmdline=$1
-        if [[ $cmdline != nvim* ]]; then
+        if [[ $cmdline == nvim* ]]; then
+            change_tab_title "nvim: $(current_dir)"
+        else
             change_tab_title $cmdline
         fi
     }
