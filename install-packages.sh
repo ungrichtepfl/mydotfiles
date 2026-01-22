@@ -18,14 +18,11 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         maim xclip feh fd picom ripgrep eza bat dust \
         dua-cli autorandr yazi resvg poppler wiki-tui delta \
         i3 i3status-rust dmenu i3lock-color cups cups-filters \
-        lightdm lightdm-gtk3-greeter elogind clang \
-        flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
+        system-config-printer cups-pk-helper lightdm lightdm-gtk3-greeter \
+        elogind clang flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
         neomutt tmux mpv w3m-img notmuch pandoc urlscan \
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
         nerd-fonts font-awesome6 flameshot Solaar tealdeer
-    if [ "$1" = "--work" ] || [ "$1" = "-w" ]; then
-        sudo xbps-install -Sy evolution
-    fi
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop com.github.tchx84.Flatseal
