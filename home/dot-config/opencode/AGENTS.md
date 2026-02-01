@@ -17,6 +17,12 @@ This document provides comprehensive guidelines for AI coding agents working acr
 - ❌ "Great catch! You're absolutely right about this being a complex topic!"
 - ✅ "This requires handling three components: authentication, validation, and persistence."
 
+## 🛠️ User Environment
+
+**Editor preference:** Neovim user - when suggesting editor-specific solutions or configurations, prioritize Neovim/Vim patterns and assume familiarity with modal editing, key bindings, and command-line workflows.
+
+**Terminal-first workflow:** Prefer terminal-based solutions over GUI applications whenever possible. Assume familiarity with command-line tools, shell scripting, and text-based interfaces.
+
 ## 🔍 CRITICAL: Documentation and Research Requirements
 
 **MANDATORY web search requirements:**
