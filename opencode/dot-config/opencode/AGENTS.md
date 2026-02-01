@@ -498,6 +498,14 @@ encodeCreateUserRequest request =
 ## 🏗️ Project Structure Patterns
 
 ### Repository Analysis
+**CRITICAL: Before making any changes or providing analysis, ALWAYS read through ALL files in the relevant directory first.**
+
+When starting work in any directory:
+1. **Read ALL files** in the target directory before doing any analysis or making changes
+2. Use the Read tool to examine each file's complete contents
+3. Understand the full context of what exists before proposing solutions
+4. Only after reading all files should you begin planning or implementing changes
+
 Always analyze the project structure first:
 ```bash
 # Look for configuration files
