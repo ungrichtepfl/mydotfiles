@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Custom keybind configuration
+  "keybinds": {
+    "variant_cycle": "ctrl+k" // Changed from default ctrl+t
+  },
+  // Permission settings - require approval for destructive operations
+  "permission": {
+    "edit": "ask",   // Ask before editing files
+    "bash": "ask"    // Ask before running shell commands
+  }
+}
