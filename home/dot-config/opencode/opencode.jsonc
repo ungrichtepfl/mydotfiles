@@ -1,12 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  // Use Plan agent as default when starting OpenCode
+  "default_agent": "plan",
   // Custom keybind configuration
   "keybinds": {
     "variant_cycle": "ctrl+k" // Changed from default ctrl+t
   },
-  // Permission settings - require approval for destructive operations
-  "permission": {
-    "edit": "ask",   // Ask before editing files
-    "bash": "ask"    // Ask before running shell commands
-  }
 }
