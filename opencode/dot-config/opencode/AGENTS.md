@@ -17,6 +17,60 @@ This document provides comprehensive guidelines for AI coding agents working acr
 - ❌ "Great catch! You're absolutely right about this being a complex topic!"
 - ✅ "This requires handling three components: authentication, validation, and persistence."
 
+## 🔁 Preventing Doom Loops
+
+**CRITICAL: Detect and break out of repetitive failure patterns immediately.**
+
+A "doom loop" occurs when the agent repeatedly attempts the same failing operation without making progress. This wastes time and resources.
+
+### Recognition Patterns
+Watch for these signs of a doom loop:
+- Running the same command multiple times with identical results
+- Repeatedly attempting the same fix that continues to fail
+- Making the same type of edit that keeps getting rejected
+- Running tests that fail the same way more than 2-3 times
+- Searching for the same information repeatedly without finding it
+
+### Breaking the Loop
+When caught in a doom loop, **STOP** and:
+
+1. **Acknowledge the pattern**: "I've attempted this approach multiple times without success."
+2. **Analyze what's different**: Identify what changed or why the approach isn't working
+3. **Change strategy**: Try a fundamentally different approach, not minor variations
+4. **Ask for help**: If stuck after 2-3 attempts, ask the user for guidance or clarification
+
+### Prevention Guidelines
+- **After 2 failures**: Analyze why the approach isn't working
+- **After 3 failures**: Switch to a completely different strategy or ask the user
+- **Never retry more than 3 times** without changing your approach significantly
+- **Track your attempts**: Keep mental count of how many times you've tried similar solutions
+- **Validate assumptions**: If something fails repeatedly, challenge your assumptions about what should work
+
+### Examples
+
+**Bad (Doom Loop):**
+```
+Attempt 1: Run tests → 5 failures
+Fix attempt 1: Update type annotations
+Attempt 2: Run tests → 5 failures  
+Fix attempt 2: Update type annotations slightly differently
+Attempt 3: Run tests → 5 failures
+Fix attempt 3: Update type annotations with different syntax
+[continues indefinitely...]
+```
+
+**Good (Breaking the Loop):**
+```
+Attempt 1: Run tests → 5 failures
+Fix attempt 1: Update type annotations
+Attempt 2: Run tests → 5 failures
+Analysis: "The type annotations aren't the issue. Let me check if the test setup is correct."
+Fix attempt 2: Investigate test configuration
+[or ask user for clarification]
+```
+
+Remember: **3 strikes and you change approach or ask for help**. Persistence is good, but repetition without learning is a waste of everyone's time.
+
 ## 🛠️ User Environment
 
 **Editor preference:** Neovim user - when suggesting editor-specific solutions or configurations, prioritize Neovim/Vim patterns and assume familiarity with modal editing, key bindings, and command-line workflows.
@@ -29,12 +83,24 @@ This document provides comprehensive guidelines for AI coding agents working acr
 - **ALWAYS** perform web searches when configuring tools or using libraries
 - **ALWAYS** verify that library/tool versions match current documentation
 - **ALWAYS** check official documentation before implementing features
+- **NEVER** do what seems logical without verification - always verify in official docs first
+
+**The "seems logical" trap:**
+When a user asks for a configuration change or feature implementation:
+1. ❌ **WRONG**: "This seems logical, let me add it" → Make the change → Check docs later
+2. ✅ **CORRECT**: Check official docs first → Verify it exists → Then make the change
+3. **If unsure**: Search official documentation BEFORE suggesting or implementing anything
+
+**Examples:**
+- ❌ User: "Add doom_loop_threshold to config" → *adds fictional config option*
+- ✅ User: "Add doom_loop_threshold to config" → *searches docs first* → *finds `doom_loop` permission* → *adds correct option*
 
 **Web search guidelines:**
 - ✅ Use official documentation, GitHub repos, API references, man pages
 - ✅ Prioritize recent, authoritative sources
 - ❌ **AVOID** AI-generated content, blog tutorials, Stack Overflow answers
 - ❌ **AVOID** outdated documentation or deprecated approaches
+- ❌ **AVOID** assuming logical solutions without verification
 - ✅ Cross-reference multiple official sources when in doubt
 
 **Version compatibility:**

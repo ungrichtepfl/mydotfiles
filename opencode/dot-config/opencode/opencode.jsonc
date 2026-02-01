@@ -6,4 +6,8 @@
   "keybinds": {
     "variant_cycle": "ctrl+k" // Changed from default ctrl+t
   },
+  // Doom loop prevention - prompt when same tool call repeats 3 times
+  "permission": {
+    "doom_loop": "ask"
+  }
 }
