@@ -8,6 +8,55 @@
   },
   // Doom loop prevention - prompt when same tool call repeats 3 times
   "permission": {
-    "doom_loop": "ask"
+    "doom_loop": "ask",
+    // Dangerous bash commands - always deny
+    "bash": {
+      "*": "ask",
+      // Dangerous file operations
+      "rm -rf /*": "deny",
+      "rm -rf /": "deny",
+      "rm -rf ~/*": "deny",
+      "rm -rf $HOME/*": "deny",
+      "rm -rf .*": "deny",
+      "rm -fr /*": "deny",
+      "rm -fr /": "deny",
+      "chmod -R 777 /*": "deny",
+      "chmod -R 777 /": "deny",
+      "chown -R * /*": "deny",
+      // Dangerous system modifications
+      "mkfs*": "deny",
+      "dd if=* of=/dev/*": "deny",
+      ":(){ :|:& };:": "deny", // Fork bomb
+      // Dangerous package manager operations
+      "sudo rm -rf /*": "deny",
+      "sudo dd *": "deny",
+      // Allow safe common operations
+      "git *": "allow",
+      "npm *": "allow",
+      "pnpm *": "allow",
+      "yarn *": "allow",
+      "grep *": "allow",
+      "rg *": "allow"
+    },
+    // Protect sensitive files from reading
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "**/id_rsa": "deny",
+      "**/id_ed25519": "deny",
+      "**/.ssh/id_*": "deny",
+      "**/credentials": "deny",
+      "**/secrets.*": "deny"
+    },
+    // Protect sensitive files from editing
+    "edit": {
+      "**/id_rsa": "deny",
+      "**/id_ed25519": "deny",
+      "**/.ssh/id_*": "deny",
+      "**/credentials": "deny",
+      "**/secrets.*": "deny"
+    }
   }
 }
