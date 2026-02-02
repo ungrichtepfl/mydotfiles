@@ -4,39 +4,52 @@
   "default_agent": "plan",
   // Custom keybind configuration
   "keybinds": {
-    "variant_cycle": "ctrl+k" // Changed from default ctrl+t
+    "variant_cycle": "ctrl+k", // Changed from default ctrl+t
   },
   // Doom loop prevention - prompt when same tool call repeats 3 times
   "permission": {
     "doom_loop": "ask",
     // Dangerous bash commands - always deny
     "bash": {
-      "*": "ask",
-      // Dangerous file operations
-      "rm -rf /*": "deny",
+      "*": "allow",
+      // Potentially dangerous - ask first
+      "rm -rf /usr*": "ask",
+      "rm -rf /etc*": "ask",
+      "rm -rf /var*": "ask",
+      "rm -rf /opt*": "ask",
+      "rm -rf /home*": "ask",
+      "chmod -R *": "ask",
+      "chown -R *": "ask",
+      "sudo *": "ask",
+      "docker rm *": "ask",
+      "docker rmi *": "ask",
+      "docker system prune *": "ask",
+      "git push --force*": "ask",
+      "git push -f *": "ask",
+      "git reset --hard*": "ask",
+      "git clean -fd*": "ask",
+      "git checkout -- *": "ask",
+      "kill *": "ask",
+      "killall *": "ask",
+      "pkill *": "ask",
+      "shutdown *": "ask",
+      "reboot *": "ask",
+      "systemctl *": "ask",
+      "service *": "ask",
+      // Always deny - truly destructive
       "rm -rf /": "deny",
+      "rm -rf /*": "deny",
       "rm -rf ~/*": "deny",
-      "rm -rf $HOME/*": "deny",
+      "rm -rf $HOME": "deny",
       "rm -rf .*": "deny",
-      "rm -fr /*": "deny",
-      "rm -fr /": "deny",
-      "chmod -R 777 /*": "deny",
       "chmod -R 777 /": "deny",
+      "chmod -R 777 /*": "deny",
+      "chown -R * /": "deny",
       "chown -R * /*": "deny",
-      // Dangerous system modifications
+      "sudo dd *": "deny",
       "mkfs*": "deny",
       "dd if=* of=/dev/*": "deny",
       ":(){ :|:& };:": "deny", // Fork bomb
-      // Dangerous package manager operations
-      "sudo rm -rf /*": "deny",
-      "sudo dd *": "deny",
-      // Allow safe common operations
-      "git *": "allow",
-      "npm *": "allow",
-      "pnpm *": "allow",
-      "yarn *": "allow",
-      "grep *": "allow",
-      "rg *": "allow"
     },
     // Protect sensitive files from reading
     "read": {
@@ -48,7 +61,7 @@
       "**/id_ed25519": "deny",
       "**/.ssh/id_*": "deny",
       "**/credentials": "deny",
-      "**/secrets.*": "deny"
+      "**/secrets.*": "deny",
     },
     // Protect sensitive files from editing
     "edit": {
@@ -56,7 +69,7 @@
       "**/id_ed25519": "deny",
       "**/.ssh/id_*": "deny",
       "**/credentials": "deny",
-      "**/secrets.*": "deny"
-    }
-  }
+      "**/secrets.*": "deny",
+    },
+  },
 }
