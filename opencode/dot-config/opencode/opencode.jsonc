@@ -213,6 +213,8 @@
       "gunzip *": "allow",
       "xz *": "allow",
       // Misc dev tools
+      "act *": "allow",
+      "xclip *": "allow",
       "curl *": "allow",
       "wget *": "allow",
       "ssh-keygen *": "allow",
