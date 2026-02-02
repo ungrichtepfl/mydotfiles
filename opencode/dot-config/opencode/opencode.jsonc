@@ -152,6 +152,8 @@
       "ormolu *": "allow",
       "elm-format *": "allow",
       "elm-review *": "allow",
+      // Text editors
+      "nvim --headless *": "allow",
       // Docker (read-only and safe)
       "docker ps": "allow",
       "docker ps *": "allow",
