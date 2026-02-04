@@ -1,177 +1,38 @@
 # vim: filetype=zsh
 
 # NOTE: Checkout https://peterlyons.com/problog/2018/01/zsh-lazy-loading/
-# and https://notes.frederic-hemberger.de/speeding-up-initial-zsh-startup-with-lazy-loading/
-# for lazy-loading
+#  and https://notes.frederic-hemberger.de/speeding-up-initial-zsh-startup-with-lazy-loading/
+#  for lazy-loading
 
+# NOTE: run with: ZPROF=1 zsh -i -c exit
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 
-DISTRO="$(lsb_release -i | cut -f 2-)"
+. "$HOME/.zsh.d/options.zsh"
+. "$HOME/.zsh.d/keybinds.zsh"
+. "$HOME/.zsh.d/alias.zsh"
+. "$HOME/.zsh.d/zellij.zsh"
 
-typeset -U path PATH # Make sure only unique values are added
-path_add_front(){
-    path=("${1}" "${path[@]}")
-}
-path_add_back(){
-    path+=("${1}")
-}
+#######################
+# --- Plugins ------- #
+#######################
 
-ssource(){
-    [ -f "${1}" ] && source "${1}"
-}
+# NOTE: plugin sourcing does not work in other files.
 
-## Options section
-setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
-setopt nocaseglob                                               # Case insensitive globbing
-setopt rcexpandparam                                            # Array expansion with parameters
-setopt nocheckjobs                                              # Don't warn about running processes when exiting
-setopt numericglobsort                                          # Sort filenames numerically when it makes sense
-setopt nobeep                                                   # No beep
-setopt appendhistory                                            # Immediately append history instead of overwriting
-setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+export ZSH_PLUGIN_PATH="$HOME/.local/share/zsh/plugins"
 
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
-zstyle ':completion:*' rehash true                              # automatically find new executables in path
-# Speed up completions
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-HISTFILE=~/.zhistory
-HISTSIZE=2000
-SAVEHIST=10000
-WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
-
-# Config
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# Load run-help correctly
-unalias run-help 2>/dev/null
-autoload -U run-help
-
-## Keybindings section
-bindkey -e # Select emacs keybindings to be compatible with bash
-autoload edit-command-line
-zle -N edit-command-line
-bindkey '^X^E' edit-command-line
-# Add keybindings here:
-
-## Alias section
-alias cp="cp -i"                                                # Confirm before overwriting something
-alias df='df -h'                                                # Human-readable sizes
-alias free='free -m'                                            # Show sizes in MB
-alias gitac='git add . && git commit'				# git add and commit concatenated
-alias gitu='git add . && git commit && git push'
-
-if [ $commands[eza] ]; then
-    alias ls='eza --color=auto'                                 # Show content of folder colorized
-    alias ll='eza -lh'                                          # Show content of folder in list format
-    alias la='eza -a'                                           # Show all content of folder
-    alias lla='eza -lha'                                        # Show all content of folder in list format
-else
-    alias ls='ls --color'                                       # Show content of folder colorized
-    alias ll='ls -lh'                                           # Show content of folder in list format
-    alias la='ls -a'                                            # Show all content of folder
-    alias lla='ls -lha'                                         # Show all content of folder in list format
-fi
-if [ $commands[bat] ]; then
-    alias cat="bat"
-fi
-if [ $commands[dust] ]; then
-    alias du="dust"
-fi
-if [ $commands[dua] ]; then
-    alias ncdu="dua i"
-fi
-
-# kitty terminal ssh
-alias sshk='kitty +kitten ssh'
-
-# Git
-alias cdg='cd $(git rev-parse --show-toplevel)'/ca
-alias gita='git add'
-alias gitb='git --no-pager branch'
-alias gitc='git checkout'
-alias gitca='git commit --amend'
-alias gitcan='git commit --amend --no-edit'
-alias gitcp='git cherry-pick'
-alias gits='git status --short'
-alias gitd='git diff'
-alias gitl='git lg'
-alias gitcb='git checkout -b'
-alias gitcm='git commit --signoff'
-alias gitcmm='git commit --signoff -m'
-alias gitds='gitd --staged'
-alias gitpo='git pull origin'
-alias gitpom='gitpo master'
-alias gitpomr='gitpom --rebase'
-alias gitpod='gitpo develop'
-alias gitpodr='gitpod --rebase'
-gitpsu() {
-    local _git_branch="$(git branch --show-current)"
-    git push --set-upstream origin $_git_branch
-}
-alias gitfprl="git fetch -p ; git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -D"
-
-# Distro specific config
-if [[ "$DISTRO" == "VoidLinux" ]]; then
-    alias poweroff='sudo poweroff'
-    alias reboot='sudo reboot'
-    alias shutdown='sudo shutdown'
-    vupdate-all() {
-        echo "[update-all] Updating system..."
-        sudo xbps-install -Suy xbps
-        sudo xbps-install -Suy
-        if command -v sbctl 2>&1 >/dev/null; then
-            echo "[update-all] Resigning efi files if needed..."
-            sudo sbctl sign-all
-        fi
-        echo "[update-all] Update zsh-plugins..."
-        update-zsh-plugins
-        echo "[update-all] Update flatpak..."
-        flatpak update -y
-    }
-else
-    # Assume Debian like system
-    alias saptu='sudo apt update'					# Update all packages
-    alias saptuu='sudo apt update && sudo apt upgrade -y' 		# Update and upgrade all packages
-    alias saptufu='sudo apt update && sudo apt full-upgrade -y'	# Update and upgrade all packages
-    alias saptufup='sudo apt update && sudo apt full-upgrade -y; update-zsh-plugins'	# Update and upgrade all packages, plus zsh plugins
-    alias sapti='sudo apt install'
-fi
-
-# For external auto completion:
-fpath+="$HOME/.zfunc"
-
-# Theming section
-autoload -U colors zcalc
-colors
-
-
-# Color man pages
-export LESS_TERMCAP_mb=$'\E[01;32m'
-export LESS_TERMCAP_md=$'\E[01;32m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;47;34m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;36m'
-export LESS=-r
-
-## Plugins section:
-export ZSH_PLUGIN_PATH="${HOME}/.local/share/zsh/plugins"
-
-# Defer sourcing
+# Defer plugin sourcing
 ssource "${ZSH_PLUGIN_PATH}/zsh-defer/zsh-defer.plugin.zsh"
 
 # Use syntax highlighting
 zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+. "$HOME/.zsh.d/prompt.zsh" # FIXME: Has to be after syntax-highlighting why?
 
 # Use history substring search
 setup_history_search(){
     unfunction "$0"
     ssource "${ZSH_PLUGIN_PATH}/zsh-history-substring-search/zsh-history-substring-search.zsh"
     # bind UP and DOWN arrow keys to history substring search
-    zmodload zsh/terminfo
     bindkey "$terminfo[kcuu1]" history-substring-search-up
     bindkey "$terminfo[kcud1]" history-substring-search-down
     bindkey '^[[A' history-substring-search-up
@@ -182,7 +43,7 @@ setup_history_search(){
 zsh-defer setup_history_search
 
 # jump quickly to directories that where visited frequently
-if  [[ ! $commands[zoxide] ]]; then
+if  (( ! $+commands[zoxide] )); then
     zsh-defer ssource "${ZSH_PLUGIN_PATH}/zsh-z/zsh-z.plugin.zsh"
 fi
 # More suggsetions
@@ -201,103 +62,38 @@ setup_autosuggestion(){
 }
 zsh-defer setup_autosuggestion
 
-## DEFINE PROMPT                  # NOTE: Has to be below plugins otherwise it does not work somehow?
-# enable substitution for prompt
-setopt prompt_subst
-PROMPT=$'%{$fg_bold[red]%}%n%{$fg_bold[yellow]%}@%{$fg_bold[green]%}%m %{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%}%{$fg[blue]%}%{$fg_bold[blue]%} %#%{$reset_color%} '
-
-# Modify the colors and symbols in these variables as desired.
-GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"                              # plus/minus     - clean repo
-GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
-GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
-GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"             # A"NUM"         - ahead by "NUM" commits
-GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"           # B"NUM"         - behind by "NUM" commits
-GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"     # lightning bolt - merge conflict
-GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●%{$reset_color%}"       # red circle     - untracked files
-GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●%{$reset_color%}"     # yellow circle  - tracked files modified
-GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"        # green circle   - staged changes present = ready for "git push"
-
-parse_git_branch() {
-    # Show Git branch/tag, or name-rev if on detached head
-    ( git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD ) 2> /dev/null
-}
-
-parse_git_state() {
-    # Show different symbols as appropriate for various Git repository states
-    # Compose this value via multiple conditional appends.
-    local GIT_STATE=""
-    local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
-    if [ "$NUM_AHEAD" -gt 0 ]; then
-        GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
-    fi
-    local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
-    if [ "$NUM_BEHIND" -gt 0 ]; then
-        GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
-    fi
-    local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
-    if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
-    fi
-    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
-    fi
-    if ! git diff --quiet 2> /dev/null; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
-    fi
-    if ! git diff --cached --quiet 2> /dev/null; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
-    fi
-    if [[ -n $GIT_STATE ]]; then
-        echo "$GIT_PROMPT_PREFIX$GIT_STATE$GIT_PROMPT_SUFFIX"
-    fi
-}
-
-git_prompt_string() {
-    local git_where="$(parse_git_branch)"
-
-    # If inside a Git repository, print its branch and state
-    [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX%{$fg[red]%}%(?..[%?])"
-
-    # If not inside the Git repo, only yprint exit codes of last command (only if it failed)
-    [ ! -n "$git_where" ] && echo "%{$fg[red]%} %(?..[%?])"
-}
-# Apply different settings for different terminals
-case $(basename "$(cat "/proc/$PPID/comm")") in
-    login)
-        RPROMPT="%{$fg[red]%} %(?..[%?])"
-        ;;
-    *)
-        RPROMPT='$(git_prompt_string)'
-        ;;
-esac
-## END DEFINE PROMPT
-
-zstyle ':completion:*' menu select
+#####################
+# -- Completions -- #
+#####################
 
 # Add fzf completions and key-bindings to zsh
 # sudo apt install fzf
-if [ $commands[fzf] ]; then
+if (( $+commands[fzf] )); then
     zsh-defer source <(fzf --zsh)
 fi
 
-# Add path to path
-path_add_back "$HOME/.local/bin"
-
-# Use nvim as default editor
-if [ $commands[nvim] ]; then
-    export EDITOR=`which nvim`
-    export VISUAL=`which nvim`
+# Cargo/Rust
+if (( $+commands[rustup] )); then
+    if [ ! -e "$ZFUNC_PATH/_rustup" ]; then
+        mkdir -p "$ZFUNC_PATH"
+        rustup completions zsh > "$ZFUNC_PATH/_rustup"
+    fi
+    if [ ! -e $ZFUNC_PATH/_cargo ]; then
+        mkdir -p "$ZFUNC_PATH"
+        rustup completions zsh cargo > "$ZFUNC_PATH/_cargo"
+    fi
 fi
 
-# Golang:
-path_add_back "$HOME/.local/go/bin"
-path_add_back "/usr/local/go/bin"
-export GOPATH="$HOME/.local/go"
+# Must be after comptinit:
+if (( $+commands[zoxide] )); then
+    eval "$(zoxide init zsh)"
+fi
 
-# Haskell:
-ssource "$HOME/.ghcup/env" # ghcup-env
+##############
+# -- SLOW -- #
+##############
 
-# Nvm:
+# Nvm
 setup_nvm() {
     unfunction "$0"
     export NVM_DIR="$HOME/.config/nvm"
@@ -315,98 +111,4 @@ setup_pyenv() {
 }
 zsh-defer setup_pyenv
 
-# Cargo/Rust
-ssource "$HOME/.cargo/env"
-if [ $commands[rustup] ]; then
-    if [ ! -e ~/.zfunc/_rustup ]; then
-        mkdir -p ~/.zfunc
-        rustup completions zsh > ~/.zfunc/_rustup
-    fi
-    if [ ! -e ~/.zfunc/_cargo ]; then
-        mkdir -p ~/.zfunc
-        rustup completions zsh cargo > ~/.zfunc/_cargo
-    fi
-fi
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) path_add_front "$PNPM_HOME" ;;
-esac
-# pnpm end
-
-# Get no sync data:
-ssource "$HOME/.zshrc.nosync"
-
-# Add neovim:
-path_add_front "$HOME/.local/nvim/bin"
-
-# Add julia:
-path_add_front "$HOME/.local/julia/bin"
-
-# Add mojo:
-export MODULAR_HOME="$HOME/.modular"
-path_add_front "$HOME/.modular/pkg/packages.modular.com_mojo/bin"
-
-# Dotnet:
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-# Create as alias for nuget
-alias nuget="mono /usr/local/bin/nuget.exe"
-
-# opencode
-export PATH=/home/chrigi/.opencode/bin:$PATH
-
-# Enable autocomplete
-autoload -Uz compinit
-compinit -C # Enable caching
-
-# Must be after comptinit:
-if [ $commands[zoxide] ]; then
-    eval "$(zoxide init zsh)"
-fi
-
-# Zellij config
-if [[ -n $ZELLIJ && ! -n $NVIM ]]; then
-    function current_dir() {
-        local current_dir=$PWD
-        if [[ $current_dir == $HOME ]]; then
-            current_dir="~"
-        else
-            current_dir=${current_dir##*/}
-        fi
-
-        echo $current_dir
-    }
-
-    function change_tab_title() {
-        local title=$1
-        command nohup zellij action rename-tab $title >/dev/null 2>&1
-    }
-
-    function set_tab_to_working_dir() {
-        local result=$?
-        local title=$(current_dir)
-        # uncomment the following to show the exit code after a failed command
-        # if [[ $result -gt 0 ]]; then
-        #     title="$title [$result]"
-        # fi
-
-        change_tab_title $title
-    }
-
-    function set_tab_to_command_line() {
-        local cmdline=$1
-        if [[ $cmdline == nvim* ]]; then
-            change_tab_title "nvim: $(current_dir)"
-        else
-            change_tab_title $cmdline
-        fi
-    }
-
-    autoload -Uz add-zsh-hook
-    add-zsh-hook precmd set_tab_to_working_dir
-    add-zsh-hook preexec set_tab_to_command_line
-fi
-
-# run with: ZPROF=1 zsh -i -c exit
 [ -z "$ZPROF" ] || zprof

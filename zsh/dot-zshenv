@@ -1,0 +1,58 @@
+# vim: filetype=zsh
+
+typeset -U path PATH # Make sure only unique values are added
+path_add_front(){
+    path=("${1}" "${path[@]}")
+}
+path_add_back(){
+    path+=("${1}")
+}
+
+ssource(){
+    [ -f "${1}" ] && . "${1}"
+}
+
+# Config
+export XDG_CONFIG_HOME="$HOME/.config"
+
+HISTFILE="$HOME/.zhistory"
+HISTSIZE=2000
+SAVEHIST=10000
+WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
+
+# Add .local/bin to path
+path_add_back "$HOME/.local/bin"
+
+# Get no sync data:
+ssource "$HOME/.zshrc.nosync"
+# Golang:
+path_add_back "$HOME/.local/go/bin"
+path_add_back "/usr/local/go/bin"
+export GOPATH="$HOME/.local/go"
+
+# Haskell:
+ssource "$HOME/.ghcup/env" # ghcup-env
+
+# Cargo/Rust
+ssource "$HOME/.cargo/env"
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+path_add_front "$PNPM_HOME"
+
+# Add neovim:
+path_add_front "$HOME/.local/nvim/bin"
+
+# Add julia:
+path_add_front "$HOME/.local/julia/bin"
+
+# Add mojo:
+export MODULAR_HOME="$HOME/.modular"
+path_add_front "$HOME/.modular/pkg/packages.modular.com_mojo/bin"
+
+# Dotnet:
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# opencode
+export PATH=/home/chrigi/.opencode/bin:$PATH
+
