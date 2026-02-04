@@ -31,8 +31,6 @@
       "git pull": "allow",
       "git pull *": "allow",
       "git add *": "allow",
-      "git commit": "allow",
-      "git commit *": "allow",
       "git stash": "allow",
       "git stash *": "allow",
       "git tag": "allow",
