@@ -22,7 +22,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         elogind clang flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
         neomutt tmux mpv w3m-img notmuch pandoc urlscan \
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
-        nerd-fonts font-awesome6 flameshot Solaar tealdeer
+        nerd-fonts font-awesome6 flameshot Solaar tealdeer avidemux docker
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop com.github.tchx84.Flatseal
@@ -32,6 +32,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     sudo usermod -aG storage "$(whoami)"
     sudo usermod -aG network "$(whoami)"
     sudo usermod -aG plugdev "$(whoami)"
+    sudo usermod -aG docker "$(whoami)"
 
     echo "[install-packages] Please check that the following services are enables in /var/service"
     echo "[install-packages]    polkitd"
@@ -49,6 +50,8 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    nanoklogd"
     echo "[install-packages]    socklog-unix"
     echo "[install-packages]    cupsd"
+    echo "[install-packages]    docker"
+    echo "[install-packages]    containerd"
     echo "[install-packages] Disable the following when you enable NetworkManager:"
     echo "[install-packages]    dhcpcd"
     echo "[install-packages]    wpa_supplicant"

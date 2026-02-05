@@ -32,6 +32,18 @@ alias sshk='kitty +kitten ssh'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
 
+# Handy
+alias edit-video="avidemux"
+
+function web-arch(){
+    w3m "https://wiki.archlinux.org/index.php?search=$1"
+}
+
+function web-wiki(){
+    # All but first arguments passed as string
+    wiki-tui "${@:2}"
+}
+
 # Git
 alias cdg='cd $(git rev-parse --show-toplevel)'/ca
 alias gita='git add'
@@ -59,6 +71,9 @@ gitpsu() {
 alias gitfprl="git fetch -p ; git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -D"
 
 # Distro specific config
+
+DISTRO="$(lsb_release -i | cut -f 2-)"
+
 if [[ "$DISTRO" == "VoidLinux" ]]; then
     alias poweroff='sudo poweroff'
     alias reboot='sudo reboot'
