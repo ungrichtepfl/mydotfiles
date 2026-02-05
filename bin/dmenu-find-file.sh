@@ -19,11 +19,9 @@ scripts_path="$HOME/.local/bin"
 if [[ -n $search_path ]]; then
 
     prompt="File:"
-
-    # file_name="$(find "$search_path" \( ! -regex '.*/\..*' \) -type f | \
-    #              dmenu -i -p "$prompt" $lines $colors $font)"
+    # FIXME: Get dmenu args from command line args (it only gets one at the moment)
     file_name="$($fd . "$search_path" | \
-                 dmenu -i -p "$prompt" $lines $colors $font)"
+                 dmenu -i -p "$prompt" $lines $colors $font $1 $2)"
 
     if [[ ! -z $file_name ]]; then
         xdg-open "$file_name"
