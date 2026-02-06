@@ -10,24 +10,20 @@ else
     fd=fdfind
 fi
 
-# scripts path
-scripts_path="$HOME/.local/bin"
-
-# dmenu theming
-. "$scripts_path/dmenu-theming"
-
 if [[ -n $search_path ]]; then
-
-    prompt="File:"
-
-    # FIXME: Get dmenu args from command line args (it only gets one at the moment)
-    file_name="$($fd --hidden --no-ignore . "$search_path" | \
-                 dmenu -i -p "$prompt" $lines $colors $font $1 $2)"
+    if (( $# == 0 )); then
+        prompt="File:"
+        scripts_path="$HOME/.local/bin"
+        . "$scripts_path/dmenu-theming"
+        file_name="$($fd --hidden --no-ignore . "$search_path" | \
+                 dmenu -i -p "$prompt" $lines $colors $font)"
+    else
+        file_name="$($fd --hidden --no-ignore . "$search_path" | \
+                 dmenu $@)"
+    fi
 
     if [[ ! -z $file_name ]]; then
         xdg-open "$file_name"
     fi
 
 fi
-
-exit 0

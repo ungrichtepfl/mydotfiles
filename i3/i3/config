@@ -255,7 +255,7 @@ bindsym $mod+apostrophe scratchpad show
 
 # Start browser
 bindsym $mod+i exec --no-startup-id flatpak run com.brave.Browser
-bindsym $mod+m exec i3-sensible-terminal -e /home/$USER/.config/neomutt/neomutt_wrapper.sh
+bindsym $mod+m exec i3-sensible-terminal -e neomutt_wrapper.sh
 bindsym $mod+Ctrl+m exec --no-startup-id evolution
 bindsym $mod+t exec --no-startup-id flatpak run com.rtosta.zapzap
 bindsym $mod+Shift+t exec flatpak run org.telegram.desktop
