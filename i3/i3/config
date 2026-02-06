@@ -49,10 +49,10 @@ exec --no-startup-id picom --daemon
 exec --no-startup-id pulseaudio --start
 
 # Start low battery notification
-exec i3-battery-popup.sh -L 15 -n -s ~/.config/i3/i3-battery-popup.wav -v 75
+exec battery-popup.sh -L 15 -n -s ~/mydotfiles/battery-popup.wav -v 75
 
 # Start gcalcli reminding
-exec i3-gcalcli-reminder.sh
+exec gcalcli-reminder.sh
 
 # Start mail syncing
 exec /home/$USER/.config/neomutt/mailsync.sh
