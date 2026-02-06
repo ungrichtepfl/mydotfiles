@@ -1,0 +1,40 @@
+#!/bin/sh
+# Display volume levels.
+
+pactl() {
+    arg="$2"
+
+    set -- "$@" @DEFAULT_SINK@ "$arg"
+
+    command pactl "$@"
+}
+
+case "$BLOCK_BUTTON" in
+    1) terminal -e wiremix ;;
+    2) pactl set-sink-mute toggle ;;
+    4) pactl set-sink-volume 3%+ ;;
+    5) pactl set-sink-volume 3%- ;;
+    6) terminal -e "$EDITOR" "$0" ;;
+esac
+
+. sb-theme
+if pactl get-sink-mute @DEFAULT_SINK@ | grep -q "yes"; then
+    display " " 9
+    exit
+fi
+
+volume="$(pactl get-sink-volume @DEFAULT_SINK@ | cut -d' ' -f6 | head -n 1 | tr -d '%')"
+
+if [ -z "$volume" ]; then
+    exit 1
+fi
+
+if [ "$volume" -gt 40 ]; then
+    icon=" "
+elif [ "$volume" -gt 15 ]; then
+    icon=" "
+else
+    icon=" "
+fi
+
+display "$icon $volume%"
