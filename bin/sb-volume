@@ -22,11 +22,11 @@ if [ "$SINK" = "@DEFAULT_SINK@" ] || [ -z "$SINK" ]; then
 fi
 
 case "$BLOCK_BUTTON" in
-    1) terminal -e wiremix ;;
+    1) sensible-terminal.sh -e pulsemixer ;;
     2) pactl set-sink-mute "$SINK" toggle ;;
     4) pactl set-sink-volume "$SINK" +3% ;;
     5) pactl set-sink-volume "$SINK" -3% ;;
-    6) terminal -e "$EDITOR" "$0" ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
 . sb-theme

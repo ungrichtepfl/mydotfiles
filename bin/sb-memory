@@ -2,7 +2,7 @@
 # Display RAM usage.
 
 case "$BLOCK_BUTTON" in
-    6) terminal -e "$EDITOR" "$0" ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
 # Read values from /proc/meminfo. `Mem:` reports kB used (incl. cache/buffers)

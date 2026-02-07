@@ -11,7 +11,7 @@ case $BLOCK_BUTTON in
         notify "This Month" "$(cal --color=always |
             sed "s|..7m|<span color='$(xrdb -get color1)'>|;s|..0m|</span>|")"
         ;;
-    6) terminal -e "$EDITOR" "$0" ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
 . sb-theme
