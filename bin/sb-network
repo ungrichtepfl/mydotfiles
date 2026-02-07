@@ -75,7 +75,7 @@ if [ -n "$wifiIcon" ] && [ -n "$wifi_iface" ]; then
     # prefer SSID if available, otherwise interface name
     display_ssid="$wifi_ssid"
     [ -z "$display_ssid" ] && display_ssid="$wifi_iface"
-    out="$wifiIcon $display_ssid $wifi_ip"
+    out="$wifiIcon $display_ssid $wifi_signal% $wifi_ip"
 fi
 
 if [ -n "$ethIcon" ] && [ -n "$eth_iface" ]; then
