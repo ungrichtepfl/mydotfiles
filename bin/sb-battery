@@ -1,6 +1,8 @@
 #!/bin/sh
 # Display the current battery status.
 
+. sb-theme
+
 notify() {
     notify-send \
         --icon=battery-good-symbolic \
@@ -14,7 +16,6 @@ case "$BLOCK_BUTTON" in
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
-. sb-theme
 
 # Loop through all attached batteries.
 for battery in /sys/class/power_supply/BAT?*; do
@@ -38,8 +39,11 @@ for battery in /sys/class/power_supply/BAT?*; do
         Full) status=" " ;;
         Discharging)
             if [ "$capacity" -le 20 ]; then
+                color=$warning
+            fi
+            if [ "$capacity" -le 20 ]; then
                 status="$status"
-                color=#FF0000
+                color=$critical
             fi
             ;;
         Charging) status="󰚥$status" ;;

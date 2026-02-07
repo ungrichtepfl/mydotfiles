@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. sb-theme
+
 # icons for common interface types (no leading spaces)
 wifiIcon="📶"
 ethIcon="🔌"
@@ -52,7 +54,6 @@ fi
 wifi_ssid=$(echo "$wifi_ssid" | sed 's/^ *//; s/ *$//')
 wifi_signal=$(echo "$wifi_signal" | sed 's/^ *//; s/ *$//')
 
-. sb-theme
 
 out=""
 color=""
@@ -62,9 +63,9 @@ if [ -n "$wifiIcon" ] && [ -n "$wifi_iface" ]; then
     if [ -n "$wifi_signal" ]; then
         sig=$wifi_signal
         if [ "$sig" -lt 30 ]; then
-            color="#FF0000"
+            color=$critical
         elif [ "$sig" -lt 60 ]; then
-            color="#FFFF00"
+            color=$warning
         else
             color=""
         fi

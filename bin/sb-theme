@@ -1,28 +1,37 @@
 #!/bin/sh
 # Utility functions for theming statusbar scripts.
 
+dark="#424242"
+light="#535353"
+warning="#ffd218"
+critical="#f44336"
+foreground="#FFFFFF"
+
 display() {
     if [ -n "$2" ]; then
-        color="$2"
+        background="$2"
+        if [ "$background" = "$warning" ]; then
+            foreground="#000000"
+        fi
     else
         case "$(basename "$0")" in
-            sb-music) color="#00FFFF" ;;
-            sb-disk) color="#00FF00" ;;
-            sb-memory) color="#FFFFFF" ;;
-            sb-swap) color="#00FF00" ;;
-            sb-loadavg) color="#FFFF00" ;;
-            sb-mic) color="#FF0000" ;;
-            sb-record) color="#FF0000" ;;
-            sb-volume) color="#FFFFFF" ;;
-            sb-battery) color="#00FFFF" ;;
-            sb-date) color="#0000FF" ;;
-            sb-network) color="#FF0000" ;;
-            *) color="#FFFFFF" ;;
+            sb-music) background=$dark ;;
+            sb-network) background=$light ;;
+            sb-disk) background=$dark ;;
+            sb-memory) background=$light ;;
+            sb-loadavg) background=$dark ;;
+            sb-mic) background=$light ;;
+            sb-record) background=$dark ;;
+            sb-volume) background=$light ;;
+            sb-battery) background=$dark ;;
+            sb-date) background=$light ;;
+            *) background="#FFFFFF" ;;
         esac
     fi
 
+
     case "$STATUSBAR" in
-        dwmblocks) echo "^c$color^$1" ;;
+        dwmblocks) echo "^b$background^^c$foreground^  $1  " ;;
         *) echo "$1" ;;
     esac
 }

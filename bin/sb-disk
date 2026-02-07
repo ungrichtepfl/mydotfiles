@@ -1,11 +1,11 @@
 #!/bin/sh
 # Display disk usage for both `/` and `/home`.
 
+. sb-theme
+
 case $BLOCK_BUTTON in
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
-
-. sb-theme
 
 path="/"
 icon="󰋊"
@@ -22,9 +22,9 @@ total_gib=$(awk "BEGIN {printf \"%d\", ($total_k/1000/1000)+0.5}")
 percent_used=$(echo "$pcent" | tr -d '%')
 # color thresholds: warn >=80 (yellow), alert >=90 (red)
 if [ "$percent_used" -ge 90 ]; then
-    color="#FF0000"
+    color=$critical
 elif [ "$percent_used" -ge 80 ]; then
-    color="#FFFF00"
+    color=$warning
 else
     color=""
 fi

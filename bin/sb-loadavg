@@ -1,31 +1,36 @@
 #!/bin/sh
 # Display the average CPU load.
 
+. sb-theme
+
 case "$BLOCK_BUTTON" in
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
-THRESHOLD=5
 
-# 1-minute load average
-load=$(cut -d' ' -f1 /proc/loadavg)
+# compute current CPU utilization by sampling /proc/stat
+# read total and idle from first cpu line (idle includes iowait)
+read total1 idle1 <<EOF
+$(awk 'NR==1 {idle=$5+$6; for(i=2;i<=NF;i++) total+=$i; print total, idle}' /proc/stat)
+EOF
 
-# number of CPUs (nproc preferred, fallback to /proc/cpuinfo)
-nproc=$(nproc 2>/dev/null || awk -F: '/^processor/ {c++} END {print c+0}' /proc/cpuinfo)
-[ -z "$nproc" ] && nproc=1
+sleep 0.2
 
-# compute load as percent of total CPU capacity (integer)
-percent=$(awk "BEGIN {printf \"%d\", ($load / $nproc) * 100}")
+read total2 idle2 <<EOF
+$(awk 'NR==1 {idle=$5+$6; for(i=2;i<=NF;i++) total+=$i; print total, idle}' /proc/stat)
+EOF
 
-# color thresholds: warn >=80% (yellow), alert >=100% (red)
-if [ "$percent" -ge 100 ]; then
-    color="#FF0000"
-elif [ "$percent" -ge 80 ]; then
-    color="#FFFF00"
+# compute percentage (integer) and clamp to 0..100
+percent=$(awk "BEGIN {dt=$total2 - $total1; di=$idle2 - $idle1; if(dt<=0){print 0} else {u=(1 - di/dt)*100; if(u<0) u=0; if(u>100) u=100; printf \"%d\", u}}")
+
+# color thresholds: warn >=50% (yellow), alert >=90% (red) — match i3status-rust cpu block
+if [ "$percent" -ge 90 ]; then
+    color=$critical
+elif [ "$percent" -ge 50 ]; then
+    color=$warning
 else
     color=""
 fi
 
-. sb-theme
 # show only full percentage (integer)
 display "   $(printf "%2s" "$percent")%" "$color"

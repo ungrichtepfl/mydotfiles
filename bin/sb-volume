@@ -1,6 +1,8 @@
 #!/bin/sh
 # Display volume levels (pactl-only).
 
+. sb-theme
+
 if ! command -v pactl >/dev/null 2>&1; then
     # pactl not available, nothing to display
     exit 1
@@ -29,12 +31,10 @@ case "$BLOCK_BUTTON" in
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
-. sb-theme
-
 # Mute detection
 if pactl get-sink-mute "$SINK" 2>/dev/null | grep -qi "yes"; then
     # Use a Nerd Font glyph for mute so it renders with FontAwesomeNerdFont
-    display "" "#FF0000"
+    display "" $warning
     exit
 fi
 
