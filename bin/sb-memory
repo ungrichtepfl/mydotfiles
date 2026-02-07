@@ -5,8 +5,27 @@ case "$BLOCK_BUTTON" in
     6) terminal -e "$EDITOR" "$0" ;;
 esac
 
-used_mib="$(free --mebi | grep '^Mem:' | tr -s ' ' | cut -d' ' -f3)"
-used_gib="$(echo "scale=2; $used_mib / 1024" | bc)"
+# Read values from /proc/meminfo. `Mem:` reports kB used (incl. cache/buffers)
+# but some kernels report slightly different ordering; use MemTotal and MemAvailable
+# to compute actual used memory more consistently.
+total_kib=$(awk '/MemTotal:/ {print $2}' /proc/meminfo)
+avail_kib=$(awk '/MemAvailable:/ {print $2}' /proc/meminfo)
+used_kib=$(awk "BEGIN {print $total_kib - $avail_kib}")
+
+# show integer GiB values (rounded)
+used_gib=$(awk "BEGIN {printf \"%d\", ($used_kib/1024/1024)+0.5}")
+total_gib=$(awk "BEGIN {printf \"%d\", ($total_kib/1024/1024)+0.5}")
+percent_used=$(awk "BEGIN {printf \"%d\", ($used_kib/$total_kib)*100}")
 
 . sb-theme
-display "  $(printf "%.2f" "$used_gib")G"
+# color thresholds: warn >=80 (yellow), alert >=90 (red)
+if [ "$percent_used" -ge 90 ]; then
+    color="#FF0000"
+elif [ "$percent_used" -ge 80 ]; then
+    color="#FFFF00"
+else
+    color=""
+fi
+
+# match i3status-rust format: icon, percentage and (used/total) in GB
+display "   $(printf "%2s" "$percent_used")% ($used_gib GB / $total_gib GB)" "$color"

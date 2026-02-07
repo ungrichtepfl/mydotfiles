@@ -1,29 +1,45 @@
 #!/bin/sh
-# Display volume levels.
+# Display volume levels (pactl-only).
 
-pactl() {
-    arg="$2"
+if ! command -v pactl >/dev/null 2>&1; then
+    # pactl not available, nothing to display
+    exit 1
+fi
 
-    set -- "$@" @DEFAULT_SINK@ "$arg"
+SINK="@DEFAULT_SINK@"
 
-    command pactl "$@"
-}
+# Resolve default sink automatically when running on systems where
+# @DEFAULT_SINK@ isn't pre-substituted. `pactl info` reports the
+# `Default Sink:` which we can use. If resolution fails we keep the
+# placeholder so that downstream tooling can override it.
+if [ "$SINK" = "@DEFAULT_SINK@" ] || [ -z "$SINK" ]; then
+    if pactl info >/dev/null 2>&1; then
+        resolved=$(pactl info 2>/dev/null | awk -F': ' '/Default Sink/ {print $2; exit}')
+        if [ -n "$resolved" ]; then
+            SINK="$resolved"
+        fi
+    fi
+fi
 
 case "$BLOCK_BUTTON" in
     1) terminal -e wiremix ;;
-    2) pactl set-sink-mute toggle ;;
-    4) pactl set-sink-volume 3%+ ;;
-    5) pactl set-sink-volume 3%- ;;
+    2) pactl set-sink-mute "$SINK" toggle ;;
+    4) pactl set-sink-volume "$SINK" +3% ;;
+    5) pactl set-sink-volume "$SINK" -3% ;;
     6) terminal -e "$EDITOR" "$0" ;;
 esac
 
 . sb-theme
-if pactl get-sink-mute @DEFAULT_SINK@ | grep -q "yes"; then
-    display " " 9
+
+# Mute detection
+if pactl get-sink-mute "$SINK" 2>/dev/null | grep -qi "yes"; then
+    # Use a Nerd Font glyph for mute so it renders with FontAwesomeNerdFont
+    display "" "#FF0000"
     exit
 fi
 
-volume="$(pactl get-sink-volume @DEFAULT_SINK@ | cut -d' ' -f6 | head -n 1 | tr -d '%')"
+# Extract highest channel percentage from sink volume output
+volume=$(pactl get-sink-volume "$SINK" 2>/dev/null | grep -o '[0-9]\+%' | tr -d '%' | sort -nr | head -n1)
 
 if [ -z "$volume" ]; then
     exit 1

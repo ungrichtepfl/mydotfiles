@@ -7,10 +7,25 @@ esac
 
 THRESHOLD=5
 
+# 1-minute load average
 load=$(cut -d' ' -f1 /proc/loadavg)
 
-is_threshold_exceeded="$(echo "$load > $THRESHOLD" | bc)"
-[ "$is_threshold_exceeded" -eq 1 ] && color=9
+# number of CPUs (nproc preferred, fallback to /proc/cpuinfo)
+nproc=$(nproc 2>/dev/null || awk -F: '/^processor/ {c++} END {print c+0}' /proc/cpuinfo)
+[ -z "$nproc" ] && nproc=1
+
+# compute load as percent of total CPU capacity (integer)
+percent=$(awk "BEGIN {printf \"%d\", ($load / $nproc) * 100}")
+
+# color thresholds: warn >=80% (yellow), alert >=100% (red)
+if [ "$percent" -ge 100 ]; then
+    color="#FF0000"
+elif [ "$percent" -ge 80 ]; then
+    color="#FFFF00"
+else
+    color=""
+fi
 
 . sb-theme
-display "  $load" "$color"
+# show only full percentage (integer)
+display "   $(printf "%2s" "$percent")%" "$color"

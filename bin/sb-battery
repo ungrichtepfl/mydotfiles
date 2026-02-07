@@ -39,7 +39,7 @@ for battery in /sys/class/power_supply/BAT?*; do
         Discharging)
             if [ "$capacity" -le 20 ]; then
                 status="$status"
-                color=1
+                color=#FF0000
             fi
             ;;
         Charging) status="󰚥$status" ;;

@@ -1,0 +1,99 @@
+#!/bin/sh
+
+# icons for common interface types (no leading spaces)
+wifiIcon="📶"
+ethIcon="🔌"
+vpnIcon=""
+if command -v nmcli >/dev/null 2>&1; then
+    if nmcli -t -f TYPE connection show --active 2>/dev/null | grep -qw vpn; then
+        vpnIcon="🔒"
+    else
+        vpnIcon=""
+    fi
+fi
+
+wifi_iface=""
+wifi_ssid=""
+wifi_ip=""
+wifi_signal=""
+for f in /sys/class/net/w*; do
+    [ -d "$f" ] || continue
+    iface=$(basename "$f")
+    [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = up ] || continue
+    # get first IPv4
+    wifi_ip=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
+    if [ -n "$wifi_ip" ]; then
+        wifi_iface="$iface"
+        break
+    fi
+done
+
+eth_iface=""
+eth_ip=""
+for f in /sys/class/net/e*; do
+    [ -d "$f" ] || continue
+    iface=$(basename "$f")
+    [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = up ] || continue
+    eth_ip=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
+    if [ -n "$eth_ip" ]; then
+        eth_iface="$iface"
+        break
+    fi
+done
+
+# If using NetworkManager, get SSID and signal for wifi
+if [ -n "$wifi_iface" ] && command -v nmcli >/dev/null 2>&1; then
+    wifi_ssid=$(nmcli -t -f GENERAL.CONNECTION device show "$wifi_iface" 2>/dev/null | cut -d: -f2 | sed 's/^ //')
+    # signal from the AP list: IN-USE marked with '*'
+    wifi_signal=$(nmcli -t -f IN-USE,SSID,SIGNAL dev wifi list ifname "$wifi_iface" 2>/dev/null | awk -F: '$1=="*" {print $3; exit}')
+fi
+
+# normalize empty values
+wifi_ssid=$(echo "$wifi_ssid" | sed 's/^ *//; s/ *$//')
+wifi_signal=$(echo "$wifi_signal" | sed 's/^ *//; s/ *$//')
+
+. sb-theme
+
+out=""
+color=""
+if [ -n "$wifiIcon" ] && [ -n "$wifi_iface" ]; then
+    # choose color based on signal strength
+    # choose color based on signal strength if available
+    if [ -n "$wifi_signal" ]; then
+        sig=$wifi_signal
+        if [ "$sig" -lt 30 ]; then
+            color="#FF0000"
+        elif [ "$sig" -lt 60 ]; then
+            color="#FFFF00"
+        else
+            color=""
+        fi
+    else
+        color=""
+    fi
+    # prefer SSID if available, otherwise interface name
+    display_ssid="$wifi_ssid"
+    [ -z "$display_ssid" ] && display_ssid="$wifi_iface"
+    out="$wifiIcon $display_ssid $wifi_ip"
+fi
+
+if [ -n "$ethIcon" ] && [ -n "$eth_iface" ]; then
+    [ -n "$out" ] && out="$out "
+    out="$out$ethIcon $eth_ip"
+fi
+
+# if nothing to show and no vpn, exit quietly
+if [ -z "$out" ] && [ -z "$vpnIcon" ]; then
+    exit 0
+fi
+
+# append vpn icon if present
+[ -n "$vpnIcon" ] && out="$out $vpnIcon"
+
+# only pass a color argument to display when we actually set one; otherwise
+# let sb-theme choose its default for this module
+if [ -n "$color" ]; then
+    display "$out" "$color"
+else
+    display "$out"
+fi

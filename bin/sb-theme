@@ -6,28 +6,23 @@ display() {
         color="$2"
     else
         case "$(basename "$0")" in
-            sb-music) color=14 ;;
-            sb-disk) color=10 ;;
-            sb-memory) color=15 ;;
-            sb-swap) color=10 ;;
-            sb-loadavg) color=11 ;;
-            sb-mic) color=9 ;;
-            sb-record) color=9 ;;
-            sb-volume) color=15 ;;
-            sb-battery) color=14 ;;
-            sb-date) color=12 ;;
-            sb-network) color=9 ;;
-            *) color=15 ;;
+            sb-music) color="#00FFFF" ;;
+            sb-disk) color="#00FF00" ;;
+            sb-memory) color="#FFFFFF" ;;
+            sb-swap) color="#00FF00" ;;
+            sb-loadavg) color="#FFFF00" ;;
+            sb-mic) color="#FF0000" ;;
+            sb-record) color="#FF0000" ;;
+            sb-volume) color="#FFFFFF" ;;
+            sb-battery) color="#00FFFF" ;;
+            sb-date) color="#0000FF" ;;
+            sb-network) color="#FF0000" ;;
+            *) color="#FFFFFF" ;;
         esac
     fi
 
     case "$STATUSBAR" in
-        # dwmblocks) echo "^C$color^$1" ;; # TODO: Not working at the moment
-        waybar)
-            # Return output in i3blocks style.
-            # https://github.com/Alexays/Waybar/wiki/Module:-Custom#return-type
-            printf "%s\n\ncolor%d\n" "$1" "$color"
-            ;;
+        dwmblocks) echo "^c$color^$1" ;;
         *) echo "$1" ;;
     esac
 }
