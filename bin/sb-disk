@@ -3,7 +3,21 @@
 
 . sb-theme
 
+du="du"
+if command -v dua >/dev/null 2>&1; then
+    du="dua i"
+elif command -v ncdu >/dev/null 2>&1; then
+    du="ncdu"
+fi
+
 case $BLOCK_BUTTON in
+    1)   
+        if [ "$du" = "du" ]; then
+            notify-send "Disk Space Home" "$(du -sh $HOME)"
+        else
+            sensible-terminal.sh -e $du "$HOME" 
+        fi
+        ;;
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 

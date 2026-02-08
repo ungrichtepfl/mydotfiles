@@ -4,6 +4,7 @@
 . sb-theme
 
 case "$BLOCK_BUTTON" in
+    1) sensible-terminal.sh -e htop ;;
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
