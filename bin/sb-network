@@ -14,54 +14,29 @@ if command -v nmcli >/dev/null 2>&1; then
     fi
 fi
 
-wifi_iface=""
-wifi_ssid=""
-wifi_ip=""
-wifi_signal=""
+shown=0
+
+# Display each wifi interface separately so each can have its own color
 for f in /sys/class/net/w*; do
     [ -d "$f" ] || continue
     iface=$(basename "$f")
     [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = up ] || continue
-    # get first IPv4
-    wifi_ip=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
-    if [ -n "$wifi_ip" ]; then
-        wifi_iface="$iface"
-        break
+    # get first IPv4 for this iface
+    ip4=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
+    [ -n "$ip4" ] || continue
+
+    ssid=""
+    signal=""
+    if command -v nmcli >/dev/null 2>&1; then
+        ssid=$(nmcli -t -f GENERAL.CONNECTION device show "$iface" 2>/dev/null | cut -d: -f2 | sed 's/^ //')
+        signal=$(nmcli -t -f IN-USE,SSID,SIGNAL dev wifi list ifname "$iface" 2>/dev/null | awk -F: '$1=="*" {print $3; exit}')
     fi
-done
+    ssid=$(echo "$ssid" | sed 's/^ *//; s/ *$//')
+    signal=$(echo "$signal" | sed 's/^ *//; s/ *$//')
 
-eth_iface=""
-eth_ip=""
-for f in /sys/class/net/e*; do
-    [ -d "$f" ] || continue
-    iface=$(basename "$f")
-    [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = up ] || continue
-    eth_ip=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
-    if [ -n "$eth_ip" ]; then
-        eth_iface="$iface"
-        break
-    fi
-done
-
-# If using NetworkManager, get SSID and signal for wifi
-if [ -n "$wifi_iface" ] && command -v nmcli >/dev/null 2>&1; then
-    wifi_ssid=$(nmcli -t -f GENERAL.CONNECTION device show "$wifi_iface" 2>/dev/null | cut -d: -f2 | sed 's/^ //')
-    # signal from the AP list: IN-USE marked with '*'
-    wifi_signal=$(nmcli -t -f IN-USE,SSID,SIGNAL dev wifi list ifname "$wifi_iface" 2>/dev/null | awk -F: '$1=="*" {print $3; exit}')
-fi
-
-# normalize empty values
-wifi_ssid=$(echo "$wifi_ssid" | sed 's/^ *//; s/ *$//')
-wifi_signal=$(echo "$wifi_signal" | sed 's/^ *//; s/ *$//')
-
-
-out=""
-color=""
-if [ -n "$wifiIcon" ] && [ -n "$wifi_iface" ]; then
-    # choose color based on signal strength
-    # choose color based on signal strength if available
-    if [ -n "$wifi_signal" ]; then
-        sig=$wifi_signal
+    color=""
+    if [ -n "$signal" ]; then
+        sig=$signal
         if [ "$sig" -lt 30 ]; then
             color=$critical
         elif [ "$sig" -lt 60 ]; then
@@ -69,32 +44,41 @@ if [ -n "$wifiIcon" ] && [ -n "$wifi_iface" ]; then
         else
             color=""
         fi
-    else
-        color=""
     fi
-    # prefer SSID if available, otherwise interface name
-    display_ssid="$wifi_ssid"
-    [ -z "$display_ssid" ] && display_ssid="$wifi_iface"
-    out="$wifiIcon $display_ssid $wifi_signal% $wifi_ip"
-fi
 
-if [ -n "$ethIcon" ] && [ -n "$eth_iface" ]; then
-    [ -n "$out" ] && out="$out "
-    out="$out$ethIcon $eth_ip"
-fi
+    display_name="$ssid"
+    [ -z "$display_name" ] && display_name="$iface"
+    line="$wifiIcon $display_name $ip4"
+    [ -n "$signal" ] && line="$line ($signal%)"
+    [ -n "$vpnIcon" ] && line="$line $vpnIcon"
 
-# if nothing to show and no vpn, exit quietly
-if [ -z "$out" ] && [ -z "$vpnIcon" ]; then
-    exit 0
-fi
+    if [ -n "$color" ]; then
+        display "$line" "$color"
+    else
+        display "$line"
+    fi
+    shown=1
+done
 
-# append vpn icon if present
-[ -n "$vpnIcon" ] && out="$out $vpnIcon"
+# Display each ethernet interface separately
+for f in /sys/class/net/e*; do
+    [ -d "$f" ] || continue
+    iface=$(basename "$f")
+    [ "$(cat /sys/class/net/$iface/operstate 2>/dev/null)" = up ] || continue
+    ip4=$(ip -o -4 addr show dev "$iface" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1)
+    [ -n "$ip4" ] || continue
 
-# only pass a color argument to display when we actually set one; otherwise
-# let sb-theme choose its default for this module
-if [ -n "$color" ]; then
-    display "$out" "$color"
-else
-    display "$out"
+    line="$ethIcon $ip4"
+    [ -n "$vpnIcon" ] && line="$line $vpnIcon"
+    display "$line"
+    shown=1
+done
+
+# If nothing displayed but vpn present, show vpn alone
+if [ "$shown" -eq 0 ]; then
+    if [ -n "$vpnIcon" ]; then
+        display "$vpnIcon"
+    else
+        exit 0
+    fi
 fi
