@@ -7,6 +7,13 @@ warning="#ffd218"
 critical="#f44336"
 foreground="#FFFFFF"
 
+echo="echo"
+
+display_noline() {
+    echo="echo -n"
+    display "$@"
+}
+
 display() {
     if [ -n "$2" ]; then
         background="$2"
@@ -31,7 +38,9 @@ display() {
 
 
     case "$STATUSBAR" in
-        dwmblocks) echo "^b$background^^c$foreground^  $1  " ;;
-        *) echo "$1" ;;
+        dwmblocks) $echo "^b$background^^c$foreground^  $1  " ;;
+        *) $echo "$1" ;;
     esac
 }
+
+

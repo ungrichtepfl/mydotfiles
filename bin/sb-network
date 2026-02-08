@@ -39,7 +39,7 @@ for f in /sys/class/net/w*; do
         sig=$signal
         if [ "$sig" -lt 30 ]; then
             color=$critical
-        elif [ "$sig" -lt 60 ]; then
+        elif [ "$sig" -lt 50 ]; then
             color=$warning
         else
             color=""
@@ -53,9 +53,9 @@ for f in /sys/class/net/w*; do
     [ -n "$vpnIcon" ] && line="$line $vpnIcon"
 
     if [ -n "$color" ]; then
-        display "$line" "$color"
+        display_noline "$line" "$color"
     else
-        display "$line"
+        display_noline "$line"
     fi
     shown=1
 done
@@ -70,15 +70,17 @@ for f in /sys/class/net/e*; do
 
     line="$ethIcon $ip4"
     [ -n "$vpnIcon" ] && line="$line $vpnIcon"
-    display "$line"
+    display_noline "$line"
     shown=1
 done
 
 # If nothing displayed but vpn present, show vpn alone
 if [ "$shown" -eq 0 ]; then
     if [ -n "$vpnIcon" ]; then
-        display "$vpnIcon"
-    else
-        exit 0
+        display_noline "$vpnIcon"
+        shown=1
     fi
+fi
+if [ "$shown" -eq 1 ]; then
+    echo # Add the newline to flush
 fi
