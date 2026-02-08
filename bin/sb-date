@@ -8,8 +8,8 @@ notify() {
 
 case $BLOCK_BUTTON in
     1)
-        notify "This Month" "$(cal --color=always |
-            sed "s|..7m|<span color='$(xrdb -get color1)'>|;s|..0m|</span>|")"
+        # Use perl to convert cal's reverse-video ANSI escapes to bold markup
+        notify "This Month" "$(cal --color=always | perl -pe 's/\e\[7m/<b>/g; s/\e\[0m/<\/b>/g')"
         ;;
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
