@@ -1,0 +1,4 @@
+#:schema https://raw.githubusercontent.com/insanum/gcalcli/HEAD/data/config-schema.json
+
+[output]
+week-start = "monday"
