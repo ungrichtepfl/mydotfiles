@@ -8,4 +8,4 @@ case $BLOCK_BUTTON in
 esac
 
 . sb-theme
-display "  $(gcalcli --nocolor --refresh agenda "$(date)" | head -2 | tail -1)"
+display "  $(gcalcli --nocolor --refresh agenda "$(date)" | head -2 | tail -1 | awk '{$1=$1};1' | cut -d " " -f 4- )"
