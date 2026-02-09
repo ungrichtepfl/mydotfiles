@@ -34,7 +34,7 @@ esac
 # Mute detection
 if pactl get-sink-mute "$SINK" 2>/dev/null | grep -qi "yes"; then
     # Use a Nerd Font glyph for mute so it renders with FontAwesomeNerdFont
-    display "" $warning
+    display " " $warning
     exit
 fi
 
