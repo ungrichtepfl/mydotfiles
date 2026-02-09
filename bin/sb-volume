@@ -10,19 +10,6 @@ fi
 
 SINK="@DEFAULT_SINK@"
 
-# Resolve default sink automatically when running on systems where
-# @DEFAULT_SINK@ isn't pre-substituted. `pactl info` reports the
-# `Default Sink:` which we can use. If resolution fails we keep the
-# placeholder so that downstream tooling can override it.
-if [ "$SINK" = "@DEFAULT_SINK@" ] || [ -z "$SINK" ]; then
-    if pactl info >/dev/null 2>&1; then
-        resolved=$(pactl info 2>/dev/null | awk -F': ' '/Default Sink/ {print $2; exit}')
-        if [ -n "$resolved" ]; then
-            SINK="$resolved"
-        fi
-    fi
-fi
-
 case "$BLOCK_BUTTON" in
     1) sensible-terminal.sh -e pulsemixer ;;
     2) pactl set-sink-mute "$SINK" toggle ;;

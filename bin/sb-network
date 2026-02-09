@@ -2,6 +2,11 @@
 
 . sb-theme
 
+case "$BLOCK_BUTTON" in
+    1) nm-connection-editor ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
+esac
+
 # icons for common interface types (no leading spaces)
 wifiIcon="📶"
 ethIcon="🔌"
