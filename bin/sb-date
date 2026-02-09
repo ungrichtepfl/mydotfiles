@@ -11,12 +11,10 @@ case $BLOCK_BUTTON in
         # Use perl to convert cal's reverse-video ANSI escapes to bold markup
         notify "This Month" "$(cal --color=always | perl -pe 's/\e\[7m/<b>/g; s/\e\[0m/<\/b>/g')"
         ;;
-    2) cal-notify.sh week ;;
-    3) xdg-open "https://calendar.google.com/calendar/u/0/r" ;;
     4) notify --urgency=critical "Winti to Baden" "<tt>$(fahrplan from Winterthur to Baden)</tt>" ;;
     5) notify --urgency=critical "Baden to Winti" "<tt>$(fahrplan from Baden to Winterthur)</tt>" ;;
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
 . sb-theme
-display "󰥔  $(date '+%a %d/%m %H:%M:%S')"
+display "󰥔  $(date '+%a %d.%m.%y %H:%M:%S')"

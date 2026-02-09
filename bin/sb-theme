@@ -22,15 +22,16 @@ display() {
         fi
     else
         case "$(basename "$0")" in
-            sb-music) background=$dark ;;
-            sb-network) background=$light ;;
-            sb-disk) background=$dark ;;
-            sb-memory) background=$light ;;
-            sb-loadavg) background=$dark ;;
-            sb-mic) background=$light ;;
+            sb-music) background=$light ;;
+            sb-network) background=$dark ;;
+            sb-disk) background=$light ;;
+            sb-memory) background=$dark ;;
+            sb-loadavg) background=$light ;;
+            sb-mic) background=$dark ;;
             sb-record) background=$dark ;;
-            sb-volume) background=$light ;;
-            sb-battery) background=$dark ;;
+            sb-volume) background=$dark ;;
+            sb-battery) background=$light ;;
+            sb-cal) background=$dark ;;
             sb-date) background=$light ;;
             *) background="#FFFFFF" ;;
         esac

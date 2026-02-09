@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+    1) cal-notify.sh ;;
+    2) cal-notify.sh week ;;
+    3) xdg-open "https://calendar.google.com/calendar/u/0/r" ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
+esac
+
+. sb-theme
+display "  $(gcalcli --nocolor --refresh agenda "$(date)" | head -2 | tail -1)"
