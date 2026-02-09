@@ -23,7 +23,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         neomutt tmux mpv w3m-img notmuch pandoc urlscan \
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
         nerd-fonts font-awesome6 flameshot Solaar tealdeer avidemux docker \
-        j4-dmenu-desktop acpi xorg-server-xephyr 
+        j4-dmenu-desktop acpi xorg-server-xephyr libXinerama-devel
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop com.github.tchx84.Flatseal
