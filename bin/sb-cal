@@ -2,8 +2,8 @@
 
 case $BLOCK_BUTTON in
     1) cal-notify.sh ;;
-    2) cal-notify.sh week ;;
-    3) xdg-open "https://calendar.google.com/calendar/u/0/r" ;;
+    2) xdg-open "https://calendar.google.com/calendar/u/0/r" ;;
+    3) cal-notify.sh week ;;
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
