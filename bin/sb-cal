@@ -8,4 +8,52 @@ case $BLOCK_BUTTON in
 esac
 
 . sb-theme
-display "  $(gcalcli --nocolor --refresh agenda "$(date)" | head -2 | tail -1 | cut -d " " -f 4- | awk '{$1=$1};1' )"
+
+# Find the next timed event from gcalcli (skip all-day events).
+# Output format from awk: <datepart>\t<time>\t<title>
+next_event=$(gcalcli --nocolor --refresh agenda --military "$(date)" | \
+awk -v today="$(date '+%a %b %e')" '
+    /^[^\t ]/ {
+        header=$0
+        if (match($0, /[0-9]{1,2}:[0-9]{2}/)) {
+            time=substr($0, RSTART, RLENGTH)
+            title=substr($0, RSTART+RLENGTH)
+            gsub(/^[ \t]+/, "", title)
+            split(header, parts, /[ \t]+/)
+            datepart=parts[1] " " parts[2] " " parts[3]
+            gsub(/[ \t]+$/, "", datepart)
+            print datepart "\t" time "\t" title
+            exit
+        }
+        next
+    }
+    /^[ \t]/ && match($0, /[0-9]{1,2}:[0-9]{2}/) {
+        time=substr($0, RSTART, RLENGTH)
+        title=substr($0, RSTART+RLENGTH)
+        gsub(/^[ \t]+/, "", title)
+        split(header, parts, /[ \t]+/)
+        datepart=parts[1] " " parts[2] " " parts[3]
+        gsub(/[ \t]+$/, "", datepart)
+        print datepart "\t" time "\t" title
+        exit
+    }
+')
+
+if [ -n "$next_event" ]; then
+    # split fields (tab-separated)
+    IFS=$(printf '\t') read -r ev_date ev_time ev_title <<EOF
+$next_event
+EOF
+
+    today_hdr=$(date '+%a %b %e')
+
+
+    if [ "$ev_date" = "$today_hdr" ]; then
+        display "  $ev_time $ev_title"
+    else
+        display "  $ev_date $ev_time $ev_title"
+    fi
+else
+    # no timed event found
+    display " "
+fi
