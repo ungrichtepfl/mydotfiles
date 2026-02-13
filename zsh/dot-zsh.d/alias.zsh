@@ -26,8 +26,13 @@ if (( $+commands[dua] )); then
     alias ncdu="dua i"
 fi
 
-# kitty terminal ssh
-alias sshk='kitty +kitten ssh'
+if [ "$TERM" = "kitty" ]; then
+    # kitty terminal ssh
+    alias ssh='kitty +kitten ssh'
+elif [ "$TERM" = "alacritty" ]; then
+    # alacritty terminal ssh
+    alias ssh='TERM="xterm-256color" ssh'
+fi
 
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
