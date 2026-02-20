@@ -32,7 +32,7 @@ display() {
             sb-volume) background=$dark ;;
             sb-battery) background=$light ;;
             sb-cal) background=$dark ;;
-            sb-date) background=$light ;;
+            sb-date) background="#F2F3F4"; foreground=$dark;;
             *) background="#FFFFFF" ;;
         esac
     fi

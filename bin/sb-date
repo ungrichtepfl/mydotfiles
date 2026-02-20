@@ -9,7 +9,7 @@ notify() {
 case $BLOCK_BUTTON in
     1)
         # Use perl to convert cal's reverse-video ANSI escapes to bold markup
-        notify "This Month" "$(cal --color=always | perl -pe 's/\e\[7m/<b>/g; s/\e\[0m/<\/b>/g')"
+        notify "This Month" "<tt>$(cal --color=always | perl -pe 's/\e\[7m/<b>/g; s/\e\[0m/<\/b>/g')</tt>"
         ;;
     4) train-notify.sh ;;
     5) train-notify.sh "back" ;;
