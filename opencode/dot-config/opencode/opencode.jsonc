@@ -2,10 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   // Use Plan agent as default when starting OpenCode
   "default_agent": "plan",
-  // Custom keybind configuration
-  "keybinds": {
-    "variant_cycle": "ctrl+k", // Changed from default ctrl+t
-  },
   // Doom loop prevention - prompt when same tool call repeats 3 times
   "permission": {
     "doom_loop": "ask",
