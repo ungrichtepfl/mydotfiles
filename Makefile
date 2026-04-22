@@ -5,7 +5,7 @@ ignore := '\.md$$|\.gitignore$$'
 # USER
 
 .PHONY: user
-user: home bin zsh i3 opencode
+user: home bin zsh i3 opencode claude
 	@echo '-------------------- FINISHED ------------------------'
 	@echo 'If you also want to install system configs run "make system"'
 	@echo 'If you want to install packages run "make packages"'
@@ -42,6 +42,10 @@ zsh:
 .PHONY: opencode
 opencode:
 	stow $(flags) --dotfiles -t $$HOME opencode
+
+.PHONY: claude
+claude:
+	stow $(flags) --dotfiles -t $$HOME claude
 
 .PHONY: fonts
 fonts:

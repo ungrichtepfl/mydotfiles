@@ -246,18 +246,29 @@
       "fdisk *": "deny",
       "parted *": "deny",
       "dd *of=/dev/*": "deny",
-      "> /dev/sd*": "deny",
-      "> /dev/nvme*": "deny",
-      "> /dev/vd*": "deny",
+      "* > /dev/sd*": "deny",
+      "* > /dev/nvme*": "deny",
+      "* > /dev/vd*": "deny",
       // Fork bomb and other shell exploits
       ":(){ :|:& };:": "deny",
+      // Command injection via shell operators (opencode matches the full command
+      // string, so "git status *" would match "git status && rm -rf /" without these)
+      "* && *": "deny",
+      "* || *": "deny",
+      "*;*": "deny",
+      "* | *": "deny",
+      // Output/append redirection can overwrite arbitrary files
+      "* > *": "deny",
+      "* >> *": "deny",
     },
     // Protect sensitive files from reading
     "read": {
       "*": "allow",
-      "*.env": "deny",
-      "*.env.*": "deny",
-      "*.env.example": "allow",
+      "**/.env": "deny",
+      "**/*.env": "deny",
+      "**/.env.*": "deny",
+      // Must come after **/.env.* so last-match-wins keeps .env.example allowed
+      "**/.env.example": "allow",
       "**/id_rsa": "deny",
       "**/id_ed25519": "deny",
       "**/.ssh/id_*": "deny",
