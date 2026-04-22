@@ -54,3 +54,8 @@ color = '#b6927b'
 [[colors.indexed_colors]]
 index = 17
 color = '#b98d7b'
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
