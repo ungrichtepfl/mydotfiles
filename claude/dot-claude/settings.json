@@ -245,5 +245,12 @@
       "Edit(**/credentials)",
       "Edit(**/secrets.*)"
     ]
-  }
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "model": "opus[1m]"
 }
