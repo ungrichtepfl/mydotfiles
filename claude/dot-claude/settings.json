@@ -246,19 +246,12 @@
       "Edit(**/secrets.*)"
     ]
   },
-<<<<<<< Updated upstream
+  "model": "opus[1m]",
+  "effortLevel": "medium",
   "enabledPlugins": {
     "clangd-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "github@claude-plugins-official": true
-  },
-  "effortLevel": "medium",
-  "model": "opus[1m]"
-=======
-  "model": "opus[1m]",
-  "effortLevel": "xhigh",
-  "enabledPlugins": {
+    "github@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true
   }
->>>>>>> Stashed changes
 }
