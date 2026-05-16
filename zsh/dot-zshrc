@@ -89,6 +89,11 @@ if (( $+commands[zoxide] )); then
     eval "$(zoxide init zsh)"
 fi
 
+# jujutsu
+if (( $+commands[jj] )); then
+    source <(jj util completion zsh)
+fi
+
 ##############
 # -- SLOW -- #
 ##############
