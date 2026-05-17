@@ -61,8 +61,8 @@ alias gits='git status --short'
 alias gitd='git diff'
 alias gitl='git lg'
 alias gitcb='git checkout -b'
-alias gitcm='git commit --signoff'
-alias gitcmm='git commit --signoff -m'
+alias gitcm='git commit'
+alias gitcmm='git commit -m'
 alias gitds='gitd --staged'
 alias gitpo='git pull origin'
 alias gitpom='gitpo master'
@@ -75,7 +75,16 @@ gitpsu() {
 }
 alias gitfprl="git fetch -p ; git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -D"
 
-# Distro specific config
+# Jujutsu
+alias jjs='jj diff --summary'
+alias jjd='jj diff'
+alias jjl='jj log -r "all()"'
+alias jjb='jj bookmark list'
+alias jjm='jj describe'
+alias jjmm='jj describe -m'
+alias jjcm='jj commit'
+alias jjcmm='jj commit -m'
+alias cdjj='cd $(jj root)'
 
 DISTRO="$(lsb_release -i | cut -f 2-)"
 
