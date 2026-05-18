@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "mcp__github__pull_request_read",
       "WebSearch",
       "Read(**)",
       "Bash(git status)",
@@ -246,12 +247,11 @@
       "Edit(**/secrets.*)"
     ]
   },
-  "model": "opus[1m]",
-  "effortLevel": "medium",
   "enabledPlugins": {
     "clangd-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "github@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true
+    "pyright-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
   }
 }
