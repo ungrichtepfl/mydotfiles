@@ -8,7 +8,7 @@ GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
 GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
 GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"             # A"NUM"         - ahead by "NUM" commits
 GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"           # B"NUM"         - behind by "NUM" commits
-GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"     # lightning bolt - merge conflict
+GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"    # lightning bolt - merge conflict
 GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●%{$reset_color%}"       # red circle     - untracked files
 GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●%{$reset_color%}"     # yellow circle  - tracked files modified
 GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"        # green circle   - staged changes present = ready for "git push"
@@ -25,39 +25,33 @@ parse_git_branch() {
 parse_git_state() {
     local GIT_STATE=""
     local trunk_branch=""
+    local GIT_DIR="$(git rev-parse --git-dir 2>/dev/null)"
 
     if jj root &>/dev/null; then
-        local raw="$(jj log -r 'trunk()' --no-graph -T 'coalesce(local_bookmarks.map(|b| b.name()).join(""), remote_bookmarks.map(|b| b.name()).join(""))' 2>/dev/null)"
-        if [[ "$raw" == *@* ]]; then
-            local branch="${raw%%@*}"
-            local remote="${raw##*@}"
-        else
-            local branch="$raw"
-            local remote="origin"
+        if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
         fi
-        local upstream="${remote}/${branch}"
-        local NUM_AHEAD="$(git log --oneline ${upstream}..${branch} 2>/dev/null | wc -l | tr -d ' ')"
-        local NUM_BEHIND="$(git log --oneline ${branch}..${upstream} 2>/dev/null | wc -l | tr -d ' ')"
-        if [ "$NUM_AHEAD" -gt 0 ]; then GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}; fi
-        if [ "$NUM_BEHIND" -gt 0 ]; then GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}; fi
+        if [[ -n "$(jj diff --summary 2>/dev/null)" ]]; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+        fi
     else
         local NUM_AHEAD="$(git log --oneline @{u}.. 2>/dev/null | wc -l | tr -d ' ')"
         local NUM_BEHIND="$(git log --oneline ..@{u} 2>/dev/null | wc -l | tr -d ' ')"
         if [ "$NUM_AHEAD" -gt 0 ]; then GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}; fi
         if [ "$NUM_BEHIND" -gt 0 ]; then GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}; fi
-    fi
-    local GIT_DIR="$(git rev-parse --git-dir 2>/dev/null)"
-    if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
-    fi
-    if [[ -n $(git ls-files --other --exclude-standard 2>/dev/null) ]]; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
-    fi
-    if ! git diff --quiet 2>/dev/null; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
-    fi
-    if ! git diff --cached --quiet 2>/dev/null; then
-        GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+
+        if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+        fi
+        if [[ -n $(git ls-files --other --exclude-standard 2>/dev/null) ]]; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+        fi
+        if ! git diff --quiet 2>/dev/null; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+        fi
+        if ! git diff --cached --quiet 2>/dev/null; then
+            GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+        fi
     fi
 
     if [[ -n $GIT_STATE ]]; then
