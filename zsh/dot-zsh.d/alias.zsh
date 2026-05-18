@@ -76,7 +76,7 @@ gitpsu() {
 alias gitfprl="git fetch -p ; git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -D"
 
 # Jujutsu
-alias jjs='jj diff --summary'
+alias jjs='jj st'
 alias jjd='jj diff'
 alias jjl='jj log -r "all()"'
 alias jjb='jj bookmark list'
