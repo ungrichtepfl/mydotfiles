@@ -1,1 +1,2 @@
 *.bak
+opencode/**/package-lock.json
