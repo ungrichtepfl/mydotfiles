@@ -775,9 +775,41 @@ should_create_user_with_valid_data()
 TestUserService_CreateUser_ReturnsErrorOnInvalidInput()
 ```
 
-## 🔄 Git and Commit Guidelines
+## 🔄 Version Control Guidelines
 
-### Commit Messages
+### VCS Detection (CRITICAL)
+
+**Before any VCS operation, check which system is in use:**
+
+```bash
+# Check for Jujutsu
+ls .jj
+
+# Check for Git
+ls .git
+```
+
+- If `.jj` exists → use **Jujutsu (`jj`)** commands
+- If only `.git` exists → use **Git** commands
+- If both exist → prefer **Jujutsu** (jj repos often have a colocated `.git`)
+
+### Jujutsu Equivalents
+
+| Git | Jujutsu |
+|-----|---------|
+| `git status` | `jj status` |
+| `git log` | `jj log` |
+| `git diff` | `jj diff` |
+| `git add -p` | `jj split` / `jj diffedit` |
+| `git commit -m "..."` | `jj commit -m "..."` or `jj describe -m "..."` then `jj new` |
+| `git checkout -b branch` | `jj new -B branch` |
+| `git push` | `jj git push` |
+| `git pull` | `jj git fetch` |
+| `git stash` | `jj new` (changes stay in working copy) |
+
+In Jujutsu, the working copy is always a commit — there is no staging area. Amend the current change with `jj describe` or create a new child with `jj new`.
+
+### Git/Jujutsu Commit Messages
 ```
 type(scope): brief description
 
