@@ -6,10 +6,10 @@ alias gitac='git add . && git commit'				# git add and commit concatenated
 alias gitu='git add . && git commit && git push'
 
 if (( $+commands[eza] )); then
-    alias ls='eza --color=auto'                                 # Show content of folder colorized
-    alias ll='eza -lh'                                          # Show content of folder in list format
-    alias la='eza -a'                                           # Show all content of folder
-    alias lla='eza -lha'                                        # Show all content of folder in list format
+    alias ls='eza'                                               # Show content of folder
+    alias ll='eza -lhg'                                          # Show content of folder in list format
+    alias la='eza -a'                                            # Show all content of folder
+    alias lla='eza -lhag'                                        # Show all content of folder in list format
 else
     alias ls='ls --color'                                       # Show content of folder colorized
     alias ll='ls -lh'                                           # Show content of folder in list format
