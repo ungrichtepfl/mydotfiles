@@ -6,7 +6,7 @@ email = "christoph.ungricht@outlook.com"
 
 [ui]
 default-command = "log"
-conflict-marker-style = "git"   
+conflict-marker-style = "git"
 diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 diff-instructions = false
 
@@ -15,3 +15,18 @@ diff-instructions = false
 "diff added token" = { fg = "green", underline = false }
 "diff modified" = "yellow"
 "diff untracked" = "red"
+
+[snapshot]
+auto-track = '''
+all()
+  ~ glob:'**/*.csv' ~ glob:'**/*.tsv' ~ glob:'**/*.parquet' ~ glob:'**/*.feather'
+  ~ glob:'**/*.npy' ~ glob:'**/*.npz' ~ glob:'**/*.mat'
+  ~ glob:'**/*.h5' ~ glob:'**/*.hdf5'
+  ~ glob:'**/*.bag' ~ glob:'**/*.mcap' ~ glob:'**/*.db3' ~ glob:'**/*.pcap'
+  ~ glob:'**/*.log' ~ glob:'**/*.dump'
+  ~ glob:'**/*.bin' ~ glob:'**/*.dat'
+  ~ glob:'**/*.png' ~ glob:'**/*.jpg' ~ glob:'**/*.jpeg' ~ glob:'**/*.gif' ~ glob:'**/*.bmp' ~ glob:'**/*.svg'
+  ~ glob:'**/*.pdf'
+  ~ glob:'**/*.mp4' ~ glob:'**/*.mov' ~ glob:'**/*.mkv' ~ glob:'**/*.avi'
+  ~ glob:'**/*.zip' ~ glob:'**/*.tar' ~ glob:'**/*.gz' ~ glob:'**/*.tgz' ~ glob:'**/*.bz2' ~ glob:'**/*.xz' ~ glob:'**/*.7z'
+'''
