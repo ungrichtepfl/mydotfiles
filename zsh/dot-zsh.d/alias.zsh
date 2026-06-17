@@ -101,7 +101,7 @@ if [[ "$DISTRO" == "VoidLinux" ]]; then
             sudo sbctl sign-all
         fi
         echo "[update-all] Update zsh-plugins..."
-        update-zsh-plugins
+        update-zsh-plugins.sh
         echo "[update-all] Update flatpak..."
         flatpak update -y
     }
