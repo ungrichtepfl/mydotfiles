@@ -58,7 +58,7 @@ theme :=  Everforest-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 icons := Papirus-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 
 .PHONY: system
-system: gtk lightdm polkit sudoers udev
+system: gtk lightdm polkit sudoers udev claude-code
 	@echo "--------------FINISHED--------------------"
 	@echo "If you have a HDPI system checkout the README on how to fix the tiny screen."
 	@echo "Also check out the INSTALL.md for more manual info (Secure Boot)."
@@ -89,6 +89,11 @@ sudoers:
 udev:
 	sudo mkdir -p /etc/udev/rules.d
 	-sudo cp -i ./udev/backlight.rules /etc/udev/rules.d/
+
+.PHONY: claude-code
+claude-code:
+	sudo mkdir -p /etc/claude-code
+	sudo cp ./claude/dot-claude/managed-settings.json /etc/claude-code/managed-settings.json
 
 
 # HELP
