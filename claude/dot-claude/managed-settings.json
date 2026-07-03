@@ -10,6 +10,11 @@
     "enabled": true,
     "failIfUnavailable": true,
     "allowUnsandboxedCommands": false,
+    "excludeCommands": ["docker *"],
+    "filesystem": {
+      "allowWrite": ["~/Scewo"],
+      "allowRead": ["~/Scewo"]
+    },
     "network": {
       "allowedDomains": [
         "github.com",
