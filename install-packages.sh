@@ -42,7 +42,6 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages]    cupsd"
     echo "[install-packages]    dbus"
     echo "[install-packages]    docker"
-    echo "[install-packages]    elogind"
     echo "[install-packages]    lightdm"
     echo "[install-packages]    nanoklogd"
     echo "[install-packages]    NetworkManager"
