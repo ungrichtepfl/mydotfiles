@@ -5,7 +5,7 @@ ignore := '\.md$$|\.gitignore$$'
 # USER
 
 .PHONY: user
-user: home bin zsh i3 opencode claude
+user: home bin zsh i3 opencode claude pi
 	@echo '-------------------- FINISHED ------------------------'
 	@echo 'If you also want to install system configs run "make system"'
 	@echo 'If you want to install packages run "make packages"'
@@ -46,6 +46,13 @@ opencode:
 .PHONY: claude
 claude:
 	stow $(flags) --dotfiles -t $$HOME claude
+
+.PHONY: pi
+pi:
+	mkdir -p $$HOME/.pi/agent
+	stow $(flags) --dotfiles -t $$HOME pi
+	# Taken from https://github.com/earendil-works/pi/tree/main/packages/coding-agent/examples/extensions/sandbox
+	-cd pi/dot-pi/agent/extensions/sandbox && npm install
 
 .PHONY: fonts
 fonts:
@@ -115,6 +122,7 @@ help:
 	@echo 'Usage: make [target]'
 	@echo 'Targets:'
 	@echo '  make [user]: install all the dotfiles (default)'
+	@echo '  make pi: install the pi agent config + sandbox extension'
 	@echo '  make packages: install all the packages'
 	@echo '  make packages-work: install all the packages for work'
 	@echo '  make system: install all the system configs'
