@@ -1,2 +1,3 @@
 *.bak
 opencode/**/package-lock.json
+.claude/settings.local.json

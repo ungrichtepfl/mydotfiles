@@ -117,3 +117,7 @@ setup_pyenv() {
 zsh-defer setup_pyenv
 
 [ -z "$ZPROF" ] || zprof
+
+# Qwen Code PATH block begin
+export PATH='/home/chrigi/.local/bin':$PATH
+# Qwen Code PATH block end

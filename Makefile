@@ -95,6 +95,18 @@ claude-code:
 	sudo mkdir -p /etc/claude-code
 	sudo cp ./claude/dot-claude/managed-settings.json /etc/claude-code/managed-settings.json
 
+.PHONY: ollama-init
+ollama-init:
+	# Checkout https://docs.ollama.com/linux
+	sudo useradd -r -s /bin/false -U -m -d /usr/share/ollama ollama
+	sudo usermod -a -G ollama $(whoami)
+
+.PHONY: ollama-config
+ollama-config:
+	sudo mkdir -p /etc/sv/ollama/log
+	-sudo cp -i ./ollama/run /etc/sv/ollama/run
+	-sudo cp -i ./ollama/log/run /etc/sv/ollama/log/run
+	-sudo ln -s /etc/sv/ollama /var/service/
 
 # HELP
 
@@ -102,7 +114,11 @@ claude-code:
 help:
 	@echo 'Usage: make [target]'
 	@echo 'Targets:'
-	@echo '  make [user]: install all the dotfiles'
+	@echo '  make [user]: install all the dotfiles (default)'
 	@echo '  make packages: install all the packages'
+	@echo '  make packages-work: install all the packages for work'
 	@echo '  make system: install all the system configs'
+	@echo '  make fonts: install the fonts'
+	@echo '  make ollama-init: create the ollama user (see docs.ollama.com/linux)'
+	@echo '  make ollama-config: install the ollama runit service'
 	@echo '  make help: show this help message'
