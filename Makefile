@@ -5,7 +5,7 @@ ignore := '\.md$$|\.gitignore$$'
 # USER
 
 .PHONY: user
-user: home bin zsh i3 opencode claude pi
+user: home bin zsh i3 agents opencode claude pi
 	@echo '-------------------- FINISHED ------------------------'
 	@echo 'If you also want to install system configs run "make system"'
 	@echo 'If you want to install packages run "make packages"'
@@ -38,6 +38,12 @@ i3: bin
 zsh:
 	stow $(flags) --ignore $(ignore) --ignore 'zshrc.luke|\.sh$$' -t $$HOME zsh
 	./zsh/install-zsh.sh
+
+# Shared guidelines and skills for all coding agents (AGENTS.md source of truth)
+.PHONY: agents
+agents:
+	mkdir -p $$HOME/.agents
+	stow $(flags) --dotfiles -t $$HOME agents
 
 .PHONY: opencode
 opencode:

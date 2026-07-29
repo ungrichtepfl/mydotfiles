@@ -19,7 +19,28 @@
       "allowedDomains": [
         "github.com",
         "*.github.com",
-        "*.githubusercontent.com"
+        "*.githubusercontent.com",
+        "gitlab.com",
+        "npmjs.org",
+        "*.npmjs.org",
+        "registry.yarnpkg.com",
+        "pypi.org",
+        "*.pypi.org",
+        "files.pythonhosted.org",
+        "crates.io",
+        "static.crates.io",
+        "index.crates.io",
+        "docs.rs",
+        "proxy.golang.org",
+        "sum.golang.org",
+        "pkg.go.dev",
+        "go.dev",
+        "doc.rust-lang.org",
+        "docs.python.org",
+        "developer.mozilla.org",
+        "repo-default.voidlinux.org",
+        "docs.voidlinux.org",
+        "man.voidlinux.org"
       ]
     }
   },

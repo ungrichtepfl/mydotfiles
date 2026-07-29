@@ -2,5 +2,9 @@
 exec 2>&1
 
 export HOME="/usr/share/ollama"
+# Optimized for ~30GB RAM and CPU-only:
+export OLLAMA_CONTEXT_LENGTH=16384
+export OLLAMA_FLASH_ATTENTION=1
+export OLLAMA_KV_CACHE_TYPE=q8_0
 
 exec chpst -u ollama:ollama /usr/local/bin/ollama serve
