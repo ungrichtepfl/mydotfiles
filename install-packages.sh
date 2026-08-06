@@ -21,7 +21,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         system-config-printer cups-pk-helper lightdm lightdm-gtk3-greeter \
         elogind clang flatpak xdg-desktop-portal-gtk gthumb mupdf ImageMagick \
         neomutt tmux mpv w3m-img notmuch pandoc urlscan \
-        isync xdg-utils cyrus-sasl-xoauth2 goimapnotify mpv vlc inkscape \
+        isync xdg-utils cyrus-sasl-xoauth2 goimapnotify vlc inkscape \
         nerd-fonts font-awesome6 flameshot Solaar tealdeer avidemux docker \
         j4-dmenu-desktop acpi xorg-server-xephyr libXinerama-devel jujutsu \
         bubblewrap socat
