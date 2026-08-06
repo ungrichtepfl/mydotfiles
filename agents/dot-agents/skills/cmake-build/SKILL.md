@@ -22,15 +22,16 @@ Check (in the project root): non-hidden preset names in `CMakePresets.json`,
 
 Report build output, highlight any errors or warnings.
 
-## Dependency fetch when sandboxed (FetchContent / SSH)
-**Applies only when running inside a sandbox that blocks SSH** (e.g. Claude Code's Bash sandbox, which proxies HTTP/HTTPS only — port 22 raw TCP cannot traverse it). Detect it by an SSH/clone error on a fresh configure of a `FetchContent_Declare(... GIT_REPOSITORY git@github.com:...)` dep; unsandboxed, fetch normally. Handle it in this order:
+## Dependency fetch (FetchContent / SSH)
+The sandbox is configured with ssh-agent forwarding (`SSH_AUTH_SOCK` + `sandbox.network.allowAllUnixSockets`), so `FetchContent_Declare(... GIT_REPOSITORY git@github.com:...)` deps fetch normally over SSH — no special handling needed on this machine.
 
+**If an SSH/clone error still occurs on a fresh configure** (e.g. on a machine without this fix, or no ssh-agent running), fall back to:
 1. **Reuse already-fetched sources.** A populated `build/<preset>/_deps/` means the dependency is already cloned; `cmake --build build/<preset>` will not re-fetch. Don't wipe `build/` or reconfigure from scratch if it isn't needed.
-2. **Prefetch with `gh`, then point CMake at it.** `gh` uses HTTPS + token, which works in the sandbox. Clone the dep at the pinned `GIT_TAG` and pass it via `FETCHCONTENT_SOURCE_DIR_<NAME>` (NAME = upper-cased `FetchContent_Declare` name):
+2. **Prefetch with `gh`, then point CMake at it.** `gh` uses HTTPS + token, which works even without SSH. Clone the dep at the pinned `GIT_TAG` and pass it via `FETCHCONTENT_SOURCE_DIR_<NAME>` (NAME = upper-cased `FetchContent_Declare` name):
    ```bash
    gh repo clone Scewo/imx8-scewo-messages "$TMPDIR/scewo-messages" -- --branch v0.18.0 --depth 1
    cmake --preset <preset> -D"FETCHCONTENT_SOURCE_DIR_SCEWO-MESSAGES=$TMPDIR/scewo-messages"
    ```
-3. **Don't** edit the project's `CMakeLists.txt` to swap SSH→HTTPS or try to enable SSH in settings — the URL is shared with other devs/CI, and SSH can't be enabled in the sandbox.
+3. **Don't** edit the project's `CMakeLists.txt` to swap SSH→HTTPS — the URL is shared with other devs/CI.
 
-If a genuine first-time fetch is unavoidable, ask the user to run the configure step once in an unsandboxed shell (in Claude Code: the `! ` prefix; `!` has no TTY — use a separate terminal if SSH needs an interactive passphrase); sandboxed builds then reuse the `_deps` cache.
+If neither applies, ask the user to check that an ssh-agent is running with the key loaded (`ssh-add -l`), or run the configure step once in an unsandboxed shell.

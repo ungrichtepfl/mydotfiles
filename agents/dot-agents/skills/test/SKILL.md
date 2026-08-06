@@ -19,10 +19,11 @@ Check: project type (`Cargo.toml` vs `CMakeLists.txt`/`CMakePresets.json`),
 
 Report pass/fail counts and surface failing tests with their output.
 
-## Dependency fetch when sandboxed
-**Applies only when running inside a sandbox that blocks SSH** (e.g. Claude Code's Bash sandbox — HTTP/HTTPS only): tests that trigger a dependency fetch over `git@github.com:` fail on a cold cache. Reuse what's already fetched first:
+## Dependency fetch
+The sandbox is configured with ssh-agent forwarding, so dependency fetches over `git@github.com:` (cargo git deps, CMake `FetchContent`) work normally on a cold cache — no special handling needed on this machine.
 
-- **Rust:** if `~/.cargo/git/checkouts/` is populated, add `--offline` to the cargo command. If a dep is missing, ask the user to prefetch once in an unsandboxed shell (in Claude Code: `! cargo fetch`; `!` has no TTY — use a separate terminal if SSH needs an interactive passphrase).
-- **CMake:** if `build/<preset>/_deps/` is already populated, tests build against it without re-fetching. Otherwise see the `cmake-build` skill's prefetch-with-`gh` procedure.
+**If a fetch error still occurs** (e.g. on a machine without this fix, or no ssh-agent running):
+- **Rust:** if `~/.cargo/git/checkouts/` is populated, add `--offline` to the cargo command. If a dep is missing, ask the user to check `ssh-add -l` or prefetch once in an unsandboxed shell.
+- **CMake:** if `build/<preset>/_deps/` is already populated, tests build against it without re-fetching. Otherwise see the `cmake-build` skill's fallback procedure.
 
-Don't rewrite manifests SSH→HTTPS or try to enable SSH in settings (not possible in the sandbox).
+Don't rewrite manifests SSH→HTTPS.

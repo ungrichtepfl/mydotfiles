@@ -14,6 +14,13 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     export PATH=$HOME/.local/bin:$PATH
 fi
 
+# Start a persistent ssh-agent for the session
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)"
+    export SSH_AUTH_SOCK SSH_AGENT_PID
+    ssh-add "$HOME/.ssh/id_ed25519"
+fi
+
 # Remap keys
 setxkbmap -layout ch -variant de_nodeadkeys
 xmodmap $HOME/.Xmodmap

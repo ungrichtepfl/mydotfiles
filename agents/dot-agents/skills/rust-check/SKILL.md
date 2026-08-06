@@ -7,8 +7,8 @@ description: Check, lint, and format-check the current Rust project using its do
 
 ## Gather context first
 Check: `Cargo.toml` (name, `[features]`, `[workspace]` members), git dependencies
-(`git =` entries — SSH ones need prefetch in the sandbox), `.vscode/tasks.json`,
-and the cargo git cache (`~/.cargo/git/checkouts`).
+(`git =` entries), `.vscode/tasks.json`, and the cargo git cache
+(`~/.cargo/git/checkouts`).
 
 ## Check and lint, in this order
 1. **Honour what the user asked for** (a specific crate, feature set, or target).
@@ -17,9 +17,10 @@ and the cargo git cache (`~/.cargo/git/checkouts`).
 
 Report all errors and warnings clearly.
 
-## Dependency fetch when sandboxed (cargo git deps over SSH)
-**Applies only when running inside a sandbox that blocks SSH** (e.g. Claude Code's Bash sandbox — HTTP/HTTPS only). Detect it by a fetch error on `ssh://git@github.com/...` git dependencies (often with `git-fetch-with-cli = true`); unsandboxed, fetch normally:
+## Dependency fetch (cargo git deps over SSH)
+The sandbox is configured with ssh-agent forwarding (`SSH_AUTH_SOCK` + `sandbox.network.allowAllUnixSockets`) and `~/.cargo` is writable, so `cargo check`/`cargo fetch` on `git = "ssh://git@github.com/..."` dependencies works normally — no special handling needed on this machine.
 
-1. **Reuse the cached deps with `--offline`.** If `~/.cargo/git/checkouts/` already holds the dependency and `target/` exists, every cargo command works offline: `cargo check --offline`, `cargo clippy --offline ...`. This is the normal case — VS Code builds populate the cache. Prefer `--offline` whenever the cache is present.
-2. **If a dep is missing from the cache**, it must be fetched once over SSH outside the sandbox: ask the user to run `cargo fetch` in an unsandboxed shell (in Claude Code: `! cargo fetch`; note `!` has no TTY, so if SSH needs an interactive passphrase they must use a separate terminal). Subsequent sandboxed commands then work with `--offline`.
-3. **Don't** rewrite `Cargo.toml` SSH→HTTPS (shared with other devs/CI) or try to enable SSH in settings (not possible in the sandbox).
+**If a fetch error still occurs** (e.g. on a machine without this fix, or no ssh-agent running):
+1. **Reuse the cached deps with `--offline`.** If `~/.cargo/git/checkouts/` already holds the dependency and `target/` exists, every cargo command works offline: `cargo check --offline`, `cargo clippy --offline ...`.
+2. **If a dep is missing from the cache**, ask the user to check that an ssh-agent is running with the key loaded (`ssh-add -l`), or run `cargo fetch` once in an unsandboxed shell.
+3. **Don't** rewrite `Cargo.toml` SSH→HTTPS (shared with other devs/CI).
