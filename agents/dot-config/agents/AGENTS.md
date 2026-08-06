@@ -23,7 +23,7 @@
 
 ## Code style
 - Follow existing codebase patterns.
-- NO review comments: never comment why something was removed/changed, or restate what is clear to an engineer who reads code and knows the library. Comment ONLY "magic" values/config and logic that needs knowledge not available from the surrounding context. Document public APIs.
+- NO over-the-top comments a human engineer wouldn't write. Comment only when: (a) the logic is genuinely messy and needs a short summary to follow, or (b) something depends on context outside the local scope (another module, a cross-cutting design decision) that isn't derivable by reading the code itself. Never comment on what was changed/removed (no review-style comments), or restate what's already clear from reading the code and library. Document public APIs.
 - Use Conventional Commits: `type(scope): brief description` (feat, fix, docs, refactor, test, chore). Reference issues, note breaking changes.
 
 ## Language-specific guidelines (read on demand)
