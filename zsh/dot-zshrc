@@ -91,7 +91,8 @@ fi
 
 # jujutsu
 if (( $+commands[jj] )); then
-    source <(jj util completion zsh)
+    # source <(jj util completion zsh) # static completion
+    source <(COMPLETE=zsh jj)
 fi
 
 ##############
