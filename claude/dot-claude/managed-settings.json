@@ -44,7 +44,25 @@
         "developer.mozilla.org",
         "repo-default.voidlinux.org",
         "docs.voidlinux.org",
-        "man.voidlinux.org"
+        "man.voidlinux.org",
+        "community.nxp.com",
+        "nxp.com",
+        "*.nxp.com",
+        "developer.toradex.com",
+        "community.toradex.com",
+        "*.toradex.com",
+        "esp32.com",
+        "*.esp32.com",
+        "espressif.com",
+        "*.espressif.com",
+        "forum.arduino.cc",
+        "docs.arduino.cc",
+        "*.arduino.cc",
+        "gcc.gnu.org",
+        "llvm.org",
+        "*.llvm.org",
+        "rust-lang.org",
+        "*.rust-lang.org"
       ]
     }
   },
