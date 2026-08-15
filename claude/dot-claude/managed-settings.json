@@ -15,7 +15,26 @@
     "allowUnsandboxedCommands": false,
     "excludeCommands": ["docker *"],
     "filesystem": {
-      "allowWrite": ["~/Scewo", "~/.cargo"],
+      "allowWrite": [
+        "~/Scewo",
+        "~/.cargo",
+        "~/.rustup",
+        "~/.cache/roc",
+        "~/.cache/go-build",
+        "~/.local/go/pkg/mod",
+        "~/.npm",
+        "~/.config/nvm/versions/node",
+        "~/.cache/pip",
+        "~/.cache/yarn",
+        "~/.cache/zig",
+        "~/.cache/clangd",
+        "~/.elm",
+        "~/.nuget",
+        "~/.dotnet",
+        "~/.arduino15",
+        "~/.cache/act",
+        "~/.cache/actcache"
+      ],
       "allowRead": ["~/Scewo", "~/.ssh"]
     },
     "network": {
