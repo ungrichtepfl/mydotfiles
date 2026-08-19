@@ -8,8 +8,6 @@ bindkey  "^[[3~"  delete-char       # DELETE
 bindkey  "^[z"    undo              # Nicer for swiss keyboard than C-_
 bindkey  "^[Z"    redo
 
-bindkey -s '^f' 'cd "$(fd -t d . | fzf)"\n'
-
 yazicd () {
     tmp="$(mktemp)"
     yazi --cwd-file="$tmp" "$@"
@@ -19,4 +17,5 @@ yazicd () {
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
-bindkey -s '^o' 'yazicd\n'
+bindkey -s '^[o' 'yazicd\n'
+bindkey -s '^o' 'cd "$(fd . ~ -t d | fzf)"\n'
