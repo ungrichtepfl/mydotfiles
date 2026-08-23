@@ -33,7 +33,8 @@
         "~/.dotnet",
         "~/.arduino15",
         "~/.cache/act",
-        "~/.cache/actcache"
+        "~/.cache/actcache",
+        "~/.cache/cve-bin-tool"
       ],
       "allowRead": ["~/Scewo", "~/.ssh"]
     },
@@ -81,7 +82,16 @@
         "llvm.org",
         "*.llvm.org",
         "rust-lang.org",
-        "*.rust-lang.org"
+        "*.rust-lang.org",
+        "nvd.nist.gov",
+        "services.nvd.nist.gov",
+        "mirror.cveb.in",
+        "www.cisa.gov",
+        "access.redhat.com",
+        "curl.se",
+        "epss.cyentia.com",
+        "osv-vulnerabilities.storage.googleapis.com",
+        "storage.googleapis.com"
       ]
     }
   },
