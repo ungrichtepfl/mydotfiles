@@ -71,7 +71,7 @@ theme :=  Everforest-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 icons := Papirus-Dark # MUST BE THE SAME AS IN gtk/settings.ini
 
 .PHONY: system
-system: gtk lightdm polkit sudoers udev claude-code
+system: gtk lightdm polkit sudoers udev x11 claude-code
 	@echo "--------------FINISHED--------------------"
 	@echo "If you have a HDPI system checkout the README on how to fix the tiny screen."
 	@echo "Also check out the INSTALL.md for more manual info (Secure Boot)."
@@ -102,6 +102,12 @@ sudoers:
 udev:
 	sudo mkdir -p /etc/udev/rules.d
 	-sudo cp -i ./udev/backlight.rules /etc/udev/rules.d/
+
+# The HiDPI config (99-hdpi.conf) is machine specific, see X11/README.md
+.PHONY: x11
+x11:
+	sudo mkdir -p /etc/X11/xorg.conf.d
+	-sudo cp -i ./X11/00-keyboard.conf /etc/X11/xorg.conf.d/
 
 .PHONY: claude-code
 claude-code:

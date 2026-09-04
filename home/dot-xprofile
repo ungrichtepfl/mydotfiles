@@ -21,10 +21,6 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     ssh-add "$HOME/.ssh/id_ed25519"
 fi
 
-# Remap keys
-setxkbmap -layout ch -variant de_nodeadkeys
-xmodmap $HOME/.Xmodmap
-
 ### HIGH DPI CONFIG
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_ENABLE_HIGHDPI_SCALING=1
