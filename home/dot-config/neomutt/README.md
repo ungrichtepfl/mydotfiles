@@ -3,13 +3,15 @@
 Read this [tutorial](https://mail.margiolis.net/w/mutt_gmail_outlook/) on how to
 setup outlook mail.
 
-**TLDR:**
+## OAuth2 token for Outlook
 
 ```shell
-/usr/share/neomutt/oauth2/mutt_oauth2.py  \
+/usr/share/neomutt/oauth2/mutt_oauth2.py \
         -v \
         -t \
+        -d \
         --authorize \
+        --authflow authcode \
         --client-id "9e5f94bc-e8a4-4e73-b8be-63364c29d753" \
         --client-secret "" \
         --email "christoph.ungricht@outlook.com" \
@@ -17,31 +19,36 @@ setup outlook mail.
         ~/.config/neomutt/outlooktoken
 ```
 
-Choose `authcode`, leave the secret empty and after authentication use
-`echo <the_url> | sed 's/.*code=//;s/\&.*//'` to extract the code from the url.
-If the command above requests a user ID and if left empty crashes as such:
-
-```text
-Enter the user ID.  End with an empty line: <empty>
-
-Traceback (most recent call last):
-  File "/usr/share/neomutt/oauth2/mutt_oauth2.py", line 164, in <module>
-    writetokenfile()
-    ~~~~~~~~~~~~~~^^
-  File "/usr/share/neomutt/oauth2/mutt_oauth2.py", line 139, in writetokenfile
-    sub2 = subprocess.run(ENCRYPTION_PIPE, check=True, input=json.dumps(token).encode(),
-                          capture_output=True)
-  File "/usr/lib/python3.13/subprocess.py", line 577, in run
-    raise CalledProcessError(retcode, process.args,
-                             output=stdout, stderr=stderr)
-subprocess.CalledProcessError: Command '['gpg', '--encrypt', '--default-recipient-self']' returned non-zero exit status 2.
-```
-
-You need to create a gpg key first:
+The script prints an URL and then waits for the authorization code. Open the URL
+in the browser. You need to sign in to Microsoft and then you will be redirected
+to a page where you need to copy its url (contains the code). Then extract the
+auth code:
 
 ```shell
-gpg --full-generate-key
+python3 -c 'import sys,urllib.parse as u; print(u.parse_qs(u.urlparse(sys.argv[1]).query)["code"][0], end="")' \
+        '<the_url>' | xclip -sel clip
 ```
+
+### Gotchas
+
+- The token file is written *before* the authorization completes. On a rerun
+  with an existing file, `--client-id`, `--client-secret` and `--email` are
+  ignored (the stored values win); only `--authflow` overrides. To truly start
+  over, `rm ~/.config/neomutt/outlooktoken` first.
+- If the run asks for a user ID and then crashes with
+  `subprocess.CalledProcessError: Command '['gpg', '--encrypt',
+  '--default-recipient-self']' returned non-zero exit status 2`, you are missing
+  a GPG key:
+
+  ```shell
+  gpg --full-generate-key
+  ```
+
+- If somehow the sync still fails check if the gpg public key lock has to be deleted:
+
+  ```
+  rm ~/.gnupg/public-keys.d/pubring.db.lock
+  ```
 
 The configs have been taken from
 [gideonwolfe/neomutt](https://gideonwolfe.com/posts/workflow/neomutt/intro/).
