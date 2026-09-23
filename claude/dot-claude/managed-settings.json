@@ -91,7 +91,8 @@
         "curl.se",
         "epss.cyentia.com",
         "osv-vulnerabilities.storage.googleapis.com",
-        "storage.googleapis.com"
+        "storage.googleapis.com",
+        "xray.cloud.getxray.app"
       ]
     }
   },

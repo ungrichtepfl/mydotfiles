@@ -1,5 +1,7 @@
 *.bak
 opencode/**/package-lock.json
 .claude/settings.local.json
+.claude/.cc-writes/
+agents/dot-agents/skills/synced/
 pi/**/node_modules/
 pi/**/package-lock.json
