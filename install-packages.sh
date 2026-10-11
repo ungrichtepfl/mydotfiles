@@ -10,7 +10,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         pulseaudio NetworkManager network-manager-applet blueman tlp linux-tools \
         binutils-devel lua-language-server \
         base-devel gdb curl wget git git-lfs jq zip unzip p7zip zstd zsh lz4 fzf \
-        vim-huge neovim fastfetch cmake go zig cronie tzupdate \
+        vim-huge neovim fastfetch cmake go cronie tzupdate \
         libsixel-devel chafa chafa-devel zoxide xcb-util-image-devel \
         libvips-devel tbb-devel libopencv-devel zenity htop \
         Thunar thunar-volman gvfs tumbler ffmpeg ffmpegthumbnailer \
