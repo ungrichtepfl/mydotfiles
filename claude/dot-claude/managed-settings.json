@@ -13,7 +13,7 @@
     "enabled": true,
     "failIfUnavailable": true,
     "allowUnsandboxedCommands": false,
-    "excludeCommands": ["docker *"],
+    "excludedCommands": ["docker *"],
     "filesystem": {
       "allowWrite": [
         "~/Scewo",
@@ -92,7 +92,8 @@
         "epss.cyentia.com",
         "osv-vulnerabilities.storage.googleapis.com",
         "storage.googleapis.com",
-        "xray.cloud.getxray.app"
+        "xray.cloud.getxray.app",
+        "scewosw.atlassian.net"
       ]
     }
   },
