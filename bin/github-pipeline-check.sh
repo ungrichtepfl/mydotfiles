@@ -42,10 +42,12 @@ report_failed_runs() {
     local repo=$1 branch since runs id workflow title url key
     branch=$(gh repo view "$repo" --json defaultBranchRef -q .defaultBranchRef.name) || return 1
     since=$(date -u -d "$LOOKBACK_DAYS days ago" +%Y-%m-%d)
+    # Only the latest completed run of each workflow counts, so a failure fixed by a later run is not reported.
     # Status and conclusion are those of the last attempt; a re-run keeps the run ID.
     runs=$(gh run list -R "$repo" --branch "$branch" --status completed --created ">=$since" --limit 100 \
-        --json databaseId,conclusion,workflowName,displayTitle,url \
-        -q '.[] | select(.conclusion == "failure" or .conclusion == "timed_out" or .conclusion == "startup_failure")
+        --json databaseId,conclusion,workflowDatabaseId,workflowName,displayTitle,url,createdAt \
+        -q 'group_by(.workflowDatabaseId) | map(max_by(.createdAt)) | .[]
+               | select(.conclusion == "failure" or .conclusion == "timed_out" or .conclusion == "startup_failure")
                | [.databaseId, .workflowName, .displayTitle, .url] | @tsv') || return 1
 
     while IFS=$'\t' read -r id workflow title url; do
