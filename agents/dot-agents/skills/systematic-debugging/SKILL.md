@@ -5,12 +5,12 @@ description: Root-cause a bug methodically instead of guessing at fixes. Use whe
 
 # Systematic debugging
 
-Find the root cause BEFORE writing any fix. A fix without a diagnosed cause is a guess.
+Find the root cause before writing any fix. A fix without a diagnosed cause is a guess.
 
 ## Procedure
 1. **Reproduce.** Run the failing command/test and capture the exact error. If it can't be reproduced, that IS the first problem — don't theorize about unreproduced bugs.
 2. **Read the actual code path.** Follow the real implementation from the error site backwards — not what the code "should" do, what it does. Read the failing function, its inputs, its callers.
-3. **Form ONE hypothesis** stating cause → effect ("X is nil here because Y runs before Z"). It must be falsifiable.
+3. **Form one hypothesis** stating cause → effect ("X is nil here because Y runs before Z"). It must be falsifiable.
 4. **Test the hypothesis minimally**: a log line, a debugger breakpoint, a narrowed test — the smallest probe that confirms or kills it. Do not "test" a hypothesis by applying the fix.
 5. **Wrong? Back to 2 with what you learned.** Two failed hypotheses: question a deeper assumption (is the input what you think? the version? the environment?).
 6. **Confirmed? Fix the cause, not the symptom.** Then re-run the original reproduction to prove it, and check whether the same bug class exists elsewhere in the codebase.

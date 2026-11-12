@@ -25,7 +25,7 @@ Report build output, highlight any errors or warnings.
 ## Dependency fetch (FetchContent / SSH)
 The sandbox is configured with ssh-agent forwarding (`SSH_AUTH_SOCK` + `sandbox.network.allowAllUnixSockets`), so `FetchContent_Declare(... GIT_REPOSITORY git@github.com:...)` deps fetch normally over SSH — no special handling needed on this machine.
 
-**If an SSH/clone error still occurs on a fresh configure** (e.g. on a machine without this fix, or no ssh-agent running), fall back to:
+**If an SSH/clone error occurs on a fresh configure** (for example, no ssh-agent is running), fall back to:
 1. **Reuse already-fetched sources.** A populated `build/<preset>/_deps/` means the dependency is already cloned; `cmake --build build/<preset>` will not re-fetch. Don't wipe `build/` or reconfigure from scratch if it isn't needed.
 2. **Prefetch with `gh`, then point CMake at it.** `gh` uses HTTPS + token, which works even without SSH. Clone the dep at the pinned `GIT_TAG` and pass it via `FETCHCONTENT_SOURCE_DIR_<NAME>` (NAME = upper-cased `FetchContent_Declare` name):
    ```bash

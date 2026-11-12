@@ -22,7 +22,7 @@ Report pass/fail counts and surface failing tests with their output.
 ## Dependency fetch
 The sandbox is configured with ssh-agent forwarding, so dependency fetches over `git@github.com:` (cargo git deps, CMake `FetchContent`) work normally on a cold cache — no special handling needed on this machine.
 
-**If a fetch error still occurs** (e.g. on a machine without this fix, or no ssh-agent running):
+**If a fetch error occurs** (for example, no ssh-agent is running):
 - **Rust:** if `~/.cargo/git/checkouts/` is populated, add `--offline` to the cargo command. If a dep is missing, ask the user to check `ssh-add -l` or prefetch once in an unsandboxed shell.
 - **CMake:** if `build/<preset>/_deps/` is already populated, tests build against it without re-fetching. Otherwise see the `cmake-build` skill's fallback procedure.
 
