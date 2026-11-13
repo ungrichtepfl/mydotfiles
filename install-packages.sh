@@ -60,7 +60,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
     echo "[install-packages] Disable the following when you enable elogind:"
     echo "[install-packages]    acpid"
     echo "[install-packages] Also install manually:"
-    echo "[install-packages]    nvm (and then node)"
+    echo "[install-packages]    fnm (and then node)"
     echo "[install-packages]    rust"
     echo "[install-packages]    treesitter-cli"
 else

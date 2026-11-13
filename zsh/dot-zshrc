@@ -99,33 +99,13 @@ fi
 # -- SLOW -- #
 ##############
 
-# Nvm
-# Loading nvm.sh takes about 0.5 s and blocks typing, even deferred. So only put
-# nvm's default Node on PATH, resolved like nvm resolves its "default" alias:
-# "node" = newest installed, "v25.2.1" = that version, "25" = newest 25.x.
-export NVM_DIR="$HOME/.config/nvm"
-if [[ -r $NVM_DIR/alias/default ]]; then
-    _nvm_default=$(<"$NVM_DIR/alias/default")
-    case $_nvm_default in
-        node) _nvm_node=($NVM_DIR/versions/node/v*(NnOn[1])) ;;
-        v*)   _nvm_node=($NVM_DIR/versions/node/$_nvm_default(N)) ;;
-        *)    _nvm_node=($NVM_DIR/versions/node/v${_nvm_default}(|.*)(NnOn[1])) ;;
-    esac
-    if [[ -n $_nvm_node ]]; then
-        path=("$_nvm_node/bin" $path)
-    else
-        print -u2 "zshrc: nvm default '$_nvm_default' is not installed, node is not on PATH"
-    fi
-    unset _nvm_default _nvm_node
+# Node versions with fnm (https://github.com/Schniz/fnm). --use-on-cd switches to
+# the version in .node-version or .nvmrc when entering a folder.
+FNM_PATH="$HOME/.local/share/fnm"
+if [[ -d $FNM_PATH ]]; then
+    path=("$FNM_PATH" $path)
+    eval "$(fnm env --use-on-cd --shell zsh)"
 fi
-
-# The nvm command loads nvm.sh the first time it is used.
-nvm() {
-    unfunction nvm
-    . "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-    nvm "$@"
-}
 
 # Pyenv
 # Not deferred: deferred work blocks typing after the prompt. --no-rehash makes it
