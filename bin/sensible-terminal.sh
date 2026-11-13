@@ -16,8 +16,21 @@
 # 2. Distribution-specific mechanisms come next, e.g. x-terminal-emulator
 # 3. The terminal emulator with best accessibility comes first.
 # 4. No order is guaranteed/desired for the remaining terminal emulators.
-for terminal in "$TERMINAL" x-terminal-emulator mate-terminal gnome-terminal terminator xfce4-terminal urxvt rxvt termit Eterm aterm uxterm xterm roxterm termite lxterminal terminology st qterminal lilyterm tilix terminix konsole kitty guake tilda alacritty hyper wezterm rio; do
-    if command -v "$terminal" > /dev/null 2>&1; then
+for terminal in "$TERMINAL" zellij x-terminal-emulator mate-terminal gnome-terminal terminator xfce4-terminal urxvt rxvt termit Eterm aterm uxterm xterm roxterm termite lxterminal terminology st qterminal lilyterm tilix terminix konsole kitty guake tilda alacritty hyper wezterm rio; do
+    if ! command -v "$terminal" > /dev/null 2>&1; then
+        continue
+    fi
+    if [ "$terminal" = zellij ] && [ "${1:-}" = -e ]; then
+        shift
+        # A window for one program (mail, jira) gets its own session: hide its bars.
+        exec zellij terminal -e sh -c 'zellij action hide-bars all; exec "$@"' sh "$@"
+    elif [ "$terminal" = zellij ]; then
+        exec zellij terminal "$@"
+    elif [ "$terminal" = kitty ]; then
+        # We start kitty as a single instance, otherwise each open takes a really long time
+        # Now it is only the first time when no other kitty terminal is open
+        exec kitty --single-instance "$@"
+    else
         exec "$terminal" "$@"
     fi
 done

@@ -178,7 +178,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Shift q" { Quit; }
         // Quick actions (no mode switch needed)
         bind "Ctrl Shift w" { ToggleFloatingPanes; }
-        bind "Ctrl Shift ," { NewTab; SwitchToMode "Normal"; }
+        bind "Ctrl Shift ," "Ctrl ;" { NewTab; SwitchToMode "Normal"; }
         bind "Ctrl Shift n" { NewPane; }
         bind "Ctrl Shift i" { MoveTab "Left"; }
         bind "Ctrl Shift u" { MoveTab "Right"; }
@@ -186,10 +186,10 @@ keybinds clear-defaults=true {
         bind "Ctrl Shift l" "Ctrl Shift Right" { MoveFocusOrTab "Right"; }
         bind "Ctrl Shift j" "Ctrl Shift Down" { MoveFocus "Down"; }
         bind "Ctrl Shift k" "Ctrl Shift Up" { MoveFocus "Up"; }
-        bind "Ctrl Shift =" "Ctrl Shift +" { Resize "Increase"; }
-        bind "Ctrl Shift -" { Resize "Decrease"; }
+        bind "Ctrl Shift =" "Ctrl Shift +" "Ctrl =" { Resize "Increase"; }
+        bind "Ctrl Shift -" "Ctrl _" { Resize "Decrease"; }
         bind "Ctrl Shift [" { PreviousSwapLayout; }
-        bind "Ctrl Shift ]" { NextSwapLayout; }
+        bind "Ctrl Shift ]" "Ctrl :" { NextSwapLayout; }
         bind "Ctrl Shift a" { TogglePaneInGroup; }
         bind "Ctrl Shift z" { ToggleGroupMarking; }
     }
@@ -367,6 +367,55 @@ themes {
 }
 
 theme "solarized-dark-inverse-tab-colors"
+
+// Images in panes (presenterm, image.nvim). Changing it requires restarting Zellij.
+support_kitty_graphics_protocol true
+
+// No note when bars are hidden (windows for one program hide them on start).
+hidden_bars_notification false
+
+// https://zellij.dev/documentation/inbox.html
+attention {
+    tray_icon false
+}
+
+// The Zellij terminal window (`zellij terminal`), set up like Alacritty and kitty.
+// https://zellij.dev/documentation/terminal-options.html
+terminal {
+    font "JetBrainsMono Nerd Font Mono"
+    font_size 11
+    ligatures false
+    cursor_style "block"
+    cursor_blink false
+    // Swiss layout: the window sends Shift + key as the shifted character
+    // (Ctrl Shift 0 = "Ctrl =", Ctrl Shift - = "Ctrl _"). Those are needed for
+    // the pane resize bindings above, so zoom stays on "Ctrl +" (number pad).
+    zoom_in_keys "Ctrl +"
+    zoom_out_keys "Ctrl -"
+    zoom_reset_keys "Ctrl 0"
+    // Kanso Zen, same colors as kanso.nvim's extras/kitty/kanso_zen.conf
+    theme {
+        foreground "#C5C9C7"
+        background "#090E13"
+        cursor "#C5C9C7"
+        black "#0d0c0c"
+        red "#c4746e"
+        green "#8a9a7b"
+        yellow "#c4b28a"
+        blue "#8ba4b0"
+        magenta "#a292a3"
+        cyan "#8ea4a2"
+        white "#C8C093"
+        bright_black "#A4A7A4"
+        bright_red "#E46876"
+        bright_green "#87a987"
+        bright_yellow "#E6C384"
+        bright_blue "#7FB4CA"
+        bright_magenta "#938AA9"
+        bright_cyan "#7AA89F"
+        bright_white "#C5C9C7"
+    }
+}
 
 // The name of the default layout to load on startup
 // Default: "default"
