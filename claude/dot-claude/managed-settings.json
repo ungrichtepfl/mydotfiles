@@ -16,6 +16,10 @@
     "excludedCommands": ["docker *"],
     "filesystem": {
       "allowWrite": [
+        "~/.config/nvim",
+        "~/Programming/",
+        "~/Notes",
+        "~/mydotfiles",
         "~/Scewo",
         "~/.cargo",
         "~/.rustup",
