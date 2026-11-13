@@ -100,22 +100,39 @@ fi
 ##############
 
 # Nvm
-setup_nvm() {
-    unfunction "$0"
-    export NVM_DIR="$HOME/.config/nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion (also zsh)
+# Loading nvm.sh takes about 0.5 s and blocks typing, even deferred. So only put
+# nvm's default Node on PATH, resolved like nvm resolves its "default" alias:
+# "node" = newest installed, "v25.2.1" = that version, "25" = newest 25.x.
+export NVM_DIR="$HOME/.config/nvm"
+if [[ -r $NVM_DIR/alias/default ]]; then
+    _nvm_default=$(<"$NVM_DIR/alias/default")
+    case $_nvm_default in
+        node) _nvm_node=($NVM_DIR/versions/node/v*(NnOn[1])) ;;
+        v*)   _nvm_node=($NVM_DIR/versions/node/$_nvm_default(N)) ;;
+        *)    _nvm_node=($NVM_DIR/versions/node/v${_nvm_default}(|.*)(NnOn[1])) ;;
+    esac
+    if [[ -n $_nvm_node ]]; then
+        path=("$_nvm_node/bin" $path)
+    else
+        print -u2 "zshrc: nvm default '$_nvm_default' is not installed, node is not on PATH"
+    fi
+    unset _nvm_default _nvm_node
+fi
+
+# The nvm command loads nvm.sh the first time it is used.
+nvm() {
+    unfunction nvm
+    . "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    nvm "$@"
 }
-zsh-defer setup_nvm
 
 # Pyenv
-setup_pyenv() {
-    unfunction "$0"
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init - zsh)"
-}
-zsh-defer setup_pyenv
+# Not deferred: deferred work blocks typing after the prompt. --no-rehash makes it
+# fast; pyenv rehashes after pip installs itself, otherwise run `pyenv rehash`.
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && path=("$PYENV_ROOT/bin" $path)
+eval "$(pyenv init - --no-rehash zsh)"
 
 [ -z "$ZPROF" ] || zprof
 
