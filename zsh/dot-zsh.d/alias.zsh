@@ -29,7 +29,7 @@ if (( $+commands[dua] )); then
     alias ncdu="dua i"
 fi
 
-if [ "$TERM" = "kitty" ]; then
+if [ "$TERM" = "xterm-kitty" ]; then
     # kitty terminal ssh
     alias ssh='kitty +kitten ssh'
 elif [ "$TERM" = "alacritty" ]; then
