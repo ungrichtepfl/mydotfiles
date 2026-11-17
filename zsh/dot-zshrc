@@ -95,24 +95,25 @@ if (( $+commands[jj] )); then
     source <(COMPLETE=zsh jj)
 fi
 
-##############
-# -- SLOW -- #
-##############
-
+# Node
 # Node versions with fnm (https://github.com/Schniz/fnm). --use-on-cd switches to
 # the version in .node-version or .nvmrc when entering a folder.
-FNM_PATH="$HOME/.local/share/fnm"
-if [[ -d $FNM_PATH ]]; then
-    path=("$FNM_PATH" $path)
-    eval "$(fnm env --use-on-cd --shell zsh)"
+if (( $+commands[fnm] )); then
+    FNM_PATH="$HOME/.local/share/fnm"
+    if [[ -d $FNM_PATH ]]; then
+        path=("$FNM_PATH" $path)
+        eval "$(fnm env --use-on-cd --shell zsh)"
+    fi
 fi
 
 # Pyenv
 # Not deferred: deferred work blocks typing after the prompt. --no-rehash makes it
 # fast; pyenv rehashes after pip installs itself, otherwise run `pyenv rehash`.
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && path=("$PYENV_ROOT/bin" $path)
-eval "$(pyenv init - --no-rehash zsh)"
+if (( $+commands[pyenv] )); then
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && path=("$PYENV_ROOT/bin" $path)
+    eval "$(pyenv init - --no-rehash zsh)"
+fi
 
 [ -z "$ZPROF" ] || zprof
 
