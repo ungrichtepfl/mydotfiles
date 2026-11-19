@@ -49,6 +49,7 @@
         "github.com",
         "*.github.com",
         "*.githubusercontent.com",
+        "*.blob.core.windows.net",
         "gitlab.com",
         "npmjs.org",
         "*.npmjs.org",
