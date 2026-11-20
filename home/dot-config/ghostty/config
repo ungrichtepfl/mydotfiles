@@ -1,0 +1,64 @@
+# All options: ghostty +show-config --default --docs
+# Same look and keys as kitty.conf: plain window for zellij.
+
+font-family = JetBrainsMono Nerd Font Mono
+font-style-bold = ExtraBold
+font-size = 16
+font-feature = -calt, -liga, -dlig
+
+cursor-style = block
+cursor-style-blink = false
+
+# No titlebar, close buttons or tabs.
+window-decoration = none
+gtk-titlebar = false
+# GTK still keeps a 6 px resize frame around the window. This paints it in the
+# terminal background color, so it is not visible.
+window-theme = ghostty
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = false
+resize-overlay = never
+
+# Close without asking, like Alacritty.
+confirm-close-surface = false
+
+# Remove all Ghostty shortcuts, so every Ctrl+Shift key reaches zellij.
+# Only the keys Alacritty has by default come back.
+keybind = clear
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+plus=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = ctrl+zero=reset_font_size
+
+# Same as in alacritty.toml
+keybind = shift+enter=text:\x1b\r
+
+# Kanso Zen, same colors as kitty/kanso_zen.conf
+background = #090E13
+foreground = #C5C9C7
+selection-background = #393B44
+selection-foreground = #C5C9C7
+cursor-color = #C5C9C7
+cursor-text = #090E13
+
+palette = 0=#0d0c0c
+palette = 1=#c4746e
+palette = 2=#8a9a7b
+palette = 3=#c4b28a
+palette = 4=#8ba4b0
+palette = 5=#a292a3
+palette = 6=#8ea4a2
+palette = 7=#C8C093
+palette = 8=#A4A7A4
+palette = 9=#E46876
+palette = 10=#87a987
+palette = 11=#E6C384
+palette = 12=#7FB4CA
+palette = 13=#938AA9
+palette = 14=#7AA89F
+palette = 15=#C5C9C7
+palette = 16=#b6927b
+palette = 17=#b98d7b
