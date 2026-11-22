@@ -20,7 +20,6 @@
 - Void Linux (runit, xbps), Neovim user, terminal-first workflow. Prefer CLI solutions over GUI.
 - Check for `.jj` before `.git`; prefer Jujutsu when both exist (colocated repos). jj has no staging area: the working copy is a commit — use `jj describe` / `jj new` / `jj split` instead of add/commit/stash.
 - When shell commands run, the sandbox can create empty dotfiles and config files in the working directory. They are not real project files: do not read them as config, edit, or commit them (jj tracks new files automatically, so check for them before `jj describe` / `jj new`).
-- Shell commands can be aliased or replaced by shell functions. Check with `type <cmd>`, or run the plain command with `command <cmd>` (it skips aliases and functions). Check which shell runs the commands (e.g. `echo $0`) before you use shell-specific syntax.
 
 ## Failure loops
 - Same failure twice: stop, question your assumptions, analyze before retrying.

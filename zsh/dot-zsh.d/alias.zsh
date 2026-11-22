@@ -1,7 +1,4 @@
 ## Alias section
-# Claude Code loads this file into its agent shell; aliases like `cp -i` break agent commands.
-[[ -n $CLAUDECODE ]] && return
-
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
