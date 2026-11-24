@@ -15,7 +15,7 @@ GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"        # green circle
 
 parse_git_branch() {
     if jj root &>/dev/null; then
-        jj log -r '@' --no-graph -T 'if(description.first_line(), description.first_line(), "(no description)")' 2>/dev/null
+        jj log --ignore-working-copy -r '@' --no-graph -T 'if(description.first_line(), description.first_line(), "(no description)")' 2>/dev/null
         return
     fi
     # Show Git branch/tag, or name-rev if on detached head
@@ -31,7 +31,7 @@ parse_git_state() {
         if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
             GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
         fi
-        if [[ -n "$(jj diff --summary 2>/dev/null)" ]]; then
+        if [[ -n "$(jj diff --ignore-working-copy --summary 2>/dev/null)" ]]; then
             GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
         fi
     else
