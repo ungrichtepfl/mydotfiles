@@ -430,3 +430,7 @@ pane_frames false
 // Whether to show tips on startup
 // Default: true
 show_startup_tips false
+
+// Copy with xclip instead of OSC 52: in the zellij terminal window (0.46.0),
+// OSC 52 copies sometimes only had the first line.
+copy_command "xclip -selection clipboard"
