@@ -21,27 +21,37 @@ case $BLOCK_BUTTON in
     6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
 esac
 
-path="/"
 icon="󰋊"
 
-# Get used, total (in KB) and percent from df -- avoid process substitution for /bin/sh
-set -- $(df --output=used,size,pcent "$path" | tail -n1 | awk '{print $1, $2, $3}')
-used_k=$1
-total_k=$2
-pcent=$3
-# calculate GB integer values (round)
-used_gib=$(awk "BEGIN {printf \"%d\", ($used_k/1000/1000)+0.5}")
-total_gib=$(awk "BEGIN {printf \"%d\", ($total_k/1000/1000)+0.5}")
+# Sets $usage_text and $percent_used for the filesystem of the given path.
+read_usage() {
+    # Get used, total (in KB) and percent from df -- avoid process substitution for /bin/sh
+    set -- $(df --output=used,size,pcent "$1" | tail -n1 | awk '{print $1, $2, $3}')
+    # calculate GB integer values (round)
+    used_gib=$(awk "BEGIN {printf \"%d\", ($1/1000/1000)+0.5}")
+    total_gib=$(awk "BEGIN {printf \"%d\", ($2/1000/1000)+0.5}")
+    percent_used=$(echo "$3" | tr -d '%')
+    usage_text="$(printf "%2s" "$percent_used")% ($used_gib GB / $total_gib GB)"
+}
 
-percent_used=$(echo "$pcent" | tr -d '%')
+read_usage /
+text="$usage_text"
+worst_percent=$percent_used
+
+if mountpoint -q /home; then
+    read_usage /home
+    text="/ $text  ~ $usage_text"
+    [ "$percent_used" -gt "$worst_percent" ] && worst_percent=$percent_used
+fi
+
 # color thresholds: warn >=80 (yellow), alert >=90 (red)
-if [ "$percent_used" -ge 90 ]; then
+if [ "$worst_percent" -ge 90 ]; then
     color=$critical
-elif [ "$percent_used" -ge 80 ]; then
+elif [ "$worst_percent" -ge 80 ]; then
     color=$warning
 else
     color=""
 fi
 
 # match i3status-rust format: icon, percentage (width 2) and (used / total) in GB
-display "$icon   $(printf "%2s" "$percent_used")% ($used_gib GB / $total_gib GB)" "$color"
+display "$icon   $text" "$color"
