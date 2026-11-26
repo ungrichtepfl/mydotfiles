@@ -1,0 +1,18 @@
+#!/bin/sh
+# Display a keyboard icon that toggles the svkbd on-screen keyboard on click.
+# Shows nothing if svkbd is not installed.
+
+keyboard="svkbd-mobile-intl"
+
+command -v "$keyboard" >/dev/null 2>&1 || exit
+
+case $BLOCK_BUTTON in
+    1)
+        # dwmblocks reads this script's output, so the keyboard must not keep it open
+        pkill -xf "$keyboard" || setsid -f "$keyboard" >/dev/null 2>&1
+        ;;
+    6) sensible-terminal.sh -e "$EDITOR" "$0" ;;
+esac
+
+. sb-theme
+display " 󰌌 "
