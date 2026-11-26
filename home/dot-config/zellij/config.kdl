@@ -431,10 +431,6 @@ pane_frames false
 // Default: true
 show_startup_tips false
 
-// sidekick.nvim runs zellij inside a Neovim terminal; that pane must stay a
-// normal pane instead of being zoomed or taking over the keys.
-nested_session_handling "never"
-
 // Copy with xclip instead of OSC 52: in the zellij terminal window (0.46.0),
 // OSC 52 copies sometimes only had the first line.
 copy_command "xclip -selection clipboard"
