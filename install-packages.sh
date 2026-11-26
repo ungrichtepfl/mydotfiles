@@ -24,7 +24,7 @@ if [ "$DISTRO" = "VoidLinux" ]; then
         isync xdg-utils cyrus-sasl-xoauth2 goimapnotify vlc inkscape \
         nerd-fonts font-awesome6 flameshot Solaar tealdeer avidemux docker \
         j4-dmenu-desktop acpi xorg-server-xephyr libXinerama-devel jujutsu \
-        bubblewrap socat xournalpp
+        bubblewrap socat xournalpp rclone
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y com.rtosta.zapzap com.brave.Browser org.telegram.desktop com.github.tchx84.Flatseal com.github.flxzt.rnote
