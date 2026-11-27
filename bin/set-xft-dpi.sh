@@ -19,8 +19,10 @@ fi
 # A monitor line looks like:
 # eDP-1 connected primary 2560x1440+5120+0 (normal left ...) 344mm x 194mm
 # The diagonal is used so that a rotated monitor gives the same DPI.
-# 13.3" 1080p panels have 166 DPI, high DPI panels from 15.6" 1440p (188) up.
-high_dpi_threshold=175
+# The font sizes in the configs are chosen for 96 DPI. That still works on a
+# 15.6" 1440p panel (189 DPI), but is too small on a 12.3" 2736x1824 panel
+# (267 DPI).
+high_dpi_threshold=200
 
 dpi="$(printf '%s\n' "$monitors" | awk -v high_dpi_threshold="$high_dpi_threshold" '
     $2 == "connected" {
