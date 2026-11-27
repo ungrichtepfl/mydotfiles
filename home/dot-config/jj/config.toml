@@ -30,3 +30,8 @@ all()
   ~ glob:'**/*.mp4' ~ glob:'**/*.mov' ~ glob:'**/*.mkv' ~ glob:'**/*.avi'
   ~ glob:'**/*.zip' ~ glob:'**/*.tar' ~ glob:'**/*.gz' ~ glob:'**/*.tgz' ~ glob:'**/*.bz2' ~ glob:'**/*.xz' ~ glob:'**/*.7z'
 '''
+
+[working-copy]
+# Store LF, like `core.autocrlf = input`. jj ignores .gitattributes, so a CRLF file that git
+# checked out (e.g. `*.bat text eol=crlf`) would otherwise be committed with CRLF.
+eol-conversion = "input"
