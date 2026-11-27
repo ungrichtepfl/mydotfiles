@@ -16,10 +16,10 @@ if [[ -n $search_path ]]; then
         prompt="File:"
         scripts_path="$HOME/.local/bin"
         . "$scripts_path/dmenu-theming"
-        file_name="$($fd . "$search_path" | \
+        file_name="$($fd --one-file-system . "$search_path" | \
                  dmenu -i -p "$prompt" $lines $colors $font)"
     else
-        file_name="$($fd . "$search_path" | \
+        file_name="$($fd --one-file-system . "$search_path" | \
                  dmenu $@)"
     fi
 
