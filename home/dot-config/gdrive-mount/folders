@@ -1,3 +1,5 @@
 # Google Drive folders mounted by gdrive-mount.sh, one per line:
 # <Drive folder ID (last part of the folder URL)> <mount directory, relative to $HOME unless it starts with />
-1WSenv6QQPghzF_efgQQo9dd9WKCXOdFt Scewo/GDrive/SW-Ticket-Documentation
+0B5IiBBfzxq2yeFNzOFdhSXh3UEU Scewo/GDrive/107_Software
+0B5IiBBfzxq2ycE9CUmZqUGtIXzg Scewo/GDrive/106_Testing
+1fY9Wstg8tKy38MIRjZX780QIrcPIy-gn Scewo/GDrive/108_Electronics
